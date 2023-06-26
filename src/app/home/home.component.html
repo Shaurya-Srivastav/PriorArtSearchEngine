@@ -5,8 +5,8 @@
     <h1 class="title">Prior Art Search Engine</h1>
 
     <div class="search-container">
-        <input type="text" placeholder="Search">
-        <button type="submit"><i class="fas fa-search"></i></button>
+        <input type="text" placeholder="Search" [(ngModel)]="input">
+        <button type="submit" (click)="test()"><i class="fas fa-search"></i></button>
     </div>
 
     <div class="result">
