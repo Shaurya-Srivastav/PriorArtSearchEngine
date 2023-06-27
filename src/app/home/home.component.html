@@ -4,15 +4,20 @@
 
     <h1 class="title">Prior Art Search Engine</h1>
 
-    <div class="search-container">
+    <div class="search-container" >
         <input type="text" placeholder="Search" [(ngModel)]="input">
         <button type="submit" (click)="test()"><i class="fas fa-search"></i></button>
     </div>
 
-    <div class="result">
+    <div class="result" >
         <h1 style=" text-align: center;">Most Similar Patent: </h1>
-        <h2>Title: </h2>
-        <h3>Abstract: </h3>
+        <h2>Title: {{title}}</h2>
+        <h3>Abstract: {{abstract}}</h3>
     </div>
-      
+
+    <ngx-loading
+    [show]="loading"
+    [config]="{ backdropBorderRadius: '3px' }"
+  ></ngx-loading>
+
 </section>

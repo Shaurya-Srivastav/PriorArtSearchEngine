@@ -9,7 +9,10 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { FormsModule } from '@angular/forms';
 
+import { NgxLoadingModule } from 'ngx-loading';
 
+//environments
+import { environment } from 'src/environments/environment.prod';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxLoadingModule.forRoot({}),
   ],
   providers: [],
   bootstrap: [AppComponent]
