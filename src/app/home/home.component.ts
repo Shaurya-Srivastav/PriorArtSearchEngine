@@ -24,12 +24,11 @@ export class HomeComponent implements OnInit {
   test() {
     this.loading = true;
     console.log(this.input);
-    const url = 'http://34.125.201.213:3003/search';
-
+    const url = 'https://priorartsearch.host2go.net/search';
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    const requestBody = { input_idea: this.input };
-    this.http.post(url, requestBody, { headers }).subscribe({
+    const requestBody = {input_idea: this.input};
+    this.http.post(url, requestBody, {headers}).subscribe({
       next: (response: any) => {
         console.log(response);
         this.title = response.most_similar_title;

@@ -19,7 +19,7 @@
 .search-container {
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 20%;
     transform: translate(-50%, -40%);
     display: flex;
     align-items: center;
@@ -27,6 +27,7 @@
     background-color: #333;
     border-radius: 5px;
     overflow: hidden;
+    margin: aut;
   }
   
   input[type="text"] {
