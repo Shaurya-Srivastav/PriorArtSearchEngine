@@ -9,11 +9,40 @@
         <button type="submit" (click)="test()"><i class="fas fa-search"></i></button>
     </div>
 
-    <div class="result" >
-        <h1>Most Similar Patent: </h1>
-        <h2>Title: {{title}}</h2>
-        <h3>Abstract: {{abstract}}</h3>
-    </div>
+
+    <div class="table-wrapper">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Abstract</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Title of Paper</td>
+                <td>Abstract</td>
+                <td>Score</td>
+              </tr>
+              <tr>
+                <td>Title of Paper</td>
+                <td>Abstract</td>
+                <td>Score</td>
+              </tr>
+              <tr>
+                <td>Title of Paper</td>
+                <td>Abstract</td>
+                <td>Score</td>
+              </tr>
+              
+              <!-- Add more table rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
 
     <ngx-loading
     [show]="loading"
