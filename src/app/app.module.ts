@@ -13,10 +13,12 @@ import { NgxLoadingModule } from 'ngx-loading';
 
 //environments
 import { environment } from 'src/environments/environment.prod';
+import { SearchComponent } from './search/search.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

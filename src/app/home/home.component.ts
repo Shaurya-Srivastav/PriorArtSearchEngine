@@ -40,6 +40,15 @@ export class HomeComponent implements OnInit {
         this.loading = false;
       },
     });
+
+
+    const menuIcon = document.querySelector('.menu-icon') as HTMLElement;
+    const linksContainer = document.querySelector('.links') as HTMLElement;
+
+    menuIcon.addEventListener('click', () => {
+      linksContainer.classList.toggle('active');
+    });
+
   }
 
 
