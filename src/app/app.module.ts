@@ -14,11 +14,14 @@ import { NgxLoadingModule } from 'ngx-loading';
 //environments
 import { environment } from 'src/environments/environment.prod';
 import { SearchComponent } from './search/search.component';
+import { ResultsComponent } from './results/results.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+/*******************search bar*************************/
+
+#search-bar-area{
+    background-color: black;
+    height: 15vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#logo{
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    padding-left: 5%;
+}
+
+
+.search-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 60%;
+  }
+  
+  .search-input {
+    width: 95%;
+    height: 80px;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .search-input::placeholder {
+    color: #999;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /********************************* Results page *********************************/
+
+  .result-list{
+    list-style: none;
+  }
+  .result-list li{
+    padding-bottom: 5%;
+    width: 95%;
+    margin: 0 auto;
+    border-bottom: 2px solid black;
+  }
+
+  .patent-title{
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+  }
+  .patent-abstract{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  .links{
+    float: right;
+  }
+
+  .links a{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    margin-right: 10px;
+    background-color: green;
+    border-radius: 5px;
+    padding: 12px 24px;
+    color: white;
+  }
+
+/****************************** media queries ******************************/
+
+@media screen and (max-width: 1000px){
+  #logo{
+    font-size: 30px;
+  }
+
+}
+
+@media screen and (max-width: 775px) {
+  #logo{
+    font-size: 25px;
+  }
+  .result-list li{
+    padding-bottom: 10%;
+  }
+}
+  
+@media screen and (max-width: 595px) {
+  #logo{
+    font-size: 20px;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  #logo{
+    font-size: 15px;
+  }
+}
+
+
+@media screen and (max-width: 414px) {
+  #logo{
+    font-size: 10px;
+  }
+}
