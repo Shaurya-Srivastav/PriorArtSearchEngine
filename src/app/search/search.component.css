@@ -1,46 +1,4 @@
 
-/***** NAV BAR ****/
-
-
-   .current{
-     color: #39FF14;
-   }
-   
-.navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20vh;
-  }
-  
-  .navbar-list {
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 80%;
-  }
-  
-  .navbar-item {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar-item a {
-    display: block;
-    padding: 2% 4%; 
-    font-weight: bold;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    transition: color 0.75s ease;
-    font-size: 25px;
-  }
-  
-  .navbar-item a:hover {
-    color: #39FF14;
-  }
-  
-
   
 /**** Search PAGE ***/
 #search{
@@ -72,8 +30,8 @@
   
   .search-form {
     position: relative;
-    transform: translate(-50%, -40%);
-    top: 40%;
+    transform: translate(-50%, -60%);
+    top: 60%;
     left: 50%;
     display: flex;
     flex-direction: column;
@@ -112,6 +70,8 @@
   button:hover {
     background-color: #2DB81B;
   }
+
+
   
   
 

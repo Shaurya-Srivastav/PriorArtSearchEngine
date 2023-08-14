@@ -42,17 +42,6 @@
   }
   
   /********************************* Results page *********************************/
-
-  .result-list{
-    list-style: none;
-  }
-  .result-list li{
-    padding-bottom: 5%;
-    width: 95%;
-    margin: 0 auto;
-    border-bottom: 2px solid black;
-  }
-
   .patent-title{
     font-family: 'Poppins', sans-serif;
     font-size: 40px;
@@ -77,11 +66,21 @@
     color: white;
   }
 
+/*********************************filter *********************************/
+
+
+
 /****************************** media queries ******************************/
 
 @media screen and (max-width: 1000px){
   #logo{
     font-size: 30px;
+  }
+  .patent-title{
+    font-size: 30px
+  }
+  .patent-abstract{
+    font-size: 15px; 
   }
 
 }
