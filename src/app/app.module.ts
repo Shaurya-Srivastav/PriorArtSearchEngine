@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 
 import { NgxLoadingModule } from 'ngx-loading';
 
+
+
 //environments
 import { environment } from 'src/environments/environment.prod';
 import { SearchComponent } from './search/search.component';
