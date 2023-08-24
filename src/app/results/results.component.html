@@ -8,39 +8,15 @@
       </form>
 </section>
 <br>
-<Section id="search-results">
-    
-    <div id="sidebar">
-        <h2>Select Dates:</h2>
-        <form class="date-form">
-<br><br><br>
-            <h2>Filter by Year:</h2>
-            <label class="checkbox-label">
-                <input type="checkbox" name="year" value="1976">
-                1976
-            </label>
-            <label class="checkbox-label">
-                <input type="checkbox" name="year" value="1976">
-                1977
-            </label>
-            <label class="checkbox-label">
-                <input type="checkbox" name="year" value="1976">
-                1978
-            </label>
-            <label class="checkbox-label">
-                <input type="checkbox" name="year" value="1976">
-                1979
-            </label>
-            <label class="checkbox-label">
-                <input type="checkbox" name="year" value="1980">
-                1980
-            </label>
-            <!-- Add more checkboxes for other years as needed -->
-            <button>Submit</button>
-        </form>
-    </div>
+<section id="filter">
+    <form>
+    <h1 class="filterTitle">Filter By Date:</h1>
+    <input type="text" placeholder="MM/DD/YYYY" class="searchBar">
+    <button class="submitButton">Submit</button>
+    </form>
+</section>
 
-    
+<Section id="search-results">
     <ul class="result-list">
         <li>
             <h1 class="patent-title">Patent Title</h1>
@@ -58,6 +34,8 @@
             <div class="links">
                 <a class="uspto-link">Open Document</a>
                 <a class="chat-link">Chat</a>
+                <a>Google Patents</a>
+                <a>USPTO</a>
             </div>
         </li>
         <br>

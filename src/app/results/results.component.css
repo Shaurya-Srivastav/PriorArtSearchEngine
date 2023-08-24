@@ -77,58 +77,23 @@
     display: flex;
     align-items: flex-start; /* Add this line */
 }
-
-#sidebar {
-  background-color: black;
-  width: 250px;
-  padding: 20px;
-  color: white;
+#filter{
   font-family: 'Poppins', sans-serif;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
+  padding-left: 2.5%;
 }
-
-#sidebar h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-.date-form {
-  margin-bottom: 20px;
-}
-
-.checkbox-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.checkbox-label input[type="checkbox"] {
-  margin-right: 5px;
-}
-
-.result-list {
-  margin-left: 260px; /* Adjust this value as needed */
-}
-
-button {
-  margin-top: 10px;
-  background-color: #39FF14;
-  border: none;
-  color: white;
-  font-size: 18px;
-  border-radius: 5px;
-  padding: 12px 24px;
-  cursor: pointer;
-  outline: none;
+.searchBar{
   font-family: 'Poppins', sans-serif;
+  height: 30px;
 }
-
-button:hover {
-  background-color: #2DB81B;
+.submitButton{
+    font-weight: 500;
+    margin-right: 10px;
+    background-color: green;
+    border-radius: 5px;
+    padding: 12px 24px;
+    color: white;
+    margin-left: 10px;
 }
-
 
 /****************************** media queries ******************************/
 
@@ -142,7 +107,6 @@ button:hover {
   .patent-abstract{
     font-size: 15px; 
   }
-
 }
 
 @media screen and (max-width: 775px) {
