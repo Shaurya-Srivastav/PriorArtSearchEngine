@@ -8,14 +8,24 @@
       </form>
 </section>
 <br>
-<section id="filter">
-    <form>
-    <h1 class="filterTitle">Filter By Date:</h1>
-    <input type="text" placeholder="MM/DD/YYYY" class="searchBar">
-    <button class="submitButton">Submit</button>
+<section>
+    <form id="filter">
+        <div class="DateFilter">
+            <h1 class="filterTitle">Filter By Date:</h1>
+            <input type="text" placeholder="MM/DD/YYYY" class="dateBar">
+            <button class="submitButton">Submit</button>
+        </div>
+
+        <div class="keywordFilter">
+            <h1 class="filterTitle">Filter By Keywords:</h1>
+            <input type="text" placeholder="Enter Keywords..." class="keywordBar">
+            <button class="submitButton">Submit</button>
+        </div>
     </form>
 </section>
-
+<br>
+<div class="line"></div>
+<br>
 <Section id="search-results">
     <ul class="result-list">
         <li>
@@ -42,3 +52,13 @@
     </ul>
 
 </Section>
+
+<footer id="footer">
+    <ul class="pagination">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</footer>
