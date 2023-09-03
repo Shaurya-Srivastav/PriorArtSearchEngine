@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
 /*******************search bar*************************/
-
 #search-bar-area {
   background-color: black;
   height: 15vh;
@@ -13,35 +12,73 @@
   z-index: 1;
 }
 
-#logo{
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-    padding-left: 5%;
+#logo {
+  font-family: 'Poppins', sans-serif;
+  font-size: 40px;
+  padding-left: 5%;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 70%;
+}
+
+.search-input-container {
+  display: flex;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.search-input {
+  flex-grow: 1;
+  height: 80px;
+  padding: 12px;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-family: 'Poppins', sans-serif;
+}
+
+.search-button {
+  background-color: #39FF14;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 0 5px 5px 0;
+  padding: 12px 24px;
+  cursor: pointer;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Style for the "Saved Patents" button */
+.saved-button {
+  background-color: green;
+  color: white;
+  font-size: 25px;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  margin: 0 auto;
+  margin-right: 10%;
+  text-align: center;
+}
+
+.saved-button:hover {
+  background-color: darkgreen;
 }
 
 
-.search-form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 60%;
-  }
-  
-  .search-input {
-    width: 95%;
-    height: 80px;
-    padding: 12px;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
-    outline: none;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .search-input::placeholder {
-    color: #999;
-    font-family: 'Poppins', sans-serif;
-  }
   
   /********************************* Results page *********************************/
   .patent-title{
@@ -72,6 +109,12 @@
     margin: 0 auto;
     list-style: none;
   }
+
+  .result-checkbox{
+    height: 30px;
+    width: 20px;
+  }
+
 /*********************************filter *********************************/
 #search-results {
   display: flex;
@@ -84,21 +127,18 @@
   display: flex; /* Display form contents as a flex container */
 }
 
-.DateFilter, .keywordFilter {
+.keywordFilter {
   display: flex;
   align-items: center;
   margin-right: 10px; /* Add a bit of space between the divs */
 }
 
-.DateFilter {
-  flex: 1; /* Date filter occupies 1 unit of space */
-}
 
 .keywordFilter {
   flex: 2.5; /* Keyword filter occupies 1.5 units of space */
 }
 
-.dateBar, .keywordBar {
+.keywordBar {
   font-family: 'Poppins', sans-serif;
   height: 30px;
   flex: 1;
@@ -120,6 +160,29 @@
   background-color: black;
   margin: 0 auto;
 }
+
+/*****SAVE SELECTED PATENT BUTTON****/
+
+/* Style for the Save Selected Patents button */
+.save-button {
+  background-color: green;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 24px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  margin-left: 2%;
+}
+
+.save-button:hover {
+  background-color: darkgreen;
+  
+}
+
 /****************Footer******** ******/
 #footer {
   display: flex;

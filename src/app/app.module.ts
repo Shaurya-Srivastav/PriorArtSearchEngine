@@ -17,12 +17,14 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { environment } from 'src/environments/environment.prod';
 import { SearchComponent } from './search/search.component';
 import { ResultsComponent } from './results/results.component';
+import { SavedComponent } from './saved/saved.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    ResultsComponent, 
+    ResultsComponent,
+    SavedComponent, 
   ],
   imports: [
     BrowserModule,

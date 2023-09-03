@@ -1,21 +1,23 @@
 <section id="search-bar-area">
     <span id="logo">
-        <a href="/search" class="link" style="color: white;"><h1>Patent.AI</h1></a>
+        <a href="/search" class="link" style="color: white;"><h1>Semantic</h1></a>
     </span>
 
     <form class="search-form" action="">
-        <textarea class="search-input" placeholder="Search..." required></textarea>
-      </form>
+        <div class="search-input-container">
+            <textarea class="search-input" placeholder="Search..." required></textarea>
+            <button type="submit" class="search-button">Search</button>
+        </div>
+    </form>
+
+    <!-- "Saved Patents" button with a link to /saved -->
+    <a href="/saved" class="saved-button">Saved Patents</a>
 </section>
+
+
 <br>
 <section>
     <form id="filter">
-        <div class="DateFilter">
-            <h1 class="filterTitle">Filter By Date:</h1>
-            <input type="text" placeholder="YYYY-MM-DD" class="dateBar">
-            <button class="submitButton">Submit</button>
-        </div>
-        
         <div class="keywordFilter">
             <h1 class="filterTitle">Filter By Keywords:</h1>
             <input type="text" placeholder="Enter Keywords..." class="keywordBar">
@@ -26,28 +28,31 @@
 <br>
 <div class="line"></div>
 <br>
-<Section id="search-results" >
-    <div *ngIf="results && results.length > 0">
+
+<form>
+    <button class="save-button">Save Selected Patents</button>
+
+    <Section id="search-results">
         <ul class="result-list">
             <li *ngFor="let patent of paginatedResults[currentPage - 1]">
+                <input type="checkbox" class="result-checkbox">
                 <h1 class="patent-title">{{ patent.title }}</h1>
                 <h2 class="patent-abstract">
-                    <b>Patent Text:</b> 
-                    {{ patent.abstract ? patent.abstract : patent.text }}
+                    <b>Patent Abstract:</b> {{ patent.abstract ? patent.abstract : patent.text }}
                 </h2>
+                <br>
                 <div class="links" style="padding-top: 1%">
                     <a class="uspto-link" href="#" target="_blank">Open Document</a>
-                    <a class="chat-link" href="#">Chat</a>
                     <a href="https://patents.google.com/?q={{ patent.patent_id }}" target="_blank">Google Patents</a>
                     <a (click)="fetchAndRouteApplication()">USPTO</a>
                 </div>
             </li>
+            <br>
         </ul>
-    </div>
-    
-    
-</Section>
 
+    </Section>
+
+</form>
 
 <footer id="footer">
     <ul class="pagination">
