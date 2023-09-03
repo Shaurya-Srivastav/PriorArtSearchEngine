@@ -5,8 +5,8 @@
         </h1>
 
         <form class="search-form" action="">
-            <textarea class="search-input" placeholder="Search..." required></textarea>
-            <button>Search</button>
+            <textarea class="search-input" [(ngModel)]="searchQuery" name="searchQuery" placeholder="Enter search query or patent ID..." required></textarea>
+            <button (click)="onSubmit()">Search</button>
           </form>
 
 

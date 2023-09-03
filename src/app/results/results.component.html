@@ -12,10 +12,10 @@
     <form id="filter">
         <div class="DateFilter">
             <h1 class="filterTitle">Filter By Date:</h1>
-            <input type="text" placeholder="MM/DD/YYYY" class="dateBar">
+            <input type="text" placeholder="YYYY-MM-DD" class="dateBar">
             <button class="submitButton">Submit</button>
         </div>
-
+        
         <div class="keywordFilter">
             <h1 class="filterTitle">Filter By Keywords:</h1>
             <input type="text" placeholder="Enter Keywords..." class="keywordBar">
@@ -26,39 +26,35 @@
 <br>
 <div class="line"></div>
 <br>
-<Section id="search-results">
-    <ul class="result-list">
-        <li>
-            <h1 class="patent-title">Patent Title</h1>
-            <h2 class="patent-abstract">
-                <b>Patent Abstract:</b> Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-                Laboriosam, nostrum porro quo ipsa cum ipsam voluptas quia nemo optio
-                 voluptatibus similique! Praesentium, necessitatibus repudiandae? Quo, debitis expedita. 
-                 Cupiditate, repellat harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                 Debitis earum minima aliquam deleniti magni voluptate atque vitae deserunt quia magnam
-                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex voluptates saepe quis 
-                 perspiciatis soluta sequi temporibus hic ipsam voluptas, pariatur numquam et impedit 
-                 corporis mollitia esse obcaecati rerum expedita. Velit? 
-            </h2>
-            <br>
-            <div class="links">
-                <a class="uspto-link">Open Document</a>
-                <a class="chat-link">Chat</a>
-                <a>Google Patents</a>
-                <a>USPTO</a>
-            </div>
-        </li>
-        <br>
-    </ul>
-
+<Section id="search-results" >
+    <div *ngIf="results && results.length > 0">
+        <ul class="result-list">
+            <li *ngFor="let patent of paginatedResults[currentPage - 1]">
+                <h1 class="patent-title">{{ patent.title }}</h1>
+                <h2 class="patent-abstract">
+                    <b>Patent Text:</b> 
+                    {{ patent.abstract ? patent.abstract : patent.text }}
+                </h2>
+                <div class="links" style="padding-top: 1%">
+                    <a class="uspto-link" href="#" target="_blank">Open Document</a>
+                    <a class="chat-link" href="#">Chat</a>
+                    <a href="https://patents.google.com/?q={{ patent.patent_id }}" target="_blank">Google Patents</a>
+                    <a (click)="fetchAndRouteApplication()">USPTO</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    
 </Section>
+
 
 <footer id="footer">
     <ul class="pagination">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
+      <li *ngFor="let page of [].constructor(totalPages); let i = index" 
+          [class.active]="i + 1 === currentPage" 
+          (click)="setPage(i + 1)">
+        {{ i + 1 }}
+      </li>
     </ul>
-</footer>
+  </footer>
