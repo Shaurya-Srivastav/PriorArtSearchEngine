@@ -101,6 +101,13 @@ button:hover {
 
 /*************** Media Queries ******************/
 
+@media (max-width: 1115px) {
+  .calendar-container {
+    left: 0%;
+    transform: translateX(0%);
+  }
+}
+
 @media (max-width: 850px) {
   #logo {
     font-size: 130px;
