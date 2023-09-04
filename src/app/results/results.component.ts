@@ -11,8 +11,21 @@ import { Router } from '@angular/router';
 })
 export class ResultsComponent implements OnInit {
 
+  titleLetters: string[] = Array.from('Semantic');
   searchQuery: any;
-  results: any[] = []; // adjust the type based on your results structure
+  isSearching: boolean = true; 
+  results: any[] = [
+    {
+      title: "Patent 1: Innovative Idea",
+      abstract: "This is a description of the innovative idea for patent 1. It revolutionizes the way we think about technology."
+    },
+    {
+      title: "Patent 2: Next-gen Solution",
+      abstract: "This is a description of the next-gen solution for patent 2. It's a groundbreaking invention."
+    },
+    // ... add more dummy patents as needed
+  ];
+  public showResults: boolean = false;
 
   currentPage: number = 1;
   totalPages: any;
@@ -25,10 +38,30 @@ export class ResultsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.animateLogo();
+
+    setTimeout(() => {
+      this.showResults = true;
+    }, 500); // 500ms delay
+
     this.searchQuery = this.route.snapshot.queryParamMap.get('query') || ''; // get the query from route parameters
     if (this.searchQuery.trim()) { // Check if the search query is not blank
       this.search(); 
     }
+    
+  }
+
+  animateLogo(): void {
+    const letters = document.querySelectorAll('.letter');
+    letters.forEach((letter, index) => {
+      setTimeout(() => {
+        letter.classList.add('animate');
+      }, 70 * index);
+    });
+  }
+
+  toggleResults() {
+    this.showResults = !this.showResults;
   }
 
   search() {

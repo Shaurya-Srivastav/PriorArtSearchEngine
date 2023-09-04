@@ -11,13 +11,19 @@ import { FormsModule } from '@angular/forms';
 
 import { NgxLoadingModule } from 'ngx-loading';
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //environments
 import { environment } from 'src/environments/environment.prod';
 import { SearchComponent } from './search/search.component';
 import { ResultsComponent } from './results/results.component';
 import { SavedComponent } from './saved/saved.component';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -32,6 +38,12 @@ import { SavedComponent } from './saved/saved.component';
     HttpClientModule,
     FormsModule,
     NgxLoadingModule.forRoot({}),
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

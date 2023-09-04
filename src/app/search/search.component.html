@@ -1,17 +1,39 @@
 <section id="search">
     <h1 id="logo">
-      Semantic
+      <span *ngFor="let letter of titleLetters; let i = index"
+            class="letter" [class.animate]="isSearching" [style.animation-delay]="(i * 0.2) + 's'">
+        {{ letter }}
+      </span>
     </h1>
-    <form class="search-form" action="">
+  
+    <form class="search-form" #searchForm action="">
       <div class="search-input-container">
-        <textarea class="search-input" placeholder="Search..." required></textarea>
-        <button (click)="onSubmit()">Search</button>
-      </div>
-      <br>
-      <div class="calendar-container">
-        <label for="calendar">Choose a date: </label>
-        <input type="date" id="calendar" name="calendar" class="calendar-input">
+        <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="queryValue" required>
+        <!-- Hidden Angular Material Datepicker Input -->
+        <input matInput [matDatepicker]="picker" style="display: none" #datePickerRef>
+        <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
+        <!-- Calendar Icon to open the Angular Material Datepicker -->
+        <button mat-icon-button (click)="picker.open()" class="icon-button">
+          <i class="fa fa-calendar"></i>
+        </button>
+        <button (click)="onSubmit()" class="search-button">
+          <i class="fa fa-search"></i>
+        </button>
       </div>
     </form>
+    
+    <div class="suggest-for-you">
+        <h2 class="suggest-title">Suggest for you</h2>
+        <div class="suggestions-container">
+            <span class="suggested-query">Enter a patent number</span>
+            <span class="suggested-query">Describe an invention idea</span>
+            <span class="suggested-query">Find patents in biotechnology</span>
+            <span class="suggested-query">Explore latest tech patents</span>
+            <span class="suggested-query">Search patents by title</span>
+            <!-- Add more suggestions as needed -->
+        </div>
+    </div>
+        
+  
   </section>
   

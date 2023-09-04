@@ -1,208 +1,165 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-/*******************search bar*************************/
 #search-bar-area {
-  background-color: black;
-  height: 15vh;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  position: relative;
-  z-index: 1;
-}
-
-#logo {
-  font-family: 'Poppins', sans-serif;
-  font-size: 40px;
-  padding-left: 5%;
+  justify-content: center; /* Center the contents */
+  background-color: white;
+  padding: 2% 5%;
+  position: relative; /* To position the logo */
 }
 
 .search-form {
+  width: 60%; /* Adjust if needed */
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  width: 70%;
+}
+
+#logo {
+  position: absolute; /* Absolute position relative to #search-bar-area */
+  left: 5%; /* Adjust this to move the logo left or right */
+  font-size: 50px;
+  color: #FFC0CB;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+}
+#logo a {
+  text-decoration: none; /* Remove any underlines from the link */
+  color: #FFC0CB; /* Set the color to black */
+}
+
+#logo span {
+  display: inline-block;
+  transform-origin: center bottom;
+}
+
+
+.search-form {
+  width: 60%; /* Adjust width as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.5s; /* This makes all property changes smooth */
 }
 
 .search-input-container {
+  position: relative;  /* Ensures child absolute positioning is relative to this container */
+  width: 100%;  /* Set to full width of its container */
   display: flex;
-  width: 70%;
-  margin: 0 auto;
+  align-items: center;
 }
 
 .search-input {
-  flex-grow: 1;
-  height: 80px;
-  padding: 12px;
-  border-radius: 5px 0 0 5px;
+  flex-grow: 1;  /* Allows it to fill available space */
+  height: 40px;
+  padding: 10px 20px 10px 20px;  /* Adjusted padding */
+  border-radius: 20px;
   font-size: 16px;
-  resize: none;
+  border: 1px solid #ccc;
   outline: none;
   font-family: 'Poppins', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 90px - 40px - 40px);  /* Adjusted width. Account for 2 buttons (each 40px) and the total right padding (90px) */
 }
 
 .search-input::placeholder {
   color: #999;
   font-family: 'Poppins', sans-serif;
-}
+} 
 
-.search-button {
-  background-color: #39FF14;
+button {  
+  background-color: transparent;
   border: none;
   color: white;
-  font-size: 16px;
-  border-radius: 0 5px 5px 0;
-  padding: 12px 24px;
+  font-size: 24px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
   cursor: pointer;
   outline: none;
   font-family: 'Poppins', sans-serif;
 }
 
-/* Style for the "Saved Patents" button */
-.saved-button {
-  background-color: green;
-  color: white;
-  font-size: 25px;
-  border: none;
-  border-radius: 5px;
-  padding: 12px 24px;
-  text-decoration: none;
-  font-family: 'Poppins', sans-serif;
-  margin: 0 auto;
-  margin-right: 10%;
-  text-align: center;
+button.search-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.saved-button:hover {
-  background-color: darkgreen;
+button.icon-button {
+  position: absolute;
+  right: 55px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
+button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
-  
-  /********************************* Results page *********************************/
-  .patent-title{
-    font-family: 'Poppins', sans-serif;
-    font-size: 40px;
-  }
-  .patent-abstract{
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 20px;
-  }
+button i.fa {
+  color: #D87093;
+}
 
-  .links{
-    float: right;
-  }
-
-  .links a{
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    margin-right: 10px;
-    background-color: green;
-    border-radius: 5px;
-    padding: 12px 24px;
-    color: white;
-  }
-  .result-list{
-    width: 95%;
-    margin: 0 auto;
-    list-style: none;
-  }
-
-  .result-checkbox{
-    height: 30px;
-    width: 20px;
-  }
-
-/*********************************filter *********************************/
-#search-results {
+.patents-section {
+  background-color: #f5f5f5; /* light gray background */
+  margin-top: 20px; /* space between search bar and this section */
+  overflow: hidden; /* to prevent content from spilling out during animation */
+  transition: max-height 0.5s ease-in-out; /* smooth expansion transition */
+  max-height: 0; /* starts from virtually nothing */
+  padding: 0 20px; /* horizontal padding for content */
   display: flex;
-  align-items: flex-start; /* Add this line */
-}
-
-#filter {
-  font-family: 'Poppins', sans-serif;
-  padding-left: 2.5%;
-  display: flex; /* Display form contents as a flex container */
-}
-
-.keywordFilter {
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-right: 10px; /* Add a bit of space between the divs */
 }
 
-
-.keywordFilter {
-  flex: 2.5; /* Keyword filter occupies 1.5 units of space */
+.patent-box {
+  background-color: #FFF; /* white background for individual patents */
+  padding: 15px;
+  margin: 10px 0; /* space between individual patents */
+  border-radius: 20px; /* rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+  margin-bottom: 20px;  /* Adjust this value as needed */
+  width: calc(60% - 50px); /* This matches the search bar width minus the padding */
 }
 
-.keywordBar {
-  font-family: 'Poppins', sans-serif;
-  height: 30px;
-  flex: 1;
-  margin-right: 10px;
-  margin-left: 10px; 
+.patents-section.show-results {
+  max-height: 1000px; /* expands to a large height */
 }
 
-.submitButton {
-  font-weight: 500;
-  background-color: green;
-  border-radius: 5px;
-  padding: 12px 24px;
-  color: white;
-  flex-shrink: 0;
-}
-.line{
-  height: 2px;
-  width: 100%;
-  background-color: black;
-  margin: 0 auto;
+.patent-box:first-child {
+  margin-top: 2%;  /* Adjust this value as needed */
 }
 
-/*****SAVE SELECTED PATENT BUTTON****/
-
-/* Style for the Save Selected Patents button */
-.save-button {
-  background-color: green;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  padding: 12px 24px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  outline: none;
-  font-family: 'Poppins', sans-serif;
-  margin-left: 2%;
+.patent-box:last-child {
+  margin-bottom: 5%;  /* Adjust this value as needed */
 }
 
-.save-button:hover {
-  background-color: darkgreen;
-  
-}
-
-/****************Footer******** ******/
-#footer {
+.patent-buttons {
   display: flex;
-  justify-content: center;
-  padding: 10px;
+  gap: 10px; /* Space between individual suggestions */
+  flex-wrap: wrap;
 }
 
-.pagination {
-  list-style: none;
-  display: flex;
-  gap: 10px;
-}
-
-.pagination li {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.patent-button {
+  background-color: #FFC0CB; /* Light gray background */
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #555; /* Darker text for better contrast on light background */
   cursor: pointer;
+  transition: background-color 0.3s;
 }
-/****************************** media queries ******************************/
+
+.patent-button:hover {
+  background-color: #DADADA; /* Slightly darker gray on hover */
+}
+
+
 
 @media screen and (max-width: 1000px){
   #logo{
@@ -242,5 +199,22 @@
 @media screen and (max-width: 414px) {
   #logo{
     font-size: 10px;
+  }
+}
+.letter {
+  display: inline-block;
+  transform-origin: center bottom;
+}
+
+.animate {
+  animation: waviy 1s ease-out;
+}
+
+@keyframes waviy {
+  0%,40%,100% {
+    transform: translateY(0)
+  }
+  20% {
+    transform: translateY(-20px)
   }
 }

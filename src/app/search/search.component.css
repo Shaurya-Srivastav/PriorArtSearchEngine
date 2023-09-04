@@ -1,130 +1,232 @@
-/**** Search PAGE ***/
-#search{
+/* Search PAGE */
+#search {
   height: 100vh;
-  /* The image used */
-  background-image: url("src/assets/HomeBackground.jpg");
-  overflow: hidden;
+  position: relative; /* To position bubbles correctly */
+  overflow: hidden; /* To ensure bubbles don't spill out */
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-#logo{
-  font-size: 170px;
+#search::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Ccircle fill='%23FFB6C1' cx='5%25' cy='10%25' r='2%25'/%3E%3Ccircle fill='%23FFB6C1' cx='90%25' cy='80%25' r='4%25'/%3E%3Ccircle fill='%23FFB6C1' cx='50%25' cy='40%25' r='3%25'/%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.6; /* Adjust as needed */
+  z-index: -1; /* Place it behind the content */
+}
+
+#logo {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-size: 45px;
   color: white;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
-  position: absolute;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -35%);
+}
+#logo span {
+  display: inline-block;
+  transform-origin: center bottom;
 }
 
-/************************** search bar ***********************/
-
 .search-form {
-  position: relative;
-  transform: translate(-50%, -60%);
-  top: 60%;
-  left: 50%;
+  position: relative; /* Changed from absolute to relative */
+  transform: none; /* Remove any transformations */
+  margin: 20% auto 40px auto; /* Top margin pushes it down, bottom margin gives space before the next section */
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.5s; /* This makes all property changes smooth */
+  width: 60%; /* Adjust width as needed */
+}
+
+.suggest-for-you {
+  margin-top: 30px; /* Add space between search bar and this section */
+  background-color: #FFF; /* White background */
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
+  width: 60%; /* Adjust as needed */
+  margin-left: auto;
+  margin-right: auto; /* Centering the container */
+}
+
+.suggest-title {
+  font-family: 'Poppins', sans-serif;
+  color: #D87093; /* Color picked from your design */
+  margin-bottom: 15px; /* Space between title and suggestions */
+}
+
+.suggestions-container {
+  display: flex;
+  gap: 10px; /* Space between individual suggestions */
+  flex-wrap: wrap; /* Wrap to the next line if out of space */
+}
+
+.suggested-query {
+  background-color: #EDEDED; /* Light gray background */
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #555; /* Darker text for better contrast on light background */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.suggested-query:hover {
+  background-color: #DADADA; /* Slightly darker gray on hover */
 }
 
 .search-input-container {
-  position: relative;
-  width: 80%;
+  position: relative;  /* Ensures child absolute positioning is relative to this container */
+  width: 100%;  /* Set to full width of its container */
   display: flex;
   align-items: center;
 }
 
 .search-input {
-  width: 100%;
-  height: 80px;
-  padding: 12px;
-  border-radius: 5px;
+  flex-grow: 1;  /* Allows it to fill available space */
+  height: 40px;
+  padding: 10px 20px 10px 20px;  /* Adjusted padding */
+  border-radius: 20px;
   font-size: 16px;
-  resize: none;
+  border: 1px solid #ccc;
   outline: none;
   font-family: 'Poppins', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 90px - 40px - 40px);  /* Adjusted width. Account for 2 buttons (each 40px) and the total right padding (90px) */
 }
-
 .search-input::placeholder {
   color: #999;
   font-family: 'Poppins', sans-serif;
-}
+}         
 
-button {
-  background-color: #39FF14;
+button {  
+  background-color: transparent;
   border: none;
   color: white;
-  font-size: 18px;
-  border-radius: 5px;
-  padding: 12px 24px;
+  font-size: 24px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
   cursor: pointer;
   outline: none;
   font-family: 'Poppins', sans-serif;
+}             
+button.search-button {
   position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+button.icon-button {
+  position: absolute;
+  right: 55px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 
 button:hover {
-  background-color: #2DB81B;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.calendar-container {
-  position: relative;
-  top: 20%;
-  right: 28.3%;
-  transform: translate(-28.3%, 20%);
-  padding: 5px;
-  background-color: #fff;
-  border-radius: 5%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: 'Poppins', sans-serif;
+button i.fa {
+  color: #D87093;
 }
 
 .calendar-input {
-  width: 150px; /* Adjust the width as needed */
-  height: 40px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 6px;
-  font-size: 14px;
-  outline: none;
+  display: none; /* Hide the actual date input */
 }
 
-
-/*************** Media Queries ******************/
-
+/* Media Queries */
 @media (max-width: 1115px) {
   .calendar-container {
-    left: 0%;
-    transform: translateX(0%);
+      left: 0%;
+      transform: translateX(0%);
   }
 }
 
 @media (max-width: 850px) {
   #logo {
-    font-size: 130px;
+      font-size: 130px;
   }
 }
 
 @media (max-width: 768px) {
   .navbar-item a {
-    padding: 2% 2%; /* Percentage-based padding for smaller screens */
+      padding: 2% 2%; /* Percentage-based padding for smaller screens */
   }
   #logo {
-    font-size: 80px;
+      font-size: 80px;
   }
 }
 
 @media (max-width: 480px) {
   .navbar-item a {
-    padding: 2% 0; /* Further reduce padding for even smaller screens */
+      padding: 2% 0; /* Further reduce padding for even smaller screens */
+  }
+}
+
+/* Results styling */
+.results {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  opacity: 0;
+}
+
+.box {
+  background-color: #fff;
+  margin: 10px;
+  width: 80%;
+  height: 100px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: boxFadeIn 0.5s forwards 0.5s; /* Start animation after a delay */
+}
+
+@keyframes boxFadeIn {
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+.mat-datepicker-panel {
+  position: absolute !important;
+  top: calc(100% + 5px);
+  left: 0;
+}
+
+/* Override overlay backdrop styles */
+.cdk-overlay-transparent-backdrop {
+  background-color: transparent;
+}
+.letter {
+  display: inline-block;
+  transform-origin: center bottom;
+}
+
+.animate {
+  animation: waviy 1s ease-out;
+}
+
+@keyframes waviy {
+  0%,40%,100% {
+    transform: translateY(0)
+  }
+  20% {
+    transform: translateY(-20px)
   }
 }
