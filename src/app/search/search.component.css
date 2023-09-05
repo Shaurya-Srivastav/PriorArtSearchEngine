@@ -132,6 +132,7 @@ button.icon-button {
   right: 55px;
   top: 50%;
   transform: translateY(-50%);
+  padding: 0;
 }
 
 
@@ -148,25 +149,11 @@ button i.fa {
 }
 
 /* Media Queries */
-@media (max-width: 1115px) {
-  .calendar-container {
-      left: 0%;
-      transform: translateX(0%);
-  }
-}
 
-@media (max-width: 850px) {
-  #logo {
-      font-size: 130px;
-  }
-}
 
 @media (max-width: 768px) {
   .navbar-item a {
       padding: 2% 2%; /* Percentage-based padding for smaller screens */
-  }
-  #logo {
-      font-size: 80px;
   }
 }
 

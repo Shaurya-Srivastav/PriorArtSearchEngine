@@ -18,9 +18,8 @@
 }
 
 #logo {
-  position: absolute; /* Absolute position relative to #search-bar-area */
-  left: 5%; /* Adjust this to move the logo left or right */
-  font-size: 50px;
+  margin-right: 10%;
+  font-size: 3vw;
   color: #FFC0CB;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
@@ -124,7 +123,7 @@ button i.fa {
   border-radius: 20px; /* rounded corners */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
   margin-bottom: 20px;  /* Adjust this value as needed */
-  width: calc(60% - 50px); /* This matches the search bar width minus the padding */
+  width: 80%;
 }
 
 .patents-section.show-results {
@@ -157,6 +156,61 @@ button i.fa {
 
 .patent-button:hover {
   background-color: #DADADA; /* Slightly darker gray on hover */
+}
+
+/* Add the following styles for the minimalistic button */
+.minimalistic-button {
+  text-decoration: none;
+  background-color: #FFC0CB;
+  color: #555;
+  border-radius: 20px;
+  padding: 20px 30px;
+  margin-left: 5%; /* Adjust this margin as needed */
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  transition: background-color 0.3s;
+}
+
+.minimalistic-button:hover {
+  background-color: #DADADA;
+}
+
+
+
+/**************************PAGINATION*************************/
+/* Add the following styles for pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a {
+  text-decoration: none;
+  background-color: #FFC0CB;
+  color: #555;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #DADADA;
 }
 
 

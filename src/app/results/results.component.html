@@ -16,7 +16,10 @@
             </button>
         </div>
     </form>
+    
+    <a href="/saved" class="minimalistic-button">Saved</a>
 </section>
+
 
 
 <section class="patents-section" [class.show-results]="showResults" [class.no-results]="!results.length">
@@ -28,8 +31,18 @@
         <span class="patent-button"> Open Document </span>
         <span class="patent-button"> Google Patents </span>
         <span class="patent-button"> USPTO </span>
+        <span class="patent-button"> Save To List </span>
       </div>
       
     </div>
 </section>
   
+
+<div class="pagination">
+  <ul>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <!-- Add more pages as needed -->
+  </ul>
+</div>

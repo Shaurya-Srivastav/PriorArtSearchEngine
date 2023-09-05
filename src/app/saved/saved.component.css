@@ -1,16 +1,15 @@
 /* Navbar styles */
 #navbar {
-    background-color: Green; /* Neon green background color */
     color: #fff; /* White text color */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     height: 15vh;
 }
 
 .title {
+    color: #555;
     font-size: 60px;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
@@ -23,7 +22,7 @@
 
 /* Button styles */
 .nav-button {
-    background-color: #fff;
+    background-color: #FFC0CB;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -31,12 +30,12 @@
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: bold;
-    color: black;
+    color: #555;
+    padding: 20px;
 }
 
 .nav-button:hover {
-    background-color: darkgreen; /* Neon green background color on hover */
-    color: #fff; /* White text color on hover */
+    background-color: #DADADA; /* Neon green background color on hover */
 }
 
 
@@ -48,6 +47,7 @@
     margin: 0 auto;
 }
 .title2 {
+    color: #555;
     font-size: 60px;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
@@ -92,23 +92,28 @@ li {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     margin-right: 10px;
-    background-color: green;
+    background-color: #FFC0CB;
     border-radius: 5px;
     padding: 12px 24px;
-    color: white;
+    color: #555;
     text-decoration: none; /* Remove underlines from links */
     display: inline-block; /* Display links as blocks */
 }
 
 .links a:hover {
-    background-color: #007f00; /* Darker green on hover */
+    background-color: #DADADA; /* Darker green on hover */
+}
+
+#delete{
+    color: white;
+    background-color: red;
 }
 
 
 
 /************* CLEAR LIST BUTTON **********/
 .cool-button {
-    background-color: green; /* Green background color */
+    background-color: red; /* Green background color */
     color: white; /* White text color */
     border: none;
     border-radius: 5px;
@@ -121,7 +126,7 @@ li {
 }
 
 .cool-button:hover {
-    background-color: darkgreen; /* Slightly darker green on hover */
+    background-color: #DADADA; /* Slightly darker green on hover */
 }
 
 /************** SEARCH BAR ****/
@@ -145,8 +150,8 @@ li {
 }
 
 .search-button {
-    background-color: Green; /* Green button background color */
-    color: white; /* White button text color */
+    background-color: #FFC0CB; /* Green button background color */
+    color: #555; /* White button text color */
     border: none;
     padding: 12px 24px;
     cursor: pointer;
@@ -157,8 +162,48 @@ li {
 }
 
 .search-button:hover {
-    background-color: darkgreen; /* Slightly darker green on hover */
+    background-color: #DADADA; /* Slightly darker green on hover */
 }
+
+
+
+
+/**************************PAGINATION*************************/
+/* Add the following styles for pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+  }
+  
+  .pagination li {
+    margin: 0 5px;
+  }
+  
+  .pagination a {
+    text-decoration: none;
+    background-color: #FFC0CB;
+    color: #555;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination a:hover {
+    background-color: #DADADA;
+  }
+  
 
 /********MEDIA QUERIES*****/
 @media (max-width: 820px) {
