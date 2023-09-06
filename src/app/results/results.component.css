@@ -19,7 +19,7 @@
 
 #logo {
   margin-right: 10%;
-  font-size: 3vw;
+  font-size: 2.3vw;
   color: #FFC0CB;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
@@ -165,7 +165,7 @@ button i.fa {
   color: #555;
   border-radius: 20px;
   padding: 20px 30px;
-  margin-left: 5%; /* Adjust this margin as needed */
+  margin-left: 1%; /* Adjust this margin as needed */
   font-family: 'Poppins', sans-serif;
   font-size: 20px;
   transition: background-color 0.3s;

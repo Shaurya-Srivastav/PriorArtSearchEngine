@@ -9,8 +9,8 @@
 }
 
 .title {
+    font-size: 45px;
     color: #555;
-    font-size: 60px;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
 }
@@ -38,6 +38,26 @@
     background-color: #DADADA; /* Neon green background color on hover */
 }
 
+
+
+#logo {
+    margin-right: 10%;
+    font-size: 3vw;
+    color: #FFC0CB;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+  }
+  #logo a {
+    text-decoration: none; /* Remove any underlines from the link */
+    color: #FFC0CB; /* Set the color to black */
+  }
+  
+  #logo span {
+    display: inline-block;
+    transform-origin: center bottom;
+  }
+
+  
 
 /*********************** SAVED PATENTS SECTION *******************/
 #savedPatents{
