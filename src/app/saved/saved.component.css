@@ -149,6 +149,23 @@ li {
     background-color: #DADADA; /* Slightly darker green on hover */
 }
 
+.switch-button {
+    background-color: #FFC0CB; /* Green background color */
+    color: white; /* White text color */
+    border: none;
+    border-radius: 5px;
+    padding: 12px 24px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth background color transition on hover */
+}
+.switch-button:hover {
+    background-color: #DADADA; /* Slightly darker green on hover */
+}
+
+
 /************** SEARCH BAR ****/
 /* Cool search bar styles */
 .search-container {

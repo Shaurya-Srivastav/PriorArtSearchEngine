@@ -167,7 +167,7 @@ button i.fa {
   padding: 20px 30px;
   margin-left: 1%; /* Adjust this margin as needed */
   font-family: 'Poppins', sans-serif;
-  font-size: 20px;
+  font-size: 1rem;
   transition: background-color 0.3s;
 }
 
