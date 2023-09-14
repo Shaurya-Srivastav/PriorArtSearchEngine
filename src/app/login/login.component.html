@@ -1,38 +1,32 @@
 <div class="login-container">
-    <div class="login-box" id="loginBox">
+    <div class="login-box">
       <h1 class="page-title">Semantic</h1>
-      <form id="loginForm">
+      <form id="loginForm" [hidden]="showSignupForm">
+        <!-- Login form fields -->
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="text" id="username" name="username" required>
+          <input type="text" id="username" name="username" [(ngModel)]="username" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" required>
+          <input type="password" id="password" name="password" [(ngModel)]="password" required>
         </div>
         <button class="login-button" type="submit">Login</button>
       </form>
-      <div class="signup-link">
-        <a href="#" id="signupLink">Sign up</a>
-      </div>
-    </div>
-  
-    <!-- Signup Form (Initially Hidden) -->
-    <div class="signup-box" id="signupBox">
-      <h1 class="page-title">Semantic</h1>
-      <form id="signupForm">
+      <form id="signupForm" [hidden]="!showSignupForm">
+        <!-- Signup form fields -->
         <div class="form-group">
-          <label for="newUsername">New Username</label>
-          <input type="text" id="newUsername" name="newUsername" required>
+          <label for="newUsername">Choose a username</label>
+          <input type="text" id="newUsername" name="newUsername" [(ngModel)]="newUsername" required>
         </div>
         <div class="form-group">
-          <label for="newPassword">New Password</label>
-          <input type="password" id="newPassword" name="newPassword" required>
+          <label for="newPassword">Choose a Password</label>
+          <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
         </div>
         <button class="login-button" type="submit">Sign Up</button>
       </form>
       <div class="login-link">
-        <a href="#" id="loginLink">Back to Login</a>
+        <a (click)="toggleForm()">{{ showSignupForm ? 'Back to Login' : 'Sign Up' }}</a>
       </div>
     </div>
   </div>
