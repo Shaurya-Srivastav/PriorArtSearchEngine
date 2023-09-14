@@ -34,8 +34,10 @@
 
 
 <section class="patents-section" [class.expanded]="showResults">
+  <br><br>
   <span (click)="toggleResults()" class="toggle-button">Toggle Results</span>
-<h1>{{ showResultsType === 'granted' ? 'Granted Results' : 'Pregranted Results' }}</h1>
+  <br><br>
+<h1 class="">{{ showResultsType === 'granted' ? 'Granted Results' : 'Pregranted Results' }}</h1>
   <div *ngFor="let patent of getDisplayedResults()" class="patent-box" [@expandCollapse]="patent.state"
     (click)="togglePatent(patent)">
     <h2>{{ patent.title }}</h2>

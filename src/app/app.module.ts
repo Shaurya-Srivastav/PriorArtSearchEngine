@@ -24,13 +24,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     ResultsComponent,
-    SavedComponent, 
+    SavedComponent,
+    LoginComponent, 
   ],
   imports: [
     BrowserModule,

@@ -23,7 +23,9 @@
   color: #FFC0CB;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
+  text-align: center;
 }
+
 #logo a {
   text-decoration: none; /* Remove any underlines from the link */
   color: #FFC0CB; /* Set the color to black */
@@ -32,6 +34,9 @@
 #logo span {
   display: inline-block;
   transform-origin: center bottom;
+}
+.fa-calendar{
+  padding-top: 0;
 }
 
 
@@ -76,7 +81,6 @@ button {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  padding: 0;
   cursor: pointer;
   outline: none;
   font-family: 'Poppins', sans-serif;
@@ -94,6 +98,7 @@ button.icon-button {
   right: 55px;
   top: 50%;
   transform: translateY(-50%);
+  padding: 0;
 }
 
 button:hover {

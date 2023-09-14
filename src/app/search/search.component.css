@@ -140,13 +140,60 @@ button:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/************************LOGIN BUTTON ******************/
+
+.login-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #D87093; /* Background color */
+  border: none;
+  color: white;
+  font-size: 24px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Subtle box shadow for depth */
+  transform: perspective(120px) rotateX(0deg);
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Hide the icon overflow */
+}
+
+.login-button i.fa {
+  font-size: 28px;
+  margin-top: 2px;
+  transform: translateY(2px);
+  transition: transform 0.3s ease; /* Add a subtle icon scale transition */
+}
+
+.login-button:hover {
+  background-color: #FFB6C1; /* Lighter background color on hover */
+  transform: perspective(120px) rotateX(15deg) scale(1.1);
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.25);
+}
+
+.login-button:hover i.fa {
+  transform: translateY(2px) scale(1.2); /* Scale the icon slightly on hover */
+}
+
+
 button i.fa {
   color: #D87093;
 }
 
+
 .calendar-input {
-  display: none; /* Hide the actual date input */
+  display: none; 
 }
+
+
 
 /* Media Queries */
 
