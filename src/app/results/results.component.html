@@ -1,48 +1,68 @@
 <section id="search-bar-area">
-    <div id="logo">
-        <a href="#">
-          <span *ngFor="let letter of titleLetters; let i = index"
-                class="letter" [class.animate]="isSearching" [style.animation-delay]="(1 + i * 0.2) + 's'">
-            {{ letter }}
-          </span>
-        </a>
-      </div>
+  <h1 id="logo">
+    <span *ngFor="let letter of titleLetters; let i = index"
+          class="letter" [class.animate]="isSearching" [style.animation-delay]="(i * 0.2) + 's'">
+      {{ letter }}
+    </span>
+  </h1>
+
+  <form class="search-form" (submit)="onSubmit(); $event.preventDefault();">
+    <!-- Search Input -->
+    <div class="search-input-container">
+      <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="queryValue" required>
+      <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
+      <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
+
+      <div class="icon-buttons-container">
+        <button mat-icon-button (click)="picker.open()" class="icon-button" type="button" [disabled]="isSubmitting">
+          <i class="fa fa-calendar"></i>
+      </button>
       
-    <form class="search-form" action="">
-        <div class="search-input-container">
-            <input type="text" class="search-input" placeholder="Search..." required>
-            <button class="search-button">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
-    </form>
-    
-    <a href="/saved" class="minimalistic-button">Saved</a>
+        <button (click)="onSubmit()" class="search-button" [disabled]="isSubmitting">
+            <i class="fa fa-search"></i>
+        </button>
+        
+    </div>
+   
+  </div>
+  
+  </form>
+
+  <a href="/saved" class="minimalistic-button">Saved</a>
 </section>
 
 
 
-<section class="patents-section" [class.show-results]="showResults" [class.no-results]="!results.length">
-     <div *ngFor="let patent of results" class="patent-box">
-      <h2>{{ patent.title }}</h2>
-      <p>{{ patent.abstract }}</p>
-
-      <div class="patent-buttons">
-        <span class="patent-button"> Open Document </span>
-        <span class="patent-button"> Google Patents </span>
-        <span class="patent-button"> USPTO </span>
-        <span class="patent-button"> Save To List </span>
-      </div>
+<section class="patents-section" [class.expanded]="showResults">
+  <span (click)="toggleResults()" class="toggle-button">Toggle Results</span>
+<h1>{{ showResultsType === 'granted' ? 'Granted Results' : 'Pregranted Results' }}</h1>
+  <div *ngFor="let patent of getDisplayedResults()" class="patent-box" [@expandCollapse]="patent.state"
+    (click)="togglePatent(patent)">
+    <h2>{{ patent.title }}</h2>
+    <p>{{ patent.abstract }}</p>
+    <div class="more-info" *ngIf="patent.state === 'expanded'">
+      <h2>Summary</h2>
+      <p>{{ patent.summary }}</p>
+      <h2>Claims</h2>
+      <p>{{ patent.claims }}</p>
       
     </div>
+
+    <div class="patent-buttons">
+      <span class="patent-button"> Open Document </span>
+      <span class="patent-button"> Google Patents </span>
+      <span class="patent-button"> USPTO </span>
+      <span class="patent-button"> Save To List </span>
+    </div>
+
+  </div>
 </section>
-  
+
 
 <div class="pagination">
   <ul>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <!-- Add more pages as needed -->
+    <li *ngFor="let page of getPages()">
+      <a href="#" [class.activePage]="page === currentPage" (click)="changePage(page); $event.preventDefault()">{{ page }}</a>
+    </li>
   </ul>
 </div>

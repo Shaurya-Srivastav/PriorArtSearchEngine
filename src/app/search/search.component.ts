@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { Router } from '@angular/router';  // <-- Import Router
+import { HttpClient } from '@angular/common/http'; // Import HttpClient for HTTP requests
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-search',
@@ -13,7 +15,9 @@ export class SearchComponent {
   results: string[] = [];
   isSearching: boolean = false;
   queryValue: string = "";
-
+  selectedDate: Date = new Date();
+  isSubmitting: boolean = false;
+  
   @ViewChild('searchForm') searchForm!: ElementRef;
   @ViewChild('calendarRef') calendarRef!: ElementRef;
   @ViewChild('picker') datePicker!: MatDatepicker<Date>;
@@ -28,6 +32,8 @@ export class SearchComponent {
     this.setRandomGradient();
   }
 
+  
+
   setRandomGradient(): void {
     const randomIndex = Math.floor(Math.random() * this.gradients.length);
     const selectedGradient = this.gradients[randomIndex];
@@ -37,21 +43,49 @@ export class SearchComponent {
     }
   }
 
+
   // Inject the Router service
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) 
+    {}
 
   onSubmit() {
+    if (!this.queryValue || this.queryValue.trim() === '') {
+      // Maybe show a warning message here
+      console.warn('Search is empty. No action taken.');
+      return;  // Return here to exit the function early and not proceed with the query
+    }
+    this.isSubmitting = true;
     this.isSearching = true;
+    const formattedDate = this.selectedDate ? this.selectedDate.toISOString().split('T')[0] : null;
+    // Create a request object with the input data
+    const requestData = {
+      input_idea: this.queryValue,
+      user_input_date: formattedDate, // Use datePicker instead of datePickerRef
+    };
 
-    // Mock results
-    this.results = ['Result 1', 'Result 2', 'Result 3'];
-
-    // Reset the isSearching flag and redirect after the animation duration
-    setTimeout(() => {
-      this.isSearching = false;
-      this.router.navigate(['/results'], { queryParams: { query: this.queryValue } });
-  }, 2000)  // Duration to maintain the animation state
+    // Send a POST request to your Flask server
+    this.http.post('http://129.213.84.77:5000/search', requestData).subscribe(
+      (response: any) => {
+        // Assuming your server returns results in the response
+        this.results = response;
+        this.isSearching = false;
+        this.isSubmitting = false;
+        this.router.navigate(['/results'], {
+          state: { data: this.results }
+        });
+      },
+      (error) => {
+        console.error('Error:', error);
+        this.isSubmitting = false;
+        this.isSearching = false; // Handle error and reset isSearching flag
+      }
+    );
   }
+  
+  
 
   onCalendarClick() {
     this.datePicker.open();

@@ -206,7 +206,7 @@ button i.fa {
 }
 
 .animate {
-  animation: waviy 1s ease-out;
+  animation: waviy 1s ease-out infinite;;
 }
 
 @keyframes waviy {

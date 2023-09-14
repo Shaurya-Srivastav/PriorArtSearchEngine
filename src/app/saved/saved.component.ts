@@ -46,9 +46,6 @@ export class SavedComponent implements OnInit{
     }, 500); // 500ms delay
 
     this.searchQuery = this.route.snapshot.queryParamMap.get('query') || ''; // get the query from route parameters
-    if (this.searchQuery.trim()) { // Check if the search query is not blank
-      this.search(); 
-    }
     
   }
 
@@ -63,41 +60,5 @@ export class SavedComponent implements OnInit{
 
   toggleResults() {
     this.showResults = !this.showResults;
-  }
-
-  search() {
-    const selectedDate = '2023-01-01'; 
-    this.searchService.search(this.searchQuery, selectedDate).subscribe((response: any) => {
-      this.results = response.results;
-      this.paginatedResults = this.chunkArray(this.results, 10);
-      this.totalPages = this.paginatedResults.length;
-      console.log(this.results);
-      this.cdr.detectChanges();
-    });
-  }
-
-  chunkArray(arr: any[], size: number): any[][] {
-    let result = [];
-    for (let i = 0; i < arr.length; i += size) {
-      result.push(arr.slice(i, i + size));
-    }
-    return result;
-  }
-
-  setPage(page: number) {
-    this.currentPage = page;
-  }
-
-  fetchAndRouteApplication(): void {
-    const patentNumber = '7344109'; // Replace with the actual patent number
-    const url = `https://patentcenter.uspto.gov/retrieval/public/v2/application/data?patentNumber=${patentNumber}`;
-    
-    this.http.get<any>(url).subscribe((response) => {
-      const applicationNumber = response.applicationNumberText;
-      if (applicationNumber) {
-        // Route to the desired URL with the application number
-        this.router.navigate(['/applications', applicationNumber]);
-      }
-    });
   }
 }

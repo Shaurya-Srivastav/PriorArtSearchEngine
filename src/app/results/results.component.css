@@ -104,10 +104,25 @@ button i.fa {
   color: #D87093;
 }
 
+.toggle-button {
+  background-color: #FFC0CB; /* Light gray background */
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #555; /* Darker text for better contrast on light background */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+  background-color: #D87093;
+}
+
+
 .patents-section {
   background-color: #f5f5f5; /* light gray background */
   margin-top: 20px; /* space between search bar and this section */
-  overflow: hidden; /* to prevent content from spilling out during animation */
+  overflow-y: auto;
   transition: max-height 0.5s ease-in-out; /* smooth expansion transition */
   max-height: 0; /* starts from virtually nothing */
   padding: 0 20px; /* horizontal padding for content */
@@ -116,7 +131,21 @@ button i.fa {
   align-items: center;
 }
 
+
+.patent-box:hover {
+  transform: scale(1.05); /* Scale it up a bit */
+  z-index: 2;
+}
+
+.patents-section.expanded {
+  max-height: 80vh; /* or whatever value you want it to expand to */
+}
+
 .patent-box {
+  height: auto;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, max-height 0.3s ease, opacity 0.3s ease;
+  z-index: 1;
   background-color: #FFF; /* white background for individual patents */
   padding: 15px;
   margin: 10px 0; /* space between individual patents */
@@ -213,7 +242,10 @@ button i.fa {
   background-color: #DADADA;
 }
 
-
+.pagination a.activePage {
+  background-color: #DADADA;
+  color: #FFF;  /* Optional: If you want to change the text color for better contrast */
+}
 
 @media screen and (max-width: 1000px){
   #logo{
@@ -261,7 +293,7 @@ button i.fa {
 }
 
 .animate {
-  animation: waviy 1s ease-out;
+  animation: waviy 1s ease-out infinite;;
 }
 
 @keyframes waviy {

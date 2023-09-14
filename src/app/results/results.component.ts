@@ -1,102 +1,141 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SearchService } from '../services/search.service';
-import { ChangeDetectorRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http'; // Import HttpClient for HTTP requests
+
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
-  styleUrls: ['./results.component.css']
+  styleUrls: ['./results.component.css'],
+  animations: [
+    trigger('expandCollapse', [
+      state('collapsed', style({
+        height: 'auto', // Initial height, adjust as per your design needs
+        overflow: 'hidden'
+      })),
+      state('expanded', style({
+        height: '*', // Will take the full content height
+        overflow: 'hidden'
+      })),
+      transition('collapsed <=> expanded', [
+        animate('0.3s cubic-bezier(.68,-0.55,.27,1.55)') // Using a cubic bezier for smooth effect
+      ])
+    ])
+  ]
 })
 export class ResultsComponent implements OnInit {
 
   titleLetters: string[] = Array.from('Semantic');
   searchQuery: any;
-  isSearching: boolean = true; 
-  results: any[] = [
-    {
-      title: "Patent 1: Innovative Idea",
-      abstract: "This is a description of the innovative idea for patent 1. It revolutionizes the way we think about technology."
-    },
-    {
-      title: "Patent 2: Next-gen Solution",
-      abstract: "This is a description of the next-gen solution for patent 2. It's a groundbreaking invention."
-    },
-    // ... add more dummy patents as needed
-  ];
-  public showResults: boolean = false;
+  isSearching: boolean = false;
+  results: any = null;
+  showResultsType = 'granted'; // or 'pregranted'
+  grantedResults: any[] = [];
+  pregrantedResults: any[] = [];
 
+  showResults: boolean = false;
+  queryValue: string = "";
+  selectedDate: Date = new Date();
+
+  isSubmitting: boolean = false;
   currentPage: number = 1;
-  totalPages: any;
-  paginatedResults: any[][] = [];
-  applicationNumber: string = '';
-  constructor(private route: ActivatedRoute, 
-    private searchService: SearchService, 
-    private cdr: ChangeDetectorRef, 
+  itemsPerPage: number = 10;
+
+  constructor(
+    private router: Router,
     private http: HttpClient,
-    private router: Router) { }
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { data: any };
+
+    if (state) {
+      this.results = state;
+      this.grantedResults = this.results.data['Granted results'].map((res: any) => ({ ...res, state: 'collapsed' }));
+      this.grantedResults = this.results.data['Granted results'];
+      this.pregrantedResults = this.results.data['Pregranted Results'];
+    }
+  }
 
   ngOnInit(): void {
-    this.animateLogo();
-
-    setTimeout(() => {
-      this.showResults = true;
-    }, 500); // 500ms delay
-
-    this.searchQuery = this.route.snapshot.queryParamMap.get('query') || ''; // get the query from route parameters
-    if (this.searchQuery.trim()) { // Check if the search query is not blank
-      this.search(); 
-    }
-    
+    this.showResults = true;
+    this.isSearching = false;
   }
 
-  animateLogo(): void {
-    const letters = document.querySelectorAll('.letter');
-    letters.forEach((letter, index) => {
-      setTimeout(() => {
-        letter.classList.add('animate');
-      }, 70 * index);
-    });
-  }
-
-  toggleResults() {
-    this.showResults = !this.showResults;
-  }
-
-  search() {
-    const selectedDate = '2023-01-01'; 
-    this.searchService.search(this.searchQuery, selectedDate).subscribe((response: any) => {
-      this.results = response.results;
-      this.paginatedResults = this.chunkArray(this.results, 10);
-      this.totalPages = this.paginatedResults.length;
-      console.log(this.results);
-      this.cdr.detectChanges();
-    });
-  }
-
-  chunkArray(arr: any[], size: number): any[][] {
-    let result = [];
-    for (let i = 0; i < arr.length; i += size) {
-      result.push(arr.slice(i, i + size));
-    }
-    return result;
-  }
-
-  setPage(page: number) {
+  changePage(page: number): void {
     this.currentPage = page;
   }
 
-  fetchAndRouteApplication(): void {
-    const patentNumber = '7344109'; // Replace with the actual patent number
-    const url = `https://patentcenter.uspto.gov/retrieval/public/v2/application/data?patentNumber=${patentNumber}`;
-    
-    this.http.get<any>(url).subscribe((response) => {
-      const applicationNumber = response.applicationNumberText;
-      if (applicationNumber) {
-        // Route to the desired URL with the application number
-        this.router.navigate(['/applications', applicationNumber]);
-      }
-    });
+  getPages(): number[] {
+    const totalResults = this.getDisplayResults().length;
+    const totalPages = Math.ceil(totalResults / this.itemsPerPage);
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
+
+  getDisplayedResults(): any[] {
+    const currentResults = this.getDisplayResults();
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    console.log("Start Index:", startIndex, "End Index:", endIndex);
+    return currentResults.slice(startIndex, endIndex);
+  }
+
+  getDisplayResults() {
+    return this.showResultsType === 'granted' ? this.grantedResults : this.pregrantedResults;
+  }
+
+
+  toggleResults() {
+    this.showResultsType = this.showResultsType === 'granted' ? 'pregranted' : 'granted';
+    this.currentPage = 1; // reset to the first page when toggling
+  }
+  togglePatent(patent: any) {
+    patent.state = patent.state === 'expanded' ? 'collapsed' : 'expanded';
+  }
+
+  onSubmit() {
+    if (!this.queryValue || this.queryValue.trim() === '') {
+      // Maybe show a warning message here
+      console.warn('Search is empty. No action taken.');
+      return;  // Return here to exit the function early and not proceed with the query
+    }
+    this.isSubmitting = true;
+    this.isSearching = true;
+    console.log("submit", this.queryValue);
+    // Close the results section immediately
+    this.showResults = false;
+    const formattedDate = this.selectedDate ? this.selectedDate.toISOString().split('T')[0] : null;
+
+    const requestData = {
+      input_idea: this.queryValue,
+      user_input_date: formattedDate,
+    };
+
+    this.http.post('http://129.213.84.77:5000/search', requestData).subscribe(
+      (response: any) => {
+        console.log("API Response:", response);
+
+        if (response) {
+          if (response['Granted results']) {
+            this.grantedResults = response['Granted results'].map((res: any) => ({ ...res, state: 'collapsed' }));
+          }
+
+          if (response['Pregranted Results']) {
+            this.pregrantedResults = response['Pregranted Results'];
+          }
+
+          // Reopen the results section now that the data has been fetched and processed
+          this.showResults = true;
+          this.currentPage = 1;  // Reset the current page after getting new results
+          this.isSubmitting = false;
+          this.isSearching = false;
+        }
+      },
+      (error) => {
+        console.error('Error:', error);
+
+        this.isSearching = false; // Handle error and reset isSearching flag
+      }
+    );
+  }
+
 }

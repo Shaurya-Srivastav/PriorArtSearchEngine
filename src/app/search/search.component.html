@@ -5,17 +5,17 @@
         {{ letter }}
       </span>
     </h1>
-    <form class="search-form" #searchForm action="">
+    <form class="search-form" #searchForm>
       <div class="search-input-container">
-        <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="queryValue" required>
+        <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="searchQuery" required>
         <!-- Hidden Angular Material Datepicker Input -->
-        <input matInput [matDatepicker]="picker" style="display: none" #datePickerRef>
+        <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
         <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
         <!-- Calendar Icon to open the Angular Material Datepicker -->
-        <button mat-icon-button (click)="picker.open()" class="icon-button">
+        <button mat-icon-button (click)="picker.open()" class="icon-button" [disabled]="isSubmitting">
           <i class="fa fa-calendar"></i>
         </button>
-        <button (click)="onSubmit()" class="search-button">
+        <button (click)="onSubmit()" class="search-button" [disabled]="isSubmitting">
           <i class="fa fa-search"></i>
         </button>
       </div>
