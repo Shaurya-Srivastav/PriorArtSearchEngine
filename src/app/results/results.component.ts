@@ -110,7 +110,7 @@ export class ResultsComponent implements OnInit {
       user_input_date: formattedDate,
     };
 
-    this.http.post('http://129.213.84.77:5000/search', requestData).subscribe(
+    this.http.post('http://127.0.0.1:5000/search', requestData).subscribe(
       (response: any) => {
         console.log("API Response:", response);
 

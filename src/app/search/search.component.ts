@@ -67,7 +67,7 @@ export class SearchComponent {
     };
 
     // Send a POST request to your Flask server
-    this.http.post('http://129.213.84.77:5000/search', requestData).subscribe(
+    this.http.post('http://127.0.0.1:5000/search', requestData).subscribe(
       (response: any) => {
         // Assuming your server returns results in the response
         this.results = response;
