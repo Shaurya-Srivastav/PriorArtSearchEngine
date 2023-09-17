@@ -15,14 +15,12 @@
         <a href="#" class="nav-button">Back to Results</a>
     </div>
 </nav>
-
 <section id="savedPatents">
     <br>
     <div class="imp-button">
         <h1 class="title2">Saved Patents: </h1>
         <button class="switch-button">Keyword Search</button>
     </div>
-    
     
     <br>
     <form>
@@ -37,28 +35,22 @@
     </form>
     <br>
     <ol>
-        <li>
-            <h1 class="patent-title">Patent Title</h1>
+        <!-- Use *ngFor to loop through the savedPatents array -->
+        <li *ngFor="let patent of savedPatents">
+            <h1 class="patent-title">{{ patent.title }}</h1>
             <h2 class="patent-abstract">
-                <b>Patent Abstract:</b> Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
-                Laboriosam, nostrum porro quo ipsa cum ipsam voluptas quia nemo optio
-                voluptatibus similique! Praesentium, necessitatibus repudiandae? Quo, debitis expedita. 
-                Cupiditate, repellat harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                Debitis earum minima aliquam deleniti magni voluptate atque vitae deserunt quia magnam
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ex voluptates saepe quis 
-                perspiciatis soluta sequi temporibus hic ipsam voluptas, pariatur numquam et impedit 
-                corporis mollitia esse obcaecati rerum expedita. Velit? 
+                <b>Patent Abstract:</b> {{ patent.abstract }}
             </h2>
             <br>
             <div class="links">
-                <a class="uspto-link">Open Document</a>
-                <a class="gpatent">Google Patents</a>
-                <a class="uspto">USPTO</a>
-                <a id="delete">Delete</a>
+                <a class="uspto-link" [href]="patent.document_link" target="_blank">Open Document</a>
+                <a class="gpatent" [href]="patent.google_patent_link" target="_blank">Google Patents</a>
+                <a class="uspto" [href]="patent.uspto_link" target="_blank">USPTO</a>
+                <a id="delete" (click)="deletePatent(patent.key)">Delete</a> 
             </div>
         </li>
     </ol>
-    
 </section>
+
 
 

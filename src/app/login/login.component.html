@@ -5,25 +5,25 @@
         <!-- Login form fields -->
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="text" id="username" name="username" [(ngModel)]="username" required>
+          <input type="text" id="username" name="email" [(ngModel)]="email" required>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" [(ngModel)]="password" required>
         </div>
-        <button class="login-button" type="submit">Login</button>
+        <button class="login-button" type="submit" (click)="login()">Login</button>
       </form>
       <form id="signupForm" [hidden]="!showSignupForm">
         <!-- Signup form fields -->
         <div class="form-group">
-          <label for="newUsername">Choose a username</label>
-          <input type="text" id="newUsername" name="newUsername" [(ngModel)]="newUsername" required>
+          <label for="newUsername">Enter an email</label>
+          <input type="text" id="newUsername" name="newUsername" [(ngModel)]="newEmail" required>
         </div>
         <div class="form-group">
           <label for="newPassword">Choose a Password</label>
           <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
         </div>
-        <button class="login-button" type="submit">Sign Up</button>
+        <button class="login-button" type="submit" (click)="register()">Sign Up</button>
       </form>
       <div class="login-link">
         <a (click)="toggleForm()">{{ showSignupForm ? 'Back to Login' : 'Sign Up' }}</a>

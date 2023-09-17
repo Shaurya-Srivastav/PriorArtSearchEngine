@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for HTTP requests
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-results',
@@ -41,9 +43,13 @@ export class ResultsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
+  userId: any;
+
   constructor(
     private router: Router,
     private http: HttpClient,
+    private db: AngularFireDatabase,
+    private afAuth: AngularFireAuth,
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { data: any };
@@ -59,6 +65,13 @@ export class ResultsComponent implements OnInit {
   ngOnInit(): void {
     this.showResults = true;
     this.isSearching = false;
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.userId = user.uid;  // Here's the user ID!
+      } else {
+        this.userId = null;
+      }
+    });
   }
 
   changePage(page: number): void {
@@ -136,6 +149,38 @@ export class ResultsComponent implements OnInit {
         this.isSearching = false; // Handle error and reset isSearching flag
       }
     );
+  }
+
+
+  async savePatent(patent: any) {
+    if (!this.userId) {
+      console.error('No user logged in');
+      return;
+    }
+  
+    const patentId = patent.patent_id; // Assuming the patent object has an 'id' property
+  
+    const patentRef = this.db.database.ref(`saved_patents/${this.userId}/${patentId}`);
+  
+    patentRef.get().then((snapshot) => {
+      if (snapshot.exists()) {
+        alert('This patent has already been saved!');
+      } else {
+        patentRef.set(patent).then(() => {
+          alert('Patent saved successfully!');
+        }).catch((error) => {
+          console.error('Error while saving the patent:', error);
+          alert('An error occurred while saving the patent. Please try again.');
+        });
+      }
+    }).catch((error) => {
+      console.error('Error while checking the patent:', error);
+      alert('An error occurred while checking the patent. Please try again.');
+    });
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
   }
 
 }

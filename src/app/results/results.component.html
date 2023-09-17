@@ -51,11 +51,12 @@
     </div>
 
     <div class="patent-buttons">
-      <span class="patent-button"> Open Document </span>
-      <span class="patent-button"> Google Patents </span>
-      <span class="patent-button"> USPTO </span>
-      <span class="patent-button"> Save To List </span>
+      <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span>
+      <span class="patent-button" (click)="stopPropagation($event)"> Google Patents </span>
+      <span class="patent-button" (click)="stopPropagation($event)"> USPTO </span>
+      <span class="patent-button" (click)="savePatent(patent); stopPropagation($event)"> Save To List </span>
     </div>
+    
 
   </div>
 </section>
