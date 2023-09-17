@@ -28,7 +28,7 @@
   
   </form>
 
-  <a href="/saved" class="minimalistic-button">Saved</a>
+  <a (click)="routeSaved()" class="minimalistic-button">Saved</a>
 </section>
 
 
@@ -38,9 +38,11 @@
   <span (click)="toggleResults()" class="toggle-button">Toggle Results</span>
   <br><br>
 <h1 class="">{{ showResultsType === 'granted' ? 'Granted Results' : 'Pregranted Results' }}</h1>
-  <div *ngFor="let patent of getDisplayedResults()" class="patent-box" [@expandCollapse]="patent.state"
-    (click)="togglePatent(patent)">
-    <h2>{{ patent.title }}</h2>
+  <div *ngFor="let patent of getDisplayedResults()" 
+  [class.saved-patent]="isSaved(patent)"
+  class="patent-box" [@expandCollapse]="patent.state"
+  (click)="togglePatent(patent)">
+    <h2>{{ patent.title }} <br> <div *ngIf="grantedResults">{{patent.patent_id}}  </div> <div *ngIf="pregrantedResults" >{{patent.application_id}}</div></h2>
     <p>{{ patent.abstract }}</p>
     <div class="more-info" *ngIf="patent.state === 'expanded'">
       <h2>Summary</h2>

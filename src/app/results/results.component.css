@@ -73,6 +73,7 @@
   font-family: 'Poppins', sans-serif;
 } 
 
+
 button {  
   background-color: transparent;
   border: none;
@@ -136,6 +137,9 @@ button i.fa {
   align-items: center;
 }
 
+.saved-patent {
+  background-color: #FFC0CB !important;
+}
 
 .patent-box:hover {
   transform: scale(1.05); /* Scale it up a bit */

@@ -12,7 +12,7 @@
       
     <div class="buttons">
         <a href="/search" class="nav-button">Home</a>
-        <a href="#" class="nav-button">Back to Results</a>
+        <a href="/results" class="nav-button">Back to Results</a>
     </div>
 </nav>
 <section id="savedPatents">
@@ -31,7 +31,7 @@
     </form>
     <br>
     <form>
-        <button class="cool-button">Clear List</button>
+        <button class="cool-button" (click)="clearSavedPatents()">Clear List</button>
     </form>
     <br>
     <ol>

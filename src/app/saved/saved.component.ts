@@ -20,17 +20,6 @@ export class SavedComponent implements OnInit{
   searchQuery: any;
   isSearching: boolean = true; 
   userId: any;
-  results: any[] = [
-    {
-      title: "Patent 1: Innovative Idea",
-      abstract: "This is a description of the innovative idea for patent 1. It revolutionizes the way we think about technology."
-    },
-    {
-      title: "Patent 2: Next-gen Solution",
-      abstract: "This is a description of the next-gen solution for patent 2. It's a groundbreaking invention."
-    },
-    // ... add more dummy patents as needed
-  ];
   public showResults: boolean = false;
 
   savedPatents: any[] = [];
@@ -41,7 +30,8 @@ export class SavedComponent implements OnInit{
   applicationNumber: string = '';
 
   
-  constructor(private route: ActivatedRoute, 
+  constructor(
+    private route: ActivatedRoute, 
     private cdr: ChangeDetectorRef, 
     private http: HttpClient,
     private router: Router,
@@ -53,6 +43,7 @@ export class SavedComponent implements OnInit{
       this.afAuth.authState.subscribe(user => {
         if (user) {
           this.userId = user.uid;
+          console.log(this.userId)
           this.searchQuery = this.route.snapshot.queryParamMap.get('query') || '';
     
           // Fetch saved patents
@@ -68,6 +59,7 @@ export class SavedComponent implements OnInit{
               }
             }))
           ).subscribe(patents => {
+            console.log(patents)
             this.savedPatents = patents;
           });
         } else {
@@ -104,6 +96,23 @@ export class SavedComponent implements OnInit{
 
   toggleResults() {
     this.showResults = !this.showResults;
+  }
+
+  clearSavedPatents(): void {
+    if (this.userId) {
+      // Confirm with the user before deleting all saved patents
+      const confirmation = window.confirm("Are you sure you want to clear all saved patents?");
+      if (confirmation) {
+        // Delete saved patents for the user from the database
+        this.db.list(`saved_patents/${this.userId}`).remove().then(() => {
+          // Once the patents are removed from the database, update the local state
+          this.savedPatents = [];
+          alert('Saved patents cleared successfully!');
+        }).catch(error => {
+          console.error('Error clearing saved patents:', error);
+        });
+      }
+    }
   }
 
   

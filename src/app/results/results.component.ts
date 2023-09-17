@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for HTTP requests
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-results',
@@ -34,7 +37,7 @@ export class ResultsComponent implements OnInit {
   showResultsType = 'granted'; // or 'pregranted'
   grantedResults: any[] = [];
   pregrantedResults: any[] = [];
-
+  
   showResults: boolean = false;
   queryValue: string = "";
   selectedDate: Date = new Date();
@@ -45,11 +48,14 @@ export class ResultsComponent implements OnInit {
 
   userId: any;
 
+  savedPatents: any[] = [];
+
   constructor(
     private router: Router,
     private http: HttpClient,
     private db: AngularFireDatabase,
     private afAuth: AngularFireAuth,
+    private route: ActivatedRoute,
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { data: any };
@@ -59,12 +65,20 @@ export class ResultsComponent implements OnInit {
       this.grantedResults = this.results.data['Granted results'].map((res: any) => ({ ...res, state: 'collapsed' }));
       this.grantedResults = this.results.data['Granted results'];
       this.pregrantedResults = this.results.data['Pregranted Results'];
+      localStorage.setItem('grantedResults', JSON.stringify(this.grantedResults));
+      localStorage.setItem('pregrantedResults', JSON.stringify(this.pregrantedResults));
     }
   }
 
   ngOnInit(): void {
     this.showResults = true;
     this.isSearching = false;
+    if (localStorage.getItem('grantedResults')) {
+      this.grantedResults = JSON.parse(localStorage.getItem('grantedResults') || '[]');
+  }
+  if (localStorage.getItem('pregrantedResults')) {
+      this.pregrantedResults = JSON.parse(localStorage.getItem('pregrantedResults') || '[]');
+  }
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userId = user.uid;  // Here's the user ID!
@@ -72,8 +86,36 @@ export class ResultsComponent implements OnInit {
         this.userId = null;
       }
     });
-  }
 
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.userId = user.uid;
+        console.log(this.userId)
+        this.searchQuery = this.route.snapshot.queryParamMap.get('query') || '';
+  
+        // Fetch saved patents
+        this.db.list(`saved_patents/${this.userId}`).snapshotChanges().pipe(
+          map(actions => actions.map(a => {
+            const data = a.payload.val();
+            const key = a.key;
+            if (typeof data === 'object' && data !== null) {
+              return { key, ...data };
+            } else {
+              // Handle this case as you see fit. For now, just returning key.
+              return { key };
+            }
+          }))
+      ).subscribe(patents => {
+          this.savedPatents = patents.map(patent => patent.key);
+          console.log(this.savedPatents);
+      });
+      } else {
+        this.userId = null;
+        alert("Please Log in to use this page!")
+      }
+    });
+  }
+  
   changePage(page: number): void {
     this.currentPage = page;
   }
@@ -136,6 +178,9 @@ export class ResultsComponent implements OnInit {
             this.pregrantedResults = response['Pregranted Results'];
           }
 
+          localStorage.setItem('grantedResults', JSON.stringify(this.grantedResults));
+        localStorage.setItem('pregrantedResults', JSON.stringify(this.pregrantedResults));
+
           // Reopen the results section now that the data has been fetched and processed
           this.showResults = true;
           this.currentPage = 1;  // Reset the current page after getting new results
@@ -181,6 +226,17 @@ export class ResultsComponent implements OnInit {
 
   stopPropagation(event: Event) {
     event.stopPropagation();
+  }
+
+
+  isSaved(patent: any): boolean {
+    return this.savedPatents.includes(patent.patent_id || patent.application_id);
+  }
+
+  routeSaved() {
+    this.router.navigate(['/saved'], {
+      state: { data: this.results }
+    });
   }
 
 }

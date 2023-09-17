@@ -65,7 +65,7 @@ export class SearchComponent {
       input_idea: this.queryValue,
       user_input_date: formattedDate, // Use datePicker instead of datePickerRef
     };
-
+    
     // Send a POST request to your Flask server
     this.http.post('http://129.213.84.77:5000/search', requestData).subscribe(
       (response: any) => {
