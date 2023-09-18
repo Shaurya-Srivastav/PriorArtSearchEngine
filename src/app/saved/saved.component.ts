@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-saved',
@@ -29,6 +30,10 @@ export class SavedComponent implements OnInit{
   paginatedResults: any[][] = [];
   applicationNumber: string = '';
 
+  filteredPatents: any[] = [];
+
+  searchedTerm: any;
+
   
   constructor(
     private route: ActivatedRoute, 
@@ -37,6 +42,7 @@ export class SavedComponent implements OnInit{
     private router: Router,
     private db: AngularFireDatabase,
     private afAuth: AngularFireAuth,
+    private sanitizer: DomSanitizer
     ) { }
 
     ngOnInit(): void {
@@ -114,6 +120,7 @@ export class SavedComponent implements OnInit{
       }
     }
   }
+  
 
   
 }

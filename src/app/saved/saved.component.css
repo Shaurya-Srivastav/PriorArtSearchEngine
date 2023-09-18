@@ -8,6 +8,12 @@
     height: 15vh;
 }
 
+.highlight {
+    background-color: violet;
+    font-weight: bold;
+  }
+  
+
 .title {
     font-size: 45px;
     color: #555;

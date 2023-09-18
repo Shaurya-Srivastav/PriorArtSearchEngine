@@ -29,6 +29,10 @@ import { LoginComponent } from './login/login.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
+import { SearchPipe } from './search.pipe';
+import {HighlightPipe} from './highlight.pipe';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +40,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     ResultsComponent,
     SavedComponent,
     LoginComponent, 
+    SearchPipe,
+    HighlightPipe
   ],
   imports: [
     BrowserModule,

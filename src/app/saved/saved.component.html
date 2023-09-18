@@ -23,12 +23,10 @@
     </div>
     
     <br>
-    <form>
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search...">
-            <button class="search-button">Search</button>
-        </div>        
-    </form>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="searchedTerm">
+        <button class="search-button">Search</button>
+    </div>   
     <br>
     <form>
         <button class="cool-button" (click)="clearSavedPatents()">Clear List</button>
@@ -36,9 +34,9 @@
     <br>
     <ol>
         <!-- Use *ngFor to loop through the savedPatents array -->
-        <li *ngFor="let patent of savedPatents">
-            <h1 class="patent-title">{{ patent.title }}</h1>
-            <h2 class="patent-abstract">
+        <li *ngFor="let patent of savedPatents | search: searchedTerm">
+            <h1 class="patent-title" [innerHTML]="patent.title | highlight: searchedTerm">{{ patent.title }}</h1>
+            <h2 class="patent-abstract" [innerHTML]="patent.abstract | highlight: searchedTerm">
                 <b>Patent Abstract:</b> {{ patent.abstract }}
             </h2>
             <br>
