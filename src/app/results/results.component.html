@@ -1,3 +1,26 @@
+<div class="open-sidebar-button" (click)="toggleSidebar()">
+  <i class="fa fa-bars"></i>
+</div>
+
+<div class="sidebar" [class.open]="isSidebarOpen">
+  <h3>Filter Options</h3>
+  <form (submit)="applyFilters(); $event.preventDefault();">
+    <div class="filter-option">
+      <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted">
+      <label for="grantedCheckbox">Granted</label>
+    </div>
+    <div class="filter-option">
+      <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted">
+      <label for="pregrantedCheckbox">Pregranted</label>
+    </div>
+    <div class="filter-option">
+      <input type="checkbox" id="bothCheckbox" [(ngModel)]="displayBoth">
+      <label for="bothCheckbox">Granted+Pregranted</label>
+    </div>
+    <button type="submit" class="filter-button">Apply</button>
+  </form>
+</div>
+
 <section id="search-bar-area">
   <h1 id="logo">
     <span *ngFor="let letter of titleLetters; let i = index"

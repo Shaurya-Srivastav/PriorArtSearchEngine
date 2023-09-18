@@ -239,4 +239,27 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  isSidebarOpen: boolean = false;
+  displayGranted: boolean = false;
+  displayPregranted: boolean = false;
+  displayBoth: boolean = false;
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  applyFilters() {
+    // Implement your filtering logic here based on the selected filter options.
+    // You can use the displayGranted, displayPregranted, and displayBoth variables.
+    // Close the sidebar after applying filters if needed.
+    console.log('Display Granted:', this.displayGranted);
+    console.log('Display Pregranted:', this.displayPregranted);
+    console.log('Display Both:', this.displayBoth);
+
+    // Close the sidebar
+    this.toggleSidebar();
+  }
+
+
 }
+
