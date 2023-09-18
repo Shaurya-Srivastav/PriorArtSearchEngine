@@ -7,7 +7,7 @@
     </h1>
     <form class="search-form" #searchForm>
       <div class="search-input-container">
-        <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="searchQuery" required>
+        <textarea class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="searchQuery" required></textarea>
         <!-- Hidden Angular Material Datepicker Input -->
         <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
         <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>

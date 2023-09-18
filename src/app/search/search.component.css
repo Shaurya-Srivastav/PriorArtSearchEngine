@@ -91,21 +91,25 @@
 }
 
 .search-input {
-  flex-grow: 1;  /* Allows it to fill available space */
-  height: 40px;
-  padding: 10px 100px 10px 20px;  /* Adjusted padding */
+  flex-grow: 1; /* Allows it to fill available space */
+  min-height: 40px; /* Set a minimum height */
+  max-height: 120px; /* Set a maximum height */
+  padding: 10px 100px 10px 20px; /* Adjusted padding */
   border-radius: 20px;
   font-size: 16px;
   border: 1px solid #ccc;
   outline: none;
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: calc(100% - 90px - 40px - 40px);  /* Adjusted width. Account for 2 buttons (each 40px) and the total right padding (90px) */
+  width: calc(100% - 90px - 40px - 40px); /* Adjusted width. Account for 2 buttons (each 40px) and the total right padding (90px) */
+  resize: none; /* Disable textarea resizing */
 }
+
 .search-input::placeholder {
   color: #999;
   font-family: 'Poppins', sans-serif;
-}         
+}
+        
 
 button {  
   background-color: transparent;
