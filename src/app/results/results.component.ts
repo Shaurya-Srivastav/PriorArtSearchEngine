@@ -50,6 +50,14 @@ export class ResultsComponent implements OnInit {
 
   savedPatents: any[] = [];
 
+  title: string = 'Granted Patents';
+
+  
+  isSidebarOpen: boolean = false;
+  displayGranted: boolean = true;
+  displayPregranted: boolean = false;
+  displayBoth: boolean = false;
+
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -130,13 +138,21 @@ export class ResultsComponent implements OnInit {
     const currentResults = this.getDisplayResults();
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    console.log("Start Index:", startIndex, "End Index:", endIndex);
     return currentResults.slice(startIndex, endIndex);
   }
 
+  
   getDisplayResults() {
-    return this.showResultsType === 'granted' ? this.grantedResults : this.pregrantedResults;
+  if (this.displayBoth) {
+    return [...this.grantedResults, ...this.pregrantedResults];
+  } else if (this.displayGranted) {
+    return this.grantedResults;
+  } else if (this.displayPregranted) {
+    return this.pregrantedResults;
+  } else {
+    return [];  // No results if no filters are selected.
   }
+}
 
 
   toggleResults() {
@@ -203,7 +219,7 @@ export class ResultsComponent implements OnInit {
       return;
     }
   
-    const patentId = patent.patent_id; // Assuming the patent object has an 'id' property
+    const patentId = patent.patent_id; // Assuming the patent object has an 'id' property 
   
     const patentRef = this.db.database.ref(`saved_patents/${this.userId}/${patentId}`);
   
@@ -239,26 +255,57 @@ export class ResultsComponent implements OnInit {
     });
   }
 
-  isSidebarOpen: boolean = false;
-  displayGranted: boolean = false;
-  displayPregranted: boolean = false;
-  displayBoth: boolean = false;
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   applyFilters() {
-    // Implement your filtering logic here based on the selected filter options.
-    // You can use the displayGranted, displayPregranted, and displayBoth variables.
-    // Close the sidebar after applying filters if needed.
-    console.log('Display Granted:', this.displayGranted);
-    console.log('Display Pregranted:', this.displayPregranted);
-    console.log('Display Both:', this.displayBoth);
-
+    if (this.displayGranted && this.displayPregranted) {
+      this.displayBoth = true;
+      this.displayGranted = false;
+      this.displayPregranted = false;
+    }
     // Close the sidebar
     this.toggleSidebar();
   }
+  
+  onCheckboxChange() {
+    // Check if both Granted and Pregranted are checked
+    if (this.displayGranted && this.displayPregranted) {
+      this.displayBoth = true;
+      setTimeout(() => {
+        this.displayGranted = false;
+        this.displayPregranted = false;
+      });
+    }
+    // If only one of them is unchecked, ensure that both is also unchecked
+    else if (!this.displayGranted || !this.displayPregranted) {
+      this.displayBoth = false;
+    }
+    this.updateTitle();
+  }
+  
+  onBothCheckboxChange() {
+    if (this.displayBoth) {
+      this.displayGranted = false;
+      this.displayPregranted = false;
+    }
+    this.updateTitle();
+  }
+
+  updateTitle() {
+    if (this.displayGranted && !this.displayPregranted && !this.displayBoth) {
+      this.title = 'Granted Patents';
+    } else if (this.displayPregranted && !this.displayGranted && !this.displayBoth) {
+      this.title = 'Pregranted Patents';
+    } else if (this.displayBoth) {
+      this.title = 'Granted + Pregranted Patents';
+    } else {
+      this.title = 'Granted Patents'; // Default title
+    }
+  }
+  
 
 
 }

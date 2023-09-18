@@ -57,6 +57,7 @@ export class SearchComponent {
       console.warn('Search is empty. No action taken.');
       return;  // Return here to exit the function early and not proceed with the query
     }
+    console.log(this.queryValue);
     this.isSubmitting = true;
     this.isSearching = true;
     const formattedDate = this.selectedDate ? this.selectedDate.toISOString().split('T')[0] : null;

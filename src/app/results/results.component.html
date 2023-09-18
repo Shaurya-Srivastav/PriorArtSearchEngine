@@ -6,20 +6,20 @@
   <h3>Filter Options</h3>
   <form (submit)="applyFilters(); $event.preventDefault();">
     <div class="filter-option">
-      <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted">
+      <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter" (ngModelChange)="onCheckboxChange()">
       <label for="grantedCheckbox">Granted</label>
     </div>
     <div class="filter-option">
-      <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted">
+      <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter" (ngModelChange)="onCheckboxChange()">
       <label for="pregrantedCheckbox">Pregranted</label>
     </div>
     <div class="filter-option">
-      <input type="checkbox" id="bothCheckbox" [(ngModel)]="displayBoth">
+      <input type="checkbox" id="bothCheckbox" [(ngModel)]="displayBoth" name="bothFilter" (ngModelChange)="onBothCheckboxChange()">
       <label for="bothCheckbox">Granted+Pregranted</label>
     </div>
-    <button type="submit" class="filter-button">Apply</button>
   </form>
 </div>
+
 
 <section id="search-bar-area">
   <h1 id="logo">
@@ -65,9 +65,7 @@
 
 <section class="patents-section" [class.expanded]="showResults">
   <br><br>
-  <span (click)="toggleResults()" class="toggle-button">Toggle Results</span>
-  <br><br>
-<h1 class="">{{ showResultsType === 'granted' ? 'Granted Results' : 'Pregranted Results' }}</h1>
+<h1 class="">{{title}}</h1>
   <div *ngFor="let patent of getDisplayedResults()" 
   [class.saved-patent]="isSaved(patent)"
   class="patent-box" [@expandCollapse]="patent.state"
