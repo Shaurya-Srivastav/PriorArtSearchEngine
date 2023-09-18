@@ -93,7 +93,7 @@
 .search-input {
   flex-grow: 1;  /* Allows it to fill available space */
   height: 40px;
-  padding: 10px 20px 10px 20px;  /* Adjusted padding */
+  padding: 10px 100px 10px 20px;  /* Adjusted padding */
   border-radius: 20px;
   font-size: 16px;
   border: 1px solid #ccc;

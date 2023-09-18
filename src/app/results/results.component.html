@@ -32,6 +32,13 @@
 </section>
 
 
+<div class="pagination">
+  <ul>
+    <li *ngFor="let page of getPages()">
+      <a href="#" [class.activePage]="page === currentPage" (click)="changePage(page); $event.preventDefault()">{{ page }}</a>
+    </li>
+  </ul>
+</div>
 
 <section class="patents-section" [class.expanded]="showResults">
   <br><br>
@@ -61,13 +68,8 @@
     
 
   </div>
+
 </section>
 
 
-<div class="pagination">
-  <ul>
-    <li *ngFor="let page of getPages()">
-      <a href="#" [class.activePage]="page === currentPage" (click)="changePage(page); $event.preventDefault()">{{ page }}</a>
-    </li>
-  </ul>
-</div>
+

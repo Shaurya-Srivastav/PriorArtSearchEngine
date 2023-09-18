@@ -58,7 +58,7 @@
 .search-input {
   flex-grow: 1;  /* Allows it to fill available space */
   height: 40px;
-  padding: 10px 20px 10px 20px;  /* Adjusted padding */
+  padding: 10px 100px 10px 20px;  /* Adjusted padding */
   border-radius: 20px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -130,7 +130,6 @@ button i.fa {
   margin-top: 20px; /* space between search bar and this section */
   overflow-y: auto;
   transition: max-height 0.5s ease-in-out; /* smooth expansion transition */
-  max-height: 0; /* starts from virtually nothing */
   padding: 0 20px; /* horizontal padding for content */
   display: flex;
   flex-direction: column;
