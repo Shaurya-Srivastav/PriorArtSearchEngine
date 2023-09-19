@@ -21,6 +21,59 @@
   align-items: center; /* Center content horizontally */
 }
 
+/* Container Styles */
+.page-container {
+  display: flex;
+  height: auto;
+  overflow: hidden;
+}
+
+/* Sidebar Styles for Search History */
+.search-history-sidebar {
+  margin-top: 1.1%;
+  width: 20%; /* Adjust the width to 30% */
+  background-color: #FFC0CB;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+  box-sizing: border-box;
+  overflow-y: auto; /* Add vertical scroll when content exceeds the sidebar height */
+}
+
+.sidebar-title {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.search-history-list {
+  list-style: none;
+  padding: 0;
+}
+
+.search-history-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-history-query {
+  font-weight: bold;
+  color: #FFC0CB;
+}
+
+.search-history-time {
+  color: #777;
+}
+
+.patents-section {
+  flex: 1; /* Allow the main content to grow and fill the remaining space */
+}
+
+
 .sidebar.open {
   left: 0;
   transition: left 0.3s ease-in-out; /* Add sliding animation */

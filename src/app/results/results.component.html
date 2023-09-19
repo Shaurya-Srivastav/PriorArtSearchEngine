@@ -3,6 +3,7 @@
 </div>
 
 <div class="sidebar" [class.open]="isSidebarOpen">
+  <h1>Date Selected: </h1>
   <h3>Filter Options</h3>
   <form (submit)="applyFilters(); $event.preventDefault();">
     <div class="filter-option">
@@ -23,10 +24,12 @@
 
 <section id="search-bar-area">
   <h1 id="logo">
+    <a href="#">
     <span *ngFor="let letter of titleLetters; let i = index"
           class="letter" [class.animate]="isSearching" [style.animation-delay]="(i * 0.2) + 's'">
       {{ letter }}
     </span>
+    </a>
   </h1>
 
   <form class="search-form" (submit)="onSubmit(); $event.preventDefault();">
@@ -62,37 +65,54 @@
     </li>
   </ul>
 </div>
+<div class="page-container">
+  <!-- Custom Sidebar for Search History -->
+  <aside class="search-history-sidebar">
+    <h2 class="sidebar-title">Search History</h2>
+    <ul class="search-history-list">
+      <li>
+        <div class="search-history-item">
+          <span class="search-history-query">Search Query 1</span>
+          <span class="search-history-time">2 hours ago</span>
+        </div>
+      </li>
+      <li>
+        <div class="search-history-item">
+          <span class="search-history-query">Search Query 2</span>
+          <span class="search-history-time">Yesterday</span>
+        </div>
+      </li>
+      <!-- Add more search history items as needed -->
+    </ul>
+  </aside>
 
-<section class="patents-section" [class.expanded]="showResults">
-  <br><br>
-  <span (click)="toggleResults()" class="toggle-button">Toggle Results</span>
-  <br><br>
-<h1 class="">{{ showResultsType === 'granted' ? 'Granted Results' : 'Pregranted Results' }}</h1>
-  <div *ngFor="let patent of getDisplayedResults()" 
-  [class.saved-patent]="isSaved(patent)"
-  class="patent-box" [@expandCollapse]="patent.state"
-  (click)="togglePatent(patent)">
-    <h2>{{ patent.title }} <br> <div *ngIf="grantedResults">{{patent.patent_id}}  </div> <div *ngIf="pregrantedResults" >{{patent.application_id}}</div></h2>
-    <p>{{ patent.abstract }}</p>
-    <div class="more-info" *ngIf="patent.state === 'expanded'">
-      <h2>Summary</h2>
-      <p>{{ patent.summary }}</p>
-      <h2>Claims</h2>
-      <p>{{ patent.claims }}</p>
-      
+  <!-- Main Content -->
+  <section class="patents-section" [class.expanded]="showResults">
+    <br><br>
+    <h1 class="">{{ showResultsType === 'granted' ? 'Granted Results' : 'Pregranted Results' }}</h1>
+    <div *ngFor="let patent of getDisplayedResults()" 
+      [class.saved-patent]="isSaved(patent)"
+      class="patent-box" [@expandCollapse]="patent.state"
+      (click)="togglePatent(patent)">
+      <h2>{{ patent.title }} <br> <div *ngIf="grantedResults">{{patent.patent_id}}  </div> <div *ngIf="pregrantedResults" >{{patent.application_id}}</div></h2>
+      <p>{{ patent.abstract }}</p>
+      <div class="more-info" *ngIf="patent.state === 'expanded'">
+        <h2>Summary</h2>
+        <p>{{ patent.summary }}</p>
+        <h2>Claims</h2>
+        <p>{{ patent.claims }}</p>
+      </div>
+      <div class="patent-buttons">
+        <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span>
+        <span class="patent-button" (click)="stopPropagation($event)"> Google Patents </span>
+        <span class="patent-button" (click)="stopPropagation($event)"> USPTO </span>
+        <span class="patent-button" (click)="savePatent(patent); stopPropagation($event)"> Save To List </span>
+      </div>
     </div>
+  </section>
+</div>
 
-    <div class="patent-buttons">
-      <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span>
-      <span class="patent-button" (click)="stopPropagation($event)"> Google Patents </span>
-      <span class="patent-button" (click)="stopPropagation($event)"> USPTO </span>
-      <span class="patent-button" (click)="savePatent(patent); stopPropagation($event)"> Save To List </span>
-    </div>
-    
 
-  </div>
-
-</section>
 
 
 

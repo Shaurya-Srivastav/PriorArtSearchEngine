@@ -20,6 +20,9 @@
   opacity: 0.6; /* Adjust as needed */
   z-index: -1; /* Place it behind the content */
 }
+a{
+  color: white;
+}
 
 #logo {
   position: absolute;

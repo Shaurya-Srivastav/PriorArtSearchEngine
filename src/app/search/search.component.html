@@ -1,9 +1,12 @@
 <section id="search">
+  
     <h1 id="logo">
+      <a href="#">
       <span *ngFor="let letter of titleLetters; let i = index"
             class="letter" [class.animate]="isSearching" [style.animation-delay]="(i * 0.2) + 's'">
         {{ letter }}
       </span>
+      </a>  
     </h1>
     <form class="search-form" #searchForm>
       <div class="search-input-container">
