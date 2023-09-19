@@ -26,10 +26,12 @@
   color: #fff;
 }
 
-.search-history-list {
-  list-style: none;
-  padding: 0;
+.delete-icon {
+  color: red;
+  cursor: pointer;
+  margin-left: 10px;
 }
+
 
 .search-history-item {
   display: flex;
@@ -44,10 +46,16 @@
 .search-history-query {
   font-weight: bold;
   color: #FFC0CB;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .search-history-time {
   color: #777;
+  text-align: right;
+  width: 20%; /* Adjust based on your preference */
 }
 
 .patents-section {
@@ -302,6 +310,22 @@ button i.fa {
   transition: background-color 0.3s;
 }
 
+.search-history-item {
+  cursor: pointer; /* Make the cursor look like a pointer when hovering over the item */
+  padding: 10px 15px; /* Give some padding */
+  border: 1px solid #ccc; /* Give a border */
+  border-radius: 4px; /* Rounded corners for a button-like appearance */
+  display: block; /* Block level to fill entire width of li */
+  text-align: center; /* Center the text */
+  background-color: #f5f5f5; /* Light background color */
+  margin-bottom: 5px; /* Spacing between items */
+  transition: background-color 0.3s; /* Smooth background-color transition */
+}
+
+.search-history-item:hover {
+  background-color: #e0e0e0; /* Change background color on hover */
+}
+
 .toggle-button:hover {
   background-color: #D87093;
 }
@@ -387,6 +411,11 @@ button i.fa {
   color: #555; /* Darker text for better contrast on light background */
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+.patent-button a {
+  color: inherit; /* inherit the color from parent element */
+  text-decoration: none; /* remove the underline */
 }
 
 .patent-button:hover {
