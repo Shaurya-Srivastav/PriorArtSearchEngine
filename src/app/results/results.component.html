@@ -82,20 +82,21 @@
   <aside class="search-history-sidebar">
     <h2 class="sidebar-title">Search History</h2>
     <ul class="search-history-list">
-      <li>
-        <div class="search-history-item">
-          <span class="search-history-query">Search Query 1</span>
-          <span class="search-history-time">2 hours ago</span>
-        </div>
+      <li 
+          *ngFor="let search of recentSearches"
+          class="search-history-item" 
+          [class.active]="activeSearch === search.query"
+          (click)="onSearchHistoryClick(search)">
+          <span class="search-history-query">{{ search.query }}</span>
+          <span class="search-history-time">{{ search.timestamp | date:'shortTime' }}</span>
+          <i  class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
       </li>
-      <li>
-        <div class="search-history-item">
-          <span class="search-history-query">Search Query 2</span>
-          <span class="search-history-time">Yesterday</span>
-        </div>
-      </li>
-      <!-- Add more search history items as needed -->
-    </ul>
+  </ul>
+  
+  
+    
+    
+    
   </aside>
 
 <section class="patents-section" [class.expanded]="showResults">
@@ -122,9 +123,14 @@
 
     <div class="patent-buttons">
       <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span>
-      <span class="patent-button" (click)="stopPropagation($event)"> Google Patents </span>
+      <span class="patent-button" (click)="stopPropagation($event)"><a href="https://patents.google.com/?q={{ patent.patent_id }}" target="_blank"> Google Patents</a>  </span>
+      
       <span class="patent-button" (click)="stopPropagation($event)"> USPTO </span>
-      <span class="patent-button" (click)="savePatent(patent); stopPropagation($event)"> Save To List </span>
+      <span class="patent-button" 
+      (click)="toggleSavePatent(patent); stopPropagation($event)">
+      {{ isPatentSaved(patent) ? 'Un-save Patent' : 'Save To List' }}
+      </span>
+
     </div>
 
 

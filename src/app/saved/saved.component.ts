@@ -7,7 +7,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-
+import { savePatentService } from '../services/save-patent.service';
 @Component({
   selector: 'app-saved',
   templateUrl: './saved.component.html',
@@ -42,7 +42,8 @@ export class SavedComponent implements OnInit{
     private router: Router,
     private db: AngularFireDatabase,
     private afAuth: AngularFireAuth,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private savePatent: savePatentService
     ) { }
 
     ngOnInit(): void {
@@ -75,19 +76,27 @@ export class SavedComponent implements OnInit{
       });
   }
 
-  deletePatent(patentKey: string): void {
-    if (this.userId && patentKey) {
-      this.db.object(`saved_patents/${this.userId}/${patentKey}`).remove()
-        .then(() => {
-          // Successfully deleted
-          alert('Patent removed successfully.');
-          // Optionally, you could filter out the deleted patent from this.savedPatents to immediately reflect the change in the UI
-          this.savedPatents = this.savedPatents.filter(patent => patent.key !== patentKey);
-        })
-        .catch(error => {
-          console.error('Error removing patent: ', error);
-          alert('An error occurred while trying to remove the patent. Please try again.');
-        });
+  async deletePatent(patentKey: string): Promise<void> {
+    try {
+      await this.savePatent.deletePatent(this.userId, patentKey);
+      alert('Patent removed successfully.');
+      this.savedPatents = this.savedPatents.filter(patent => patent.key !== patentKey);
+    } catch (error) {
+      console.error('Error removing patent: ', error);
+      alert('An error occurred while trying to remove the patent. Please try again.');
+    }
+  }
+  
+  async clearSavedPatents(): Promise<void> {
+    const confirmation = window.confirm("Are you sure you want to clear all saved patents?");
+    if (confirmation) {
+      try {
+        await this.savePatent.clearSavedPatents(this.userId);
+        this.savedPatents = [];
+        alert('Saved patents cleared successfully!');
+      } catch (error) {
+        console.error('Error clearing saved patents:', error);
+      }
     }
   }
 
@@ -103,24 +112,6 @@ export class SavedComponent implements OnInit{
   toggleResults() {
     this.showResults = !this.showResults;
   }
-
-  clearSavedPatents(): void {
-    if (this.userId) {
-      // Confirm with the user before deleting all saved patents
-      const confirmation = window.confirm("Are you sure you want to clear all saved patents?");
-      if (confirmation) {
-        // Delete saved patents for the user from the database
-        this.db.list(`saved_patents/${this.userId}`).remove().then(() => {
-          // Once the patents are removed from the database, update the local state
-          this.savedPatents = [];
-          alert('Saved patents cleared successfully!');
-        }).catch(error => {
-          console.error('Error clearing saved patents:', error);
-        });
-      }
-    }
-  }
-  
 
   
 }

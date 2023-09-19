@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { Router } from '@angular/router';  // <-- Import Router
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for HTTP requests
-import { SearchService } from '../services/search.service';
+import { SearchHistoryService } from '../services/search-history.service';
 
 @Component({
   selector: 'app-search',
@@ -48,6 +48,7 @@ export class SearchComponent {
   constructor(
     private router: Router,
     private http: HttpClient,
+    private searchHistoryService: SearchHistoryService
   ) 
     {}
 
@@ -75,7 +76,7 @@ export class SearchComponent {
         this.isSearching = false;
         this.isSubmitting = false;
         this.router.navigate(['/results'], {
-          state: { data: this.results }
+          state: { data: this.results, query: this.queryValue },
         });
       },
       (error) => {
@@ -91,4 +92,5 @@ export class SearchComponent {
   onCalendarClick() {
     this.datePicker.open();
   }
+
 }
