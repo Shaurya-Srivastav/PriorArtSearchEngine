@@ -83,7 +83,6 @@
 
 
 
-
 /* Button to open the sidebar */
 .open-sidebar-button {
   position: fixed;
@@ -223,6 +222,21 @@ button i.fa {
 .toggle-button:hover {
   background-color: #D87093;
 }
+.similarity-badge {
+  z-index: 9999; 
+  position: absolute;
+  top: -10px; 
+  right: 10px; 
+  padding: 5px 15px;
+  border-radius: 0 0 5px 5px; 
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: black;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 3;
+  background-color: inherit; /* This will get the background color from whatever you set in JavaScript. */
+}
 
 
 .patents-section {
@@ -250,6 +264,7 @@ button i.fa {
 }
 
 .patent-box {
+  position: relative;
   height: auto;
   flex-shrink: 0;
   transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, max-height 0.3s ease, opacity 0.3s ease;
