@@ -1,25 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-/* Sidebar styles */
-.sidebar {
-  font-family: 'Poppins', sans-serif;
-  width: 250px;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: -250px;
-  background-color: #FFF; /* Light background color */
-  overflow-x: hidden;
-  transition: left 0.3s ease-in-out; /* Add sliding animation */
-  padding: 80px 20px 20px 0;
-  z-index: 100;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  color: #333; /* Text color */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center content horizontally */
-}
 
 /* Container Styles */
 .page-container {
@@ -74,11 +55,53 @@
 }
 
 
+
+/* Sidebar styles */
+.sidebar {
+  font-family: 'Poppins', sans-serif;
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  background-color: #FFF; /* Light background color */
+  overflow-x: hidden;
+  transition: left 0.3s ease-in-out; /* Add sliding animation */
+  padding: 80px 20px 20px 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  color: #333; /* Text color */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+}
+
 .sidebar.open {
   left: 0;
   transition: left 0.3s ease-in-out; /* Add sliding animation */
 }
 
+
+h1, h3{
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Date range styles */
+.date-range {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.date-range label {
+  margin-bottom: 5px;
+}
+
+.date-range input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
 
 /* Filter options */
 .filter-option {
@@ -135,7 +158,6 @@
 
 
 
-
 /* Button to open the sidebar */
 .open-sidebar-button {
   position: fixed;
@@ -151,6 +173,7 @@
 .open-sidebar-button:hover {
   color: #D87093; /* Darker pink color on hover */
 }
+
 
 
 #search-bar-area {
@@ -206,24 +229,31 @@
   display: flex;
   align-items: center;
 }
-
+/* Update the search input styles */
 .search-input {
-  flex-grow: 1;  /* Allows it to fill available space */
-  height: 40px;
-  padding: 10px 100px 10px 20px;  /* Adjusted padding */
+  flex-grow: 1;
+  min-height: 40px; /* Minimum height for one line */
+  max-height: 120px; /* Maximum height for three lines */
+  padding: 10px 100px 10px 20px;
   border-radius: 20px;
   font-size: 16px;
   border: 1px solid #ccc;
   outline: none;
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: calc(100% - 90px - 40px - 40px);  /* Adjusted width. Account for 2 buttons (each 40px) and the total right padding (90px) */
+  width: calc(100% - 90px - 40px - 40px);
+  resize: vertical; /* Allow vertical resizing */
 }
 
-.search-input::placeholder {
-  color: #999;
-  font-family: 'Poppins', sans-serif;
-} 
+/* Add a transition for smooth height changes */
+.search-input {
+  transition: min-height 0.5s, max-height 0.5s;
+}
+
+/* Add a class to handle the expanded state */
+.search-input.expanded {
+  max-height: 180px; /* Adjust the maximum height as needed for three lines */
+}
 
 
 button {  

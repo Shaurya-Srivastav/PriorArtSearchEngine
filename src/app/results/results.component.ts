@@ -324,6 +324,15 @@ export class ResultsComponent implements OnInit {
         return {color: '#FFC1A1', label: 'Least Similar'};
     }
 }
+
+// Add a function to toggle the expanded class
+toggleSearchInputHeight() {
+  const searchInput = document.querySelector('.search-input');
+  if (searchInput) {
+    searchInput.classList.toggle('expanded', searchInput.scrollHeight > searchInput.clientHeight);
+  }
+}
+
   
 
 

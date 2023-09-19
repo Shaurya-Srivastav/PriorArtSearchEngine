@@ -3,9 +3,16 @@
 </div>
 
 <div class="sidebar" [class.open]="isSidebarOpen">
-  <h1>Date Selected: </h1>
+  <h1>Date Range:</h1>
+  <div class="date-range">
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate">
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate">
+  </div>
   <h3>Filter Options</h3>
   <form (submit)="applyFilters(); $event.preventDefault();">
+    <!-- Existing filter options -->
     <div class="filter-option">
       <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
         (ngModelChange)="onGrantedCheckboxChange()">
@@ -25,6 +32,7 @@
 </div>
 
 
+
 <section id="search-bar-area">
   <h1 id="logo">
     <a href="#">
@@ -38,8 +46,7 @@
   <form class="search-form" (submit)="onSubmit(); $event.preventDefault();">
     <!-- Search Input -->
     <div class="search-input-container">
-      <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="queryValue"
-        required>
+      <textarea class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="queryValue" required></textarea>
       <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
       <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
 

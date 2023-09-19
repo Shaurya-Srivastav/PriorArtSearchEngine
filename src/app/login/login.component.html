@@ -16,6 +16,14 @@
       <form id="signupForm" [hidden]="!showSignupForm">
         <!-- Signup form fields -->
         <div class="form-group">
+          <label for="newFirstName">First Name</label>
+          <input type="text" id="newFirstName" name="newFirstName" [(ngModel)]="newEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="newLastName">Last Name</label>
+          <input type="text" id="newLastName" name="newLastName" [(ngModel)]="newEmail" required>
+        </div>
+        <div class="form-group">
           <label for="newUsername">Enter an email</label>
           <input type="text" id="newUsername" name="newUsername" [(ngModel)]="newEmail" required>
         </div>
@@ -23,6 +31,11 @@
           <label for="newPassword">Choose a Password</label>
           <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
         </div>
+        <div class="form-group">
+          <label for="newCompany">Enter your company</label>
+          <input type="text" id="newCompany" name="newCompany" [(ngModel)]="newEmail" required>
+        </div>
+        
         <button class="login-button" type="submit" (click)="register()">Sign Up</button>
       </form>
       <div class="login-link">
