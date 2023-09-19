@@ -16,11 +16,11 @@ import { map } from 'rxjs/operators';
     trigger('expandCollapse', [
       state('collapsed', style({
         height: 'auto', // Initial height, adjust as per your design needs
-        overflow: 'hidden'
+        overflow: 'visible' // change from 'hidden' to 'visible'
       })),
       state('expanded', style({
         height: '*', // Will take the full content height
-        overflow: 'hidden'
+        overflow: 'visible' // change from 'hidden' to 'visible'
       })),
       transition('collapsed <=> expanded', [
         animate('0.3s cubic-bezier(.68,-0.55,.27,1.55)') // Using a cubic bezier for smooth effect
@@ -37,7 +37,7 @@ export class ResultsComponent implements OnInit {
   showResultsType = 'granted'; // or 'pregranted'
   grantedResults: any[] = [];
   pregrantedResults: any[] = [];
-  
+  combinedResults: any[] = [];
   showResults: boolean = false;
   queryValue: string = "";
   selectedDate: Date = new Date();
@@ -49,6 +49,14 @@ export class ResultsComponent implements OnInit {
   userId: any;
 
   savedPatents: any[] = [];
+
+  title: string = 'Granted Patents';
+
+  
+  isSidebarOpen: boolean = false;
+  displayGranted: boolean = true;
+  displayPregranted: boolean = false;
+  displayBoth: boolean = false;
 
   constructor(
     private router: Router,
@@ -65,9 +73,13 @@ export class ResultsComponent implements OnInit {
       this.grantedResults = this.results.data['Granted results'].map((res: any) => ({ ...res, state: 'collapsed' }));
       this.grantedResults = this.results.data['Granted results'];
       this.pregrantedResults = this.results.data['Pregranted Results'];
+      this.grantedResults.sort((a, b) => a.similarity - b.similarity); // Added sorting
+      this.grantedResults.sort((a, b) => a.similarity - b.similarity); // Added sorting
       localStorage.setItem('grantedResults', JSON.stringify(this.grantedResults));
       localStorage.setItem('pregrantedResults', JSON.stringify(this.pregrantedResults));
     }
+    console.log("granted results", this.grantedResults)
+
   }
 
   ngOnInit(): void {
@@ -130,13 +142,21 @@ export class ResultsComponent implements OnInit {
     const currentResults = this.getDisplayResults();
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    console.log("Start Index:", startIndex, "End Index:", endIndex);
     return currentResults.slice(startIndex, endIndex);
   }
 
+  
   getDisplayResults() {
-    return this.showResultsType === 'granted' ? this.grantedResults : this.pregrantedResults;
+  if (this.displayBoth) {
+    return [...this.grantedResults, ...this.pregrantedResults];
+  } else if (this.displayGranted) {
+    return this.grantedResults;
+  } else if (this.displayPregranted) {
+    return this.pregrantedResults;
+  } else {
+    return [];  // No results if no filters are selected.
   }
+}
 
 
   toggleResults() {
@@ -179,7 +199,7 @@ export class ResultsComponent implements OnInit {
           }
 
           localStorage.setItem('grantedResults', JSON.stringify(this.grantedResults));
-        localStorage.setItem('pregrantedResults', JSON.stringify(this.pregrantedResults));
+          localStorage.setItem('pregrantedResults', JSON.stringify(this.pregrantedResults));
 
           // Reopen the results section now that the data has been fetched and processed
           this.showResults = true;
@@ -203,7 +223,7 @@ export class ResultsComponent implements OnInit {
       return;
     }
   
-    const patentId = patent.patent_id; // Assuming the patent object has an 'id' property
+    const patentId = patent.patent_id; // Assuming the patent object has an 'id' property 
   
     const patentRef = this.db.database.ref(`saved_patents/${this.userId}/${patentId}`);
   
@@ -239,26 +259,72 @@ export class ResultsComponent implements OnInit {
     });
   }
 
-  isSidebarOpen: boolean = false;
-  displayGranted: boolean = false;
-  displayPregranted: boolean = false;
-  displayBoth: boolean = false;
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   applyFilters() {
-    // Implement your filtering logic here based on the selected filter options.
-    // You can use the displayGranted, displayPregranted, and displayBoth variables.
-    // Close the sidebar after applying filters if needed.
-    console.log('Display Granted:', this.displayGranted);
-    console.log('Display Pregranted:', this.displayPregranted);
-    console.log('Display Both:', this.displayBoth);
-
+    if (this.displayGranted && this.displayPregranted) {
+      this.displayBoth = true;
+      this.displayGranted = false;
+      this.displayPregranted = false;
+    }
     // Close the sidebar
     this.toggleSidebar();
   }
+  
+  onGrantedCheckboxChange() {
+    // If granted is checked, uncheck the other boxes
+    if (this.displayGranted) {
+      this.displayPregranted = false;
+      this.displayBoth = false;
+    }
+    this.updateTitle();
+  }
+  
+  onPregrantedCheckboxChange() {
+    // If pregranted is checked, uncheck the other boxes
+    if (this.displayPregranted) {
+      this.displayGranted = false;
+      this.displayBoth = false;
+    }
+    this.updateTitle();
+  }
+  
+  onBothCheckboxChange() {
+    // If both are checked, uncheck the other boxes
+    if (this.displayBoth) {
+      this.displayGranted = false;
+      this.displayPregranted = false;
+    }
+    this.updateTitle();
+  }
+  
+  updateTitle() {
+    if (this.displayGranted) {
+      this.title = 'Granted Patents';
+    } else if (this.displayPregranted) {
+      this.title = 'Pregranted Patents';
+    } else if (this.displayBoth) {
+      this.title = 'Granted + Pregranted Patents';
+    } else {
+      this.title = 'No Selection'; // You can change this default title if needed
+    }
+  }
+
+  getSimilarityBadge(score: number, index: number): {color: string, label: string} {
+    const absoluteIndex = (this.currentPage - 1) * this.itemsPerPage + index;
+
+    if (absoluteIndex < 33) {
+        return {color: '#AED581', label: 'Most Similar'};
+    } else if (absoluteIndex < 66) {
+        return {color: '#FFF9C4', label: 'Similar'};
+    } else {
+        return {color: '#FFC1A1', label: 'Least Similar'};
+    }
+}
+  
 
 
 }

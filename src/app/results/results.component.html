@@ -7,20 +7,23 @@
   <h3>Filter Options</h3>
   <form (submit)="applyFilters(); $event.preventDefault();">
     <div class="filter-option">
-      <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted">
+      <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
+        (ngModelChange)="onGrantedCheckboxChange()">
       <label for="grantedCheckbox">Granted</label>
     </div>
     <div class="filter-option">
-      <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted">
+      <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
+        (ngModelChange)="onPregrantedCheckboxChange()">
       <label for="pregrantedCheckbox">Pregranted</label>
     </div>
     <div class="filter-option">
-      <input type="checkbox" id="bothCheckbox" [(ngModel)]="displayBoth">
+      <input type="checkbox" id="bothCheckbox" [(ngModel)]="displayBoth" name="bothFilter"
+        (ngModelChange)="onBothCheckboxChange()">
       <label for="bothCheckbox">Granted+Pregranted</label>
     </div>
-    <button type="submit" class="filter-button">Apply</button>
   </form>
 </div>
+
 
 <section id="search-bar-area">
   <h1 id="logo">
@@ -35,23 +38,24 @@
   <form class="search-form" (submit)="onSubmit(); $event.preventDefault();">
     <!-- Search Input -->
     <div class="search-input-container">
-      <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="queryValue" required>
+      <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="queryValue"
+        required>
       <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
       <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
 
       <div class="icon-buttons-container">
         <button mat-icon-button (click)="picker.open()" class="icon-button" type="button" [disabled]="isSubmitting">
           <i class="fa fa-calendar"></i>
-      </button>
-      
-        <button (click)="onSubmit()" class="search-button" [disabled]="isSubmitting">
-            <i class="fa fa-search"></i>
         </button>
-        
+
+        <button (click)="onSubmit()" class="search-button" [disabled]="isSubmitting">
+          <i class="fa fa-search"></i>
+        </button>
+
+      </div>
+
     </div>
-   
-  </div>
-  
+
   </form>
 
   <a (click)="routeSaved()" class="minimalistic-button">Saved</a>
@@ -61,7 +65,8 @@
 <div class="pagination">
   <ul>
     <li *ngFor="let page of getPages()">
-      <a href="#" [class.activePage]="page === currentPage" (click)="changePage(page); $event.preventDefault()">{{ page }}</a>
+      <a href="#" [class.activePage]="page === currentPage" (click)="changePage(page); $event.preventDefault()">{{ page
+        }}</a>
     </li>
   </ul>
 </div>
@@ -86,33 +91,36 @@
     </ul>
   </aside>
 
-  <!-- Main Content -->
-  <section class="patents-section" [class.expanded]="showResults">
-    <br><br>
-    <h1 class="">{{ showResultsType === 'granted' ? 'Granted Results' : 'Pregranted Results' }}</h1>
-    <div *ngFor="let patent of getDisplayedResults()" 
-      [class.saved-patent]="isSaved(patent)"
-      class="patent-box" [@expandCollapse]="patent.state"
-      (click)="togglePatent(patent)">
-      <h2>{{ patent.title }} <br> <div *ngIf="grantedResults">{{patent.patent_id}}  </div> <div *ngIf="pregrantedResults" >{{patent.application_id}}</div></h2>
-      <p>{{ patent.abstract }}</p>
-      <div class="more-info" *ngIf="patent.state === 'expanded'">
-        <h2>Summary</h2>
-        <p>{{ patent.summary }}</p>
-        <h2>Claims</h2>
-        <p>{{ patent.claims }}</p>
-      </div>
-      <div class="patent-buttons">
-        <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span>
-        <span class="patent-button" (click)="stopPropagation($event)"> Google Patents </span>
-        <span class="patent-button" (click)="stopPropagation($event)"> USPTO </span>
-        <span class="patent-button" (click)="savePatent(patent); stopPropagation($event)"> Save To List </span>
-      </div>
+<section class="patents-section" [class.expanded]="showResults">
+  <br><br>
+  <h1 class="">{{title}}</h1>
+  <div *ngFor="let patent of getDisplayedResults(); let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
+    [@expandCollapse]="patent.state" (click)="togglePatent(patent)">
+
+    <div class="similarity-badge" [style.background-color]="getSimilarityBadge(patent.similarity_score, i).color">
+      <span>{{ getSimilarityBadge(patent.similarity_score, i).label }}</span>
     </div>
-  </section>
-</div>
+    <h2>{{ patent.title }} <br>
+      <div *ngIf="grantedResults">{{patent.patent_id}} </div>
+      <div *ngIf="pregrantedResults">{{patent.application_id}}</div>
+    </h2>
+    <p>{{ patent.abstract }}</p>
+    <div class="more-info" *ngIf="patent.state === 'expanded'">
+      <h2>Summary</h2>
+      <p>{{ patent.summary }}</p>
+      <h2>Claims</h2>
+      <p>{{ patent.claims }}</p>
+
+    </div>
+
+    <div class="patent-buttons">
+      <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span>
+      <span class="patent-button" (click)="stopPropagation($event)"> Google Patents </span>
+      <span class="patent-button" (click)="stopPropagation($event)"> USPTO </span>
+      <span class="patent-button" (click)="savePatent(patent); stopPropagation($event)"> Save To List </span>
+    </div>
 
 
+  </div>
 
-
-
+</section>
