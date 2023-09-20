@@ -54,6 +54,8 @@ export class ResultsComponent implements OnInit {
   showResults: boolean = false;
   queryValue: string = '';
   selectedDate: Date = new Date();
+  startDate: any;
+  endDate: any;
 
   isSubmitting: boolean = false;
   currentPage: number = 1;
@@ -95,8 +97,8 @@ export class ResultsComponent implements OnInit {
       );
       this.grantedResults = this.results.data['Granted results'];
       this.pregrantedResults = this.results.data['Pregranted Results'];
-      this.grantedResults.sort((a, b) => a.similarity - b.similarity); // Added sorting
-      this.pregrantedResults.sort((a, b) => a.similarity - b.similarity); // Added sorting
+      this.grantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
+      this.pregrantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
       this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
       this.updateDistanceBounds();
       localStorage.setItem(
@@ -107,7 +109,26 @@ export class ResultsComponent implements OnInit {
         'pregrantedResults',
         JSON.stringify(this.pregrantedResults)
       );
+      this.afAuth.authState.subscribe((user) => {
+        if (user) {
+          this.userId = user.uid;
+          console.log(this.userId);
+          this.searchQuery = this.route.snapshot.queryParamMap.get('query') || '';
+  
+          this.savePatentService.fetchSavedPatents(this.userId).subscribe(patents => {
+            this.savedPatents = patents;
+          });
+          this.searchHistoryService.fetchRecentSearches(this.userId).subscribe(searches => {
+            this.recentSearches = searches;
+            console.log(this.recentSearches)
+          });
+        } else {
+          this.userId = null;
+          alert('Please Log in to use this page!');
+        }
+      });
     }
+
     console.log('granted results', this.grantedResults);
   }
 
@@ -132,51 +153,59 @@ export class ResultsComponent implements OnInit {
       } else {
         this.userId = null;
       }
-    });
-    
-
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userId = user.uid;
-        console.log(this.userId);
-        this.searchQuery = this.route.snapshot.queryParamMap.get('query') || '';
-
-        this.savePatentService.fetchSavedPatents(this.userId).subscribe(patents => {
-          this.savedPatents = patents;
-        });
-        this.searchHistoryService.fetchRecentSearches(this.userId).subscribe(searches => {
-          this.recentSearches = searches;
-          console.log(this.recentSearches)
-        });
-      } else {
-        this.userId = null;
-        alert('Please Log in to use this page!');
-      }
-    });
-
-
+    }); 
   }
 
   changePage(page: number): void {
     this.currentPage = page;
   }
 
+
+  
   getPages(): number[] {
+    const displayedResults = this.getDisplayedResults().totalResults // Use displayed results
+    console.log(displayedResults)
     const totalResults = this.getDisplayResults().length;
-    const totalPages = Math.ceil(totalResults / this.itemsPerPage);
+    console.log(totalResults)
+    const totalPages = Math.ceil(displayedResults / this.itemsPerPage);
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
-  getDisplayedResults(): any[] {
-    const currentResults = this.getDisplayResults();
+  getDisplayedResults(): { currentResults: any, totalResults: any } {
+    let currentResults = this.getDisplayResults();
+  
+    // Check if startDate and endDate are defined
+    if (this.startDate && this.endDate) {
+      // Convert startDate and endDate strings to Date objects
+      const startDate = new Date(this.startDate);
+      const endDate = new Date(this.endDate);
+  
+      // Apply date filtering
+      currentResults = currentResults.filter((result) => {
+        const resultDate = new Date(result.date); // Assuming 'date' is the date attribute in your results
+        return resultDate >= startDate && resultDate <= endDate;
+      });
+    }
+  
+    // Calculate the total number of results after filtering
+    const totalResults = currentResults.length;
+  
+    // Calculate pagination indexes
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    return currentResults.slice(startIndex, endIndex);
+  
+    // Slice the results based on pagination
+    currentResults = currentResults.slice(startIndex, endIndex);
+  
+    return {currentResults: currentResults, totalResults: totalResults}
   }
 
   getDisplayResults() {
     if (this.displayBoth) {
-      return [...this.grantedResults, ...this.pregrantedResults];
+      this.combinedResults = this.grantedResults.concat(this.pregrantedResults);
+      this.combinedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
+      console.log(this.combinedResults)
+      return this.combinedResults;
     } else if (this.displayGranted) {
       return this.grantedResults;
     } else if (this.displayPregranted) {
@@ -195,7 +224,7 @@ export class ResultsComponent implements OnInit {
     patent.state = patent.state === 'expanded' ? 'collapsed' : 'expanded';
   }
 
-  onSubmit() {
+  search() {
     if (!this.queryValue || this.queryValue.trim() === '') {
       // Maybe show a warning message here
       console.warn('Search is empty. No action taken.');
@@ -230,10 +259,11 @@ export class ResultsComponent implements OnInit {
             this.pregrantedResults = response['Pregranted Results'];
           }
           this.activeSearch = this.queryValue; 
-          console.log("save query", this.saveSearchQuery)
           if (this.saveSearchQuery == true) {
             this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
           }
+          this.grantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
+          this.pregrantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
           localStorage.setItem(
             'grantedResults',
             JSON.stringify(this.grantedResults)
@@ -484,4 +514,19 @@ export class ResultsComponent implements OnInit {
           }
       }
   }
+
+  openUSPTO(patentNumber: any): void {
+    const url = `https://patentcenter.uspto.gov/retrieval/public/v2/application/data?patentNumber=${patentNumber}`;
+    
+    this.http.get<any>(url).subscribe((response) => {
+      console.log(response)
+      const applicationNumber = response.applicationNumberText;
+      if (applicationNumber) {
+        // Route to the desired URL with the application number
+        this.router.navigate(['/applications', applicationNumber]);
+      }
+    });
+  }
+
+  
 }

@@ -5,10 +5,10 @@
 <div class="sidebar" [class.open]="isSidebarOpen">
   <h1>Date Range:</h1>
   <div class="date-range">
-    <label for="startDate">Start Date:</label>
-    <input type="date" id="startDate" name="startDate">
+    <label for="startDate" >Start Date:</label>
+    <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
     <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" name="endDate">
+    <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
   </div>
   <h3>Filter Options</h3>
   <form (submit)="applyFilters(); $event.preventDefault();">
@@ -43,7 +43,7 @@
     </a>
   </h1>
 
-  <form class="search-form" (submit)="onSubmit(); $event.preventDefault();">
+  <form class="search-form" (submit)="search(); $event.preventDefault();">
     <!-- Search Input -->
     <div class="search-input-container">
       <textarea class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="queryValue" required></textarea>
@@ -55,7 +55,7 @@
           <i class="fa fa-calendar"></i>
         </button>
 
-        <button (click)="onSubmit()" class="search-button" [disabled]="isSubmitting">
+        <button (click)="search()" class="search-button" [disabled]="isSubmitting">
           <i class="fa fa-search"></i>
         </button>
 
@@ -102,7 +102,7 @@
 <section class="patents-section" [class.expanded]="showResults">
   <br><br>
   <h1 class="">{{title}}</h1>
-  <div *ngFor="let patent of getDisplayedResults(); let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
+  <div *ngFor="let patent of getDisplayedResults().currentResults; let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
     [@expandCollapse]="patent.state" (click)="togglePatent(patent)">
     <div class="similarity-badge" 
      [style.background-color]="getSimilarityBadge(patent.similarity_score).color">
@@ -123,10 +123,10 @@
     </div>
 
     <div class="patent-buttons">
-      <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span>
+      <!-- <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span> !-->
       <span class="patent-button" (click)="stopPropagation($event)"><a href="https://patents.google.com/?q={{ patent.patent_id }}" target="_blank"> Google Patents</a>  </span>
       
-      <span class="patent-button" (click)="stopPropagation($event)"> USPTO </span>
+      <span class="patent-button" (click)="openUSPTO(patent.patent_id); stopPropagation($event)"> USPTO </span>
       <span class="patent-button" 
       (click)="toggleSavePatent(patent); stopPropagation($event)">
       {{ isPatentSaved(patent) ? 'Un-save Patent' : 'Save To List' }}
