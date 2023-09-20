@@ -394,7 +394,7 @@ export class ResultsComponent implements OnInit {
   }
 
   getSimilarityBadge(score: number): { color: string; label: string } {
-    const similarity = this.getSimilarityPercentage(score, this.minDist, this.maxDist);
+    const similarity = this.getSimilarityPercentage(score);
   
     let color: string;
   
@@ -410,9 +410,21 @@ export class ResultsComponent implements OnInit {
     return { color, label };
   }
   
-  getSimilarityPercentage(score: number, minDist: number, maxDist: number): number {
-    if (minDist === maxDist) return 100; // Highest similarity (edge case)
-    return 100 - ((score - minDist) / (maxDist - minDist) * 100);
+  getBasePercentage(): number {
+    const decayFactor = 50;  // This is a tuning parameter; adjust it to control how rapidly the similarity falls off.
+    return 100 * Math.exp(-this.minDist / decayFactor);
+}
+
+  getSimilarityPercentage(score: number): number {
+      const basePercentage = this.getBasePercentage();
+    
+      if (this.minDist === this.maxDist) return basePercentage;  // Avoid division by zero.
+      
+      // Normalize score such that baseDist gives basePercentage and maxDist gives 0%.
+      let percentage = basePercentage - ((score - this.minDist) / (this.maxDist - this.minDist) * basePercentage);
+      
+      // To make sure it doesn't exceed basePercentage due to potential floating-point errors.
+      return Math.min(percentage, basePercentage);
   }
 
   computeDistances(arr: any[]): { minDist: number, maxDist: number } {

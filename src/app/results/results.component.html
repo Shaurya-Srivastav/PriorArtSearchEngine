@@ -104,7 +104,6 @@
   <h1 class="">{{title}}</h1>
   <div *ngFor="let patent of getDisplayedResults(); let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
     [@expandCollapse]="patent.state" (click)="togglePatent(patent)">
-
     <div class="similarity-badge" 
      [style.background-color]="getSimilarityBadge(patent.similarity_score).color">
   <span>{{ getSimilarityBadge(patent.similarity_score).label }}</span>
