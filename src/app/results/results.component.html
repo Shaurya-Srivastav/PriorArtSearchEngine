@@ -105,9 +105,11 @@
   <div *ngFor="let patent of getDisplayedResults(); let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
     [@expandCollapse]="patent.state" (click)="togglePatent(patent)">
 
-    <div class="similarity-badge" [style.background-color]="getSimilarityBadge(patent.similarity_score, i).color">
-      <span>{{ getSimilarityBadge(patent.similarity_score, i).label }}</span>
-    </div>
+    <div class="similarity-badge" 
+     [style.background-color]="getSimilarityBadge(patent.similarity_score).color">
+  <span>{{ getSimilarityBadge(patent.similarity_score).label }}</span>
+</div>
+
     <h2>{{ patent.title }} <br>
       <div *ngIf="grantedResults">{{patent.patent_id}} </div>
       <div *ngIf="pregrantedResults">{{patent.application_id}}</div>

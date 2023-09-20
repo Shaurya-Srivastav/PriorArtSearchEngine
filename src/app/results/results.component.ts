@@ -59,6 +59,9 @@ export class ResultsComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
+  minDist: number = Infinity;
+  maxDist: number = 0;
+
   userId: any;
 
   savedPatents: any[] = [];
@@ -93,8 +96,9 @@ export class ResultsComponent implements OnInit {
       this.grantedResults = this.results.data['Granted results'];
       this.pregrantedResults = this.results.data['Pregranted Results'];
       this.grantedResults.sort((a, b) => a.similarity - b.similarity); // Added sorting
-      this.grantedResults.sort((a, b) => a.similarity - b.similarity); // Added sorting
+      this.pregrantedResults.sort((a, b) => a.similarity - b.similarity); // Added sorting
       this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
+      this.updateDistanceBounds();
       localStorage.setItem(
         'grantedResults',
         JSON.stringify(this.grantedResults)
@@ -121,6 +125,7 @@ export class ResultsComponent implements OnInit {
         localStorage.getItem('pregrantedResults') || '[]'
       );
     }
+    this.updateDistanceBounds();
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userId = user.uid; // Here's the user ID!
@@ -237,7 +242,7 @@ export class ResultsComponent implements OnInit {
             'pregrantedResults',
             JSON.stringify(this.pregrantedResults)
           );
-
+          this.updateDistanceBounds();
           // Reopen the results section now that the data has been fetched and processed
           this.showResults = true;
           this.saveSearchQuery = true;
@@ -263,6 +268,7 @@ export class ResultsComponent implements OnInit {
     if (search.results) {
         this.grantedResults = search.results.granted;
         this.pregrantedResults = search.results.pregranted;
+        this.updateDistanceBounds();
     }
   }
 
@@ -387,19 +393,41 @@ export class ResultsComponent implements OnInit {
     }
   }
 
-  getSimilarityBadge(
-    score: number,
-    index: number
-  ): { color: string; label: string } {
-    const absoluteIndex = (this.currentPage - 1) * this.itemsPerPage + index;
-
-    if (absoluteIndex < 33) {
-      return { color: '#AED581', label: 'Most Similar' };
-    } else if (absoluteIndex < 66) {
-      return { color: '#FFF9C4', label: 'Similar' };
+  getSimilarityBadge(score: number): { color: string; label: string } {
+    const similarity = this.getSimilarityPercentage(score, this.minDist, this.maxDist);
+  
+    let color: string;
+  
+    if (similarity > 66) {
+      color = '#AED581';  // Green for high similarity
+    } else if (similarity > 33) {
+      color = '#FFF9C4';  // Yellow for medium similarity
     } else {
-      return { color: '#FFC1A1', label: 'Least Similar' };
+      color = '#FFC1A1';  // Red for low similarity
     }
+  
+    const label = `${similarity.toFixed(2)}% Similar`;
+    return { color, label };
+  }
+  
+  getSimilarityPercentage(score: number, minDist: number, maxDist: number): number {
+    if (minDist === maxDist) return 100; // Highest similarity (edge case)
+    return 100 - ((score - minDist) / (maxDist - minDist) * 100);
+  }
+
+  computeDistances(arr: any[]): { minDist: number, maxDist: number } {
+    const minDist = Math.min(...arr.map(p => p.similarity_score));
+    const maxDist = Math.max(...arr.map(p => p.similarity_score));
+    return { minDist, maxDist };
+  }
+  
+  updateDistanceBounds(): void {
+    const grantedDistances = this.computeDistances(this.grantedResults);
+    const pregrantedDistances = this.computeDistances(this.pregrantedResults);
+  
+    // Here, you take the global minimum and maximum across both arrays.
+    this.minDist = Math.min(grantedDistances.minDist, pregrantedDistances.minDist);
+    this.maxDist = Math.max(grantedDistances.maxDist, pregrantedDistances.maxDist);
   }
 
   // Add a function to toggle the expanded class
