@@ -88,7 +88,9 @@
           [class.active]="activeSearch === search.query"
           (click)="onSearchHistoryClick(search)">
           <span class="search-history-query">{{ search.query }}</span>
+          <br>
           <span class="search-history-time">{{ search.timestamp | date:'shortTime' }}</span>
+          <br>
           <i  class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
       </li>
   </ul>
