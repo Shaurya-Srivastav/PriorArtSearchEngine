@@ -1,9 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background-color: #FFC0CB; /* Pink background color */
+  color: #555;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #555; /* Darker text for better contrast on light background */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #555;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-btn:hover {
+  background-color: #DADADA; /* Lighter pink on hover */
+}
 
 /* Container Styles */
 .page-container {
+  margin-top: 2%;
   display: flex;
   height: auto;
   overflow: hidden;
@@ -11,7 +56,6 @@
 
 /* Sidebar Styles for Search History */
 .search-history-sidebar {
-  margin-top: 1.1%;
   width: 15%; /* Adjust the width to 30% */
   background-color: #FFC0CB;
   padding: 20px;
@@ -21,7 +65,6 @@
   overflow-y: auto; /* Add vertical scroll when content exceeds the sidebar height */
 }
 .filter-sidebar {
-  margin-top: 1.1%;
   width: 10%; /* Adjust the width to 30% */
   background-color: #FFC0CB;
   padding: 20px;
@@ -358,7 +401,6 @@ button i.fa {
 
 .patents-section {
   background-color: #f5f5f5; /* light gray background */
-  margin-top: 20px; /* space between search bar and this section */
   overflow-y: auto;
   transition: max-height 0.5s ease-in-out; /* smooth expansion transition */
   padding: 0 20px; /* horizontal padding for content */

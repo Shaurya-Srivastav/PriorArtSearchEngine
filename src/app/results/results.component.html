@@ -52,6 +52,7 @@
     </li>
   </ul>
 </div>
+
 <div class="page-container">
   <aside class="filter-sidebar">
     <h1>Filters</h1>
@@ -79,7 +80,7 @@
 
   <!-- Custom Sidebar for Search History -->
   <aside class="search-history-sidebar">
-    <h1 class="sidebar-title">Search History</h1>
+    <h1 class="sidebar-title">Projects</h1>
     <ul class="search-history-list">
       <li 
           *ngFor="let search of recentSearches"
@@ -122,16 +123,27 @@
 
     <div class="patent-buttons">
       <!-- <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span> !-->
-      <span class="patent-button" (click)="openUSPTO(patent.patent_id); stopPropagation($event)"> <a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/{{ patent.patent_id }}" target="_blank"> USPTO </a> </span>
-      <span class="patent-button" (click)="stopPropagation($event)"><a href="https://patents.google.com/patent/US{{ patent.patent_id }}" target="_blank"> Google Patents</a>  </span>
-    
-      <span class="patent-button" 
-      (click)="toggleSavePatent(patent); stopPropagation($event)">
-      {{ isPatentSaved(patent) ? 'Un-save Patent' : 'Save To List' }}
+      <span class="patent-button" (click)="openUSPTO(patent.patent_id); stopPropagation($event)">
+        <a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/{{ patent.patent_id }}" target="_blank">USPTO</a>
+      </span>
+      <span class="patent-button" (click)="stopPropagation($event)">
+        <a href="https://patents.google.com/patent/US{{ patent.patent_id }}" target="_blank">Google Patents</a>
       </span>
 
+      <div class="dropdown">
+        <div class="dropdown-btn">Save to Project </div>
+        <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+        </div>
     </div>
 
+
+
+  
+    </div>
+    
 
   </div>
 

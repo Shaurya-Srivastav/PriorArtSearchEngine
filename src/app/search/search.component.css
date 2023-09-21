@@ -9,6 +9,29 @@
   background-size: cover;
 }
 
+.search-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.link-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #D87093; /* Your desired button color */
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.link-button:hover {
+  background-color: #FFB6C1; /* Change button color on hover */
+}
+
+
+
 #search::before {
   content: "";
   position: absolute;
