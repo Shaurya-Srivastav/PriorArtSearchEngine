@@ -373,7 +373,7 @@ button i.fa {
 }
 
 .patent-box:hover {
-  transform: scale(1.05); /* Scale it up a bit */
+  background-color: #FFC0CB;
   z-index: 2;
 }
 
