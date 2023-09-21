@@ -54,15 +54,19 @@
   margin-bottom: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  overflow: hidden; /* Hide any overflowing text */
+  text-overflow: ellipsis "[..]";
 }
 
 .search-history-query {
+  width: 100%;
   font-weight: bold;
   color: black;
   overflow: hidden;
-  text-overflow: ellipsis;
   display: inline-block;
   vertical-align: middle;
+  text-overflow: ellipsis "[..]";
 }
 
 .search-history-time {
