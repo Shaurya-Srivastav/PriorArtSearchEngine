@@ -108,7 +108,7 @@
 </div>
 
     <h2>{{ patent.title }} <br>
-      <div *ngIf="grantedResults">{{patent.patent_id}} </div>
+      <div *ngIf="grantedResults">US{{patent.patent_id}} </div>
       <div *ngIf="pregrantedResults">{{patent.application_id}}</div>
     </h2>
     <p>{{ patent.abstract }}</p>
@@ -122,9 +122,9 @@
 
     <div class="patent-buttons">
       <!-- <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span> !-->
-      <span class="patent-button" (click)="stopPropagation($event)"><a href="https://patents.google.com/?q={{ patent.patent_id }}" target="_blank"> Google Patents</a>  </span>
-      
-      <span class="patent-button" (click)="openUSPTO(patent.patent_id); stopPropagation($event)"> USPTO </span>
+      <span class="patent-button" (click)="openUSPTO(patent.patent_id); stopPropagation($event)"> <a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/{{ patent.patent_id }}" target="_blank"> USPTO </a> </span>
+      <span class="patent-button" (click)="stopPropagation($event)"><a href="https://patents.google.com/patent/US{{ patent.patent_id }}" target="_blank"> Google Patents</a>  </span>
+    
       <span class="patent-button" 
       (click)="toggleSavePatent(patent); stopPropagation($event)">
       {{ isPatentSaved(patent) ? 'Un-save Patent' : 'Save To List' }}

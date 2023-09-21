@@ -109,33 +109,31 @@ export class ResultsComponent implements OnInit {
         'pregrantedResults',
         JSON.stringify(this.pregrantedResults)
       );
-      this.afAuth.authState.subscribe((user) => {
-        if (user) {
-          this.userId = user.uid;
-          console.log(this.userId);
-          this.searchQuery = this.route.snapshot.queryParamMap.get('query') || '';
-  
-          this.savePatentService.fetchSavedPatents(this.userId).subscribe(patents => {
-            this.savedPatents = patents;
-          });
-          this.searchHistoryService.fetchRecentSearches(this.userId).subscribe(searches => {
-            this.recentSearches = searches;
-            console.log(this.recentSearches)
-          });
-        } else {
-          this.userId = null;
-          alert('Please Log in to use this page!');
-        }
-      });
+     
     }
-
-    console.log('granted results', this.grantedResults);
   }
 
   ngOnInit(): void {
     this.showResults = true;
     this.isSearching = false;
-
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userId = user.uid;
+        console.log(this.userId);
+        this.searchQuery = this.route.snapshot.queryParamMap.get('query') || '';
+        
+        this.savePatentService.fetchSavedPatents(this.userId).subscribe(patents => {
+          this.savedPatents = patents;
+        });
+        this.searchHistoryService.fetchRecentSearches(this.userId).subscribe(searches => {
+          this.recentSearches = searches;
+          console.log(this.recentSearches)
+        });
+      } else {
+        this.userId = null;
+        alert('Please Log in to use this page!');
+      }
+    });
     if (localStorage.getItem('grantedResults')) {
       this.grantedResults = JSON.parse(
         localStorage.getItem('grantedResults') || '[]'
@@ -154,6 +152,7 @@ export class ResultsComponent implements OnInit {
         this.userId = null;
       }
     }); 
+   
   }
 
   changePage(page: number): void {
@@ -164,9 +163,6 @@ export class ResultsComponent implements OnInit {
   
   getPages(): number[] {
     const displayedResults = this.getDisplayedResults().totalResults // Use displayed results
-    console.log(displayedResults)
-    const totalResults = this.getDisplayResults().length;
-    console.log(totalResults)
     const totalPages = Math.ceil(displayedResults / this.itemsPerPage);
     return Array.from({ length: totalPages }, (_, i) => i + 1);
   }
@@ -339,9 +335,6 @@ export class ResultsComponent implements OnInit {
         } else {
           patentRef
             .set(patent)
-            .then(() => {
-              alert('Patent saved successfully!');
-            })
             .catch((error) => {
               console.error('Error while saving the patent:', error);
               alert(
@@ -496,7 +489,6 @@ export class ResultsComponent implements OnInit {
           // If the patent is saved, then un-save it
           try {
               await this.savePatentService.deletePatent(this.userId, patentId);
-              alert('Patent removed successfully.');
               this.savedPatents = this.savedPatents.filter(p => p.key !== patentId);
           } catch (error) {
               console.error('Error removing patent: ', error);
@@ -506,7 +498,6 @@ export class ResultsComponent implements OnInit {
           // If the patent is not saved, then save it
           try {
               await this.savePatentService.savePatent(this.userId, patent);
-              alert('Patent saved successfully.');
               this.savedPatents.push(patent);
           } catch (error) {
               console.error('Error saving patent: ', error);
