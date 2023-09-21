@@ -1,35 +1,10 @@
-<div class="open-sidebar-button" (click)="toggleSidebar()">
+<!-- <div class="open-sidebar-button" (click)="toggleSidebar()">
   <i class="fa fa-bars"></i>
 </div>
 
 <div class="sidebar" [class.open]="isSidebarOpen">
-  <h1>Date Range:</h1>
-  <div class="date-range">
-    <label for="startDate" >Start Date:</label>
-    <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
-    <label for="endDate">End Date:</label>
-    <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
-  </div>
-  <h3>Filter Options</h3>
-  <form (submit)="applyFilters(); $event.preventDefault();">
-    <!-- Existing filter options -->
-    <div class="filter-option">
-      <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
-        (ngModelChange)="onGrantedCheckboxChange()">
-      <label for="grantedCheckbox">Granted</label>
-    </div>
-    <div class="filter-option">
-      <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
-        (ngModelChange)="onPregrantedCheckboxChange()">
-      <label for="pregrantedCheckbox">Pregranted</label>
-    </div>
-    <div class="filter-option">
-      <input type="checkbox" id="bothCheckbox" [(ngModel)]="displayBoth" name="bothFilter"
-        (ngModelChange)="onBothCheckboxChange()">
-      <label for="bothCheckbox">Granted+Pregranted</label>
-    </div>
-  </form>
-</div>
+  
+</div> -->
 
 
 
@@ -78,9 +53,33 @@
   </ul>
 </div>
 <div class="page-container">
+  <aside class="filter-sidebar">
+    <h1>Filters</h1>
+    <h2>Date Range</h2>
+    <div class="date-range">
+      <label for="startDate" >Start Date:</label>
+      <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
+    </div>
+    <h2>Filter Options</h2>
+    <form (submit)="applyFilters(); $event.preventDefault();">
+      <div class="filter-option">
+        <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
+          (ngModelChange)="onGrantedCheckboxChange()">
+        <label for="grantedCheckbox">Granted</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
+          (ngModelChange)="onPregrantedCheckboxChange()">
+        <label for="pregrantedCheckbox">Pregranted</label>
+      </div>
+    </form>
+</aside>
+
   <!-- Custom Sidebar for Search History -->
   <aside class="search-history-sidebar">
-    <h2 class="sidebar-title">Search History</h2>
+    <h1 class="sidebar-title">Search History</h1>
     <ul class="search-history-list">
       <li 
           *ngFor="let search of recentSearches"
