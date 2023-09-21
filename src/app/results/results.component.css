@@ -17,6 +17,7 @@
   padding: 20px;
   border-right: 1px solid #ccc;
   box-sizing: border-box;
+  height: 76vh;
   overflow-y: auto; /* Add vertical scroll when content exceeds the sidebar height */
 }
 
@@ -355,6 +356,7 @@ button i.fa {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 76vh;
 }
 
 .saved-patent {
