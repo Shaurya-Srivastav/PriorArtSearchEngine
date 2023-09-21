@@ -92,6 +92,7 @@ export class ResultsComponent implements OnInit {
     if (state) {
       this.results = state;
       this.queryValue = this.results.query;
+      this.endDate = this.results.formattedDate
       this.grantedResults = this.results.data['Granted results'].map(
         (res: any) => ({ ...res, state: 'collapsed' })
       );
@@ -197,20 +198,20 @@ export class ResultsComponent implements OnInit {
   }
 
   getDisplayResults() {
-    if (this.displayBoth) {
-      this.combinedResults = this.grantedResults.concat(this.pregrantedResults);
-      this.combinedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
-      console.log(this.combinedResults)
-      return this.combinedResults;
+    if (this.displayGranted && this.displayPregranted) {
+      // Display both "Granted" and "Pregranted"
+      const combinedResults = this.grantedResults.concat(this.pregrantedResults);
+      return combinedResults.sort((a, b) => a.similarity_score - b.similarity_score);
     } else if (this.displayGranted) {
+      // Display only "Granted"
       return this.grantedResults;
     } else if (this.displayPregranted) {
+      // Display only "Pregranted"
       return this.pregrantedResults;
     } else {
       return []; // No results if no filters are selected.
     }
   }
-
   toggleResults() {
     this.showResultsType =
       this.showResultsType === 'granted' ? 'pregranted' : 'granted';
@@ -234,7 +235,7 @@ export class ResultsComponent implements OnInit {
     const formattedDate = this.selectedDate
       ? this.selectedDate.toISOString().split('T')[0]
       : null;
-
+    this.endDate = this.selectedDate.toISOString();
     const requestData = {
       input_idea: this.queryValue,
       user_input_date: formattedDate,
@@ -378,31 +379,27 @@ export class ResultsComponent implements OnInit {
   }
 
   onGrantedCheckboxChange() {
-    // If granted is checked, uncheck the other boxes
-    if (this.displayGranted) {
-      this.displayPregranted = false;
-      this.displayBoth = false;
+    // If granted is checked, uncheck pregranted
+    if (!this.displayGranted) {
+      this.displayBoth = true;
+    } else {
+      this.displayBoth = !this.displayPregranted;
     }
+  
     this.updateTitle();
   }
-
+  
   onPregrantedCheckboxChange() {
-    // If pregranted is checked, uncheck the other boxes
-    if (this.displayPregranted) {
-      this.displayGranted = false;
-      this.displayBoth = false;
+    // If pregranted is checked, uncheck granted
+    if (!this.displayPregranted) {
+      this.displayBoth = true;
+    } else {
+      this.displayBoth = !this.displayGranted;
     }
+  
     this.updateTitle();
   }
 
-  onBothCheckboxChange() {
-    // If both are checked, uncheck the other boxes
-    if (this.displayBoth) {
-      this.displayGranted = false;
-      this.displayPregranted = false;
-    }
-    this.updateTitle();
-  }
 
   updateTitle() {
     if (this.displayGranted) {
@@ -421,9 +418,9 @@ export class ResultsComponent implements OnInit {
   
     let color: string;
   
-    if (similarity > 66) {
+    if (similarity > 0.66) {
       color = '#AED581';  // Green for high similarity
-    } else if (similarity > 33) {
+    } else if (similarity > 0.33) {
       color = '#FFF9C4';  // Yellow for medium similarity
     } else {
       color = '#FFC1A1';  // Red for low similarity
@@ -439,16 +436,21 @@ export class ResultsComponent implements OnInit {
 }
 
   getSimilarityPercentage(score: number): number {
-      const basePercentage = this.getBasePercentage();
-    
-      if (this.minDist === this.maxDist) return basePercentage;  // Avoid division by zero.
-      
-      // Normalize score such that baseDist gives basePercentage and maxDist gives 0%.
-      let percentage = basePercentage - ((score - this.minDist) / (this.maxDist - this.minDist) * basePercentage);
-      
-      // To make sure it doesn't exceed basePercentage due to potential floating-point errors.
-      return Math.min(percentage, basePercentage);
+    return 1 - ((score * score)/4)
   }
+  /*
+  getSimilarityPercentage(score: number): number {
+        const basePercentage = this.getBasePercentage();
+      
+        if (this.minDist === this.maxDist) return basePercentage;  // Avoid division by zero.
+        
+        // Normalize score such that baseDist gives basePercentage and maxDist gives 0%.
+        let percentage = basePercentage - ((score - this.minDist) / (this.maxDist - this.minDist) * basePercentage);
+        
+        // To make sure it doesn't exceed basePercentage due to potential floating-point errors.
+        return Math.min(percentage, basePercentage);
+    }
+  */
 
   computeDistances(arr: any[]): { minDist: number, maxDist: number } {
     const minDist = Math.min(...arr.map(p => p.similarity_score));

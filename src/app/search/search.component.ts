@@ -76,7 +76,7 @@ export class SearchComponent {
         this.isSearching = false;
         this.isSubmitting = false;
         this.router.navigate(['/results'], {
-          state: { data: this.results, query: this.queryValue },
+          state: { data: this.results, query: this.queryValue, formattedDate: formattedDate },
         });
       },
       (error) => {

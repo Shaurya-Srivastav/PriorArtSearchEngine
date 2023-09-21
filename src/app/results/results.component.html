@@ -30,7 +30,7 @@
           <i class="fa fa-calendar"></i>
         </button>
 
-        <button (click)="search()" class="search-button" [disabled]="isSubmitting">
+        <button class="search-button" [disabled]="isSubmitting">
           <i class="fa fa-search"></i>
         </button>
 
@@ -98,12 +98,13 @@
 
 <section class="patents-section" [class.expanded]="showResults">
   <br><br>
-  <h1 class="">{{title}}</h1>
+  <h1 class=""></h1>
+  <br>
   <div *ngFor="let patent of getDisplayedResults().currentResults; let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
     [@expandCollapse]="patent.state" (click)="togglePatent(patent)">
     <div class="similarity-badge" 
      [style.background-color]="getSimilarityBadge(patent.similarity_score).color">
-  <span>{{ getSimilarityBadge(patent.similarity_score).label }}</span>
+  <span>{{ getSimilarityBadge(patent.similarity_score).label }} <br> <div  style="text-align: center;">{{patent.type}}</div>  </span>
 </div>
 
     <h2>{{ patent.title }} <br>

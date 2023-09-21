@@ -17,11 +17,11 @@
         <!-- Signup form fields -->
         <div class="form-group">
           <label for="newFirstName">First Name</label>
-          <input type="text" id="newFirstName" name="newFirstName" [(ngModel)]="newEmail" required>
+          <input type="text" id="newFirstName" name="newFirstName" [(ngModel)]="firstName" required>
         </div>
         <div class="form-group">
           <label for="newLastName">Last Name</label>
-          <input type="text" id="newLastName" name="newLastName" [(ngModel)]="newEmail" required>
+          <input type="text" id="newLastName" name="newLastName" [(ngModel)]="lastName" required>
         </div>
         <div class="form-group">
           <label for="newUsername">Enter an email</label>
@@ -33,7 +33,7 @@
         </div>
         <div class="form-group">
           <label for="newCompany">Enter your company</label>
-          <input type="text" id="newCompany" name="newCompany" [(ngModel)]="newEmail" required>
+          <input type="text" id="newCompany" name="newCompany" [(ngModel)]="company" required>
         </div>
         
         <button class="login-button" type="submit" (click)="register()">Sign Up</button>
