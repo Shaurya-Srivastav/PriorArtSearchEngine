@@ -1,0 +1,17 @@
+<!-- Project Modal -->
+<div class="modal">
+    <div class="modal-content">
+      <h2>Create Project</h2>
+      <form (submit)="saveProject()">
+        <label for="title">Title:</label>
+        <input type="text" id="title" [(ngModel)]="projectTitle" name="title" required>
+  
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="projectDescription" name="description" required></textarea>
+  
+        <button type="submit">Save</button>
+        <!-- Corrected the event handler here -->
+        <button type="button" (click)="closeModal()">Cancel</button>
+      </form>
+    </div>
+</div>

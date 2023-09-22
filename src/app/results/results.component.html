@@ -172,17 +172,14 @@
         <a href="https://patents.google.com/patent/US{{ patent.patent_id }}" target="_blank">Google Patents</a>
       </span>
 
-      <div class="dropdown">
-        <div class="dropdown-btn">Save to Project </div>
+      <div class="dropdown" (click)="stopPropagation($event)">
+        <div class="dropdown-btn">Save to Project</div>
         <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
-            <a href="#">Option 3</a>
-            <a href="#">Option 3</a>
-            <a href="#">Option 3</a>
+          <a *ngFor="let project of savedProjects" (click)="saveToProject(patent, project)">
+            {{ project.title }}
+          </a>
         </div>
-      </div>  
+      </div>
     </div>
   </div>
 
