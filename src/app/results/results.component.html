@@ -1,10 +1,47 @@
-<!-- <div class="open-sidebar-button" (click)="toggleSidebar()">
-  <i class="fa fa-bars"></i>
-</div>
 
 <div class="sidebar" [class.open]="isSidebarOpen">
+
+  <h1 style="font-size: 2.5rem;">Filters</h1>
+    <h2>Date Range</h2>
+    <div class="date-range">
+      <label for="startDate" >Start Date:</label>
+      <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
+    </div>
+    <h2>Filter Options</h2>
+    <form (submit)="applyFilters(); $event.preventDefault();">
+      <div class="filter-option">
+        <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
+          (ngModelChange)="onGrantedCheckboxChange()">
+        <label for="grantedCheckbox">Granted</label>
+      </div>
+      <div class="filter-option">
+        <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
+          (ngModelChange)="onPregrantedCheckboxChange()">
+        <label for="pregrantedCheckbox">Pregranted</label>
+      </div>
+    </form>
+
+    <br><br>
+    <h1 style="font-size: 2.5rem;">History</h1>
+    <ul class="search-history-list">
+      <li 
+          *ngFor="let search of recentSearches"
+          class="search-history-item" 
+          [class.active]="activeSearch === search.query"
+          (click)="onSearchHistoryClick(search)">
+          <span class="search-history-query">{{ search.query }}</span>
+          <br>
+          <span class="search-history-time">{{ search.timestamp | date:'shortTime' }}</span>
+          <br>
+          <i  class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
+      </li>
+  </ul> 
+
   
-</div> -->
+  
+</div> 
 
 
 
@@ -40,7 +77,7 @@
 
   </form>
 
-  <a (click)="routeSaved()" class="minimalistic-button">Saved</a>
+  <a (click)="routeSaved()" class="minimalistic-button">Projects</a>
 </section>
 
 
@@ -80,7 +117,7 @@
 
   <!-- Custom Sidebar for Search History -->
   <aside class="search-history-sidebar">
-    <h1 class="sidebar-title">Projects</h1>
+    <h1 class="sidebar-title">History</h1>
     <ul class="search-history-list">
       <li 
           *ngFor="let search of recentSearches"
@@ -98,7 +135,12 @@
   </aside>
 
 <section class="patents-section" [class.expanded]="showResults">
-  <br><br>
+  <br>
+  <div class="open-sidebar-button" (click)="toggleSidebar()">
+    <i class="fa fa-bars"></i>
+  </div>
+  
+  <br>
   <h1 class=""></h1>
   <br>
   <div *ngFor="let patent of getDisplayedResults().currentResults; let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
@@ -136,15 +178,12 @@
             <a href="#">Option 1</a>
             <a href="#">Option 2</a>
             <a href="#">Option 3</a>
+            <a href="#">Option 3</a>
+            <a href="#">Option 3</a>
+            <a href="#">Option 3</a>
         </div>
+      </div>  
     </div>
-
-
-
-  
-    </div>
-    
-
   </div>
 
 </section>

@@ -63,6 +63,8 @@
     transform-origin: center bottom;
   }
 
+
+  
   
 
 /*********************** SAVED PATENTS SECTION *******************/
@@ -74,7 +76,7 @@
 }
 .title2 {
     color: #555;
-    font-size: 60px;
+    font-size: 30px;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
 }
@@ -135,6 +137,113 @@ li {
     background-color: red;
 }
 
+.title{
+    font-size: 3.5rem; 
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* Sidebar styles */
+#sidebar {
+    width: 20%;
+    background-color: #FFC0CB;
+    color: #555;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: width 0.3s ease;
+}
+
+.sidebar-header {
+    padding: 15px;
+    text-align: center;
+    background-color: #FFC0CB;
+    color: #555;
+}
+
+#add-project-button {
+    background-color: #555;
+    color: #FFC0CB;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#add-project-button:hover {
+    background-color: #DADADA;
+    color: #555;
+}
+
+.project-list {
+    list-style-type: none;
+    padding: 0;
+    
+}
+
+.project-list li {
+    display: flex;
+    justify-content: space-between; /* Align items to the right side */
+    align-items: center; /* Center vertically */
+    margin: 0 auto;
+    margin-bottom: 5%;
+    width: 95%;
+    padding: 10px;
+    text-align: left;
+
+}
+
+.project-list a {
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis; /* Display an ellipsis (...) for overflowed text */
+    width: 90%;
+    text-decoration: none;
+    color: #555;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.project-list li:hover {
+    background-color: #DADADA;
+}
+
+/* Content styles (adjust the margin-left to accommodate the sidebar width) */
+#content {
+    margin-left: 20%;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+.delete-icon{
+    color: red; /* Icon color */
+    font-size: 18px; /* Icon size */
+    cursor: pointer;
+}
+
+.edit-icon{
+    font-size: 18px; /* Icon size */
+    cursor: pointer;
+    margin-right: 2%;
+}
+
+.edit-icon:hover{
+    color: #FFC0CB;
+}
+
+.delete-icon:hover {
+    color: darkred; /* Icon color on hover */
+}
+
 
 
 /************* CLEAR LIST BUTTON **********/
@@ -152,22 +261,6 @@ li {
 }
 
 .cool-button:hover {
-    background-color: #DADADA; /* Slightly darker green on hover */
-}
-
-.switch-button {
-    background-color: #FFC0CB; /* Green background color */
-    color: white; /* White text color */
-    border: none;
-    border-radius: 5px;
-    padding: 12px 24px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease; /* Smooth background color transition on hover */
-}
-.switch-button:hover {
     background-color: #DADADA; /* Slightly darker green on hover */
 }
 
@@ -211,41 +304,6 @@ li {
 
 
 
-/**************************PAGINATION*************************/
-/* Add the following styles for pagination */
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .pagination ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-  }
-  
-  .pagination li {
-    margin: 0 5px;
-  }
-  
-  .pagination a {
-    text-decoration: none;
-    background-color: #FFC0CB;
-    color: #555;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Poppins', sans-serif;
-    transition: background-color 0.3s;
-  }
-  
-  .pagination a:hover {
-    background-color: #DADADA;
-  }
   
 
 /********MEDIA QUERIES*****/
