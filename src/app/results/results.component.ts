@@ -80,6 +80,9 @@ export class ResultsComponent implements OnInit {
   saveSearchQuery: boolean = true;
   activeSearch: string | null = null;
 
+  projectTitle: any;
+  selectedProjectTitle: string | null = null;
+
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -521,22 +524,21 @@ export class ResultsComponent implements OnInit {
   }
 
   saveToProject(patent: any, project: any) {
-    // Assuming you have the user's UID in userId  
     // Create a new object representing the saved patent
     const savedPatent = {
+      patentNumber: patent.patent_id,
       title: patent.title,
       abstract: patent.abstract,
       summary: patent.summary,
       claims: patent.claims,
+      projectId: project.key, // Storing project reference here
       // Add other patent properties as needed
     };
     // Call your ProjectService to save the patent to the selected project
     this.projectService.addPatentToProject(this.userId, project.key, savedPatent).then(() => {
-      alert(`Patent saved to project ${project.title} succesfully` );
-    })
-    
+      alert(`Patent saved to project ${project.title} successfully` );
+    });
+    this.selectedProjectTitle = project.title;
   }
-
-  
 
 }
