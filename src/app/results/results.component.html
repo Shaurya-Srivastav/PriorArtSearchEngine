@@ -154,6 +154,7 @@
       <div *ngIf="grantedResults">US{{patent.patent_id}} </div>
       <div *ngIf="pregrantedResults">{{patent.application_id}}</div>
     </h2>
+    <h2>Saved to: </h2>
     <p>{{ patent.abstract }}</p>
     <div class="more-info" *ngIf="patent.state === 'expanded'">
       <h2>Summary</h2>
