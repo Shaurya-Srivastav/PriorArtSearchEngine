@@ -10,22 +10,21 @@
       </li>
     </ul>
   </div>
-  
+  <nav id="navbar">
+    <div id="logo">
+      <a href="#">
+        <span *ngFor="let letter of titleLetters; let i = index"
+              class="letter" [class.animate]="isSearching" [style.animation-delay]="(1 + i * 0.2) + 's'">
+          {{ letter }}
+        </span>
+      </a>
+    </div>
+    <div class="buttons">
+      <a href="/search" class="nav-button">Home</a>
+      <a href="/results" class="nav-button">Back to Results</a>
+    </div>
+  </nav>
   <div id="content">
-    <nav id="navbar">
-      <div id="logo">
-        <a href="#">
-          <span *ngFor="let letter of titleLetters; let i = index"
-                class="letter" [class.animate]="isSearching" [style.animation-delay]="(1 + i * 0.2) + 's'">
-            {{ letter }}
-          </span>
-        </a>
-      </div>
-      <div class="buttons">
-        <a href="/search" class="nav-button">Home</a>
-        <a href="/results" class="nav-button">Back to Results</a>
-      </div>
-    </nav>
     <section id="savedPatents">
       <br>
       <h1 class="title">Projects</h1>
@@ -43,8 +42,7 @@
       <h1 class="title2" *ngIf="selectedProject">Project Description: {{ selectedProject.description }}</h1>
       <br>
       <ol>
-        <!-- Use *ngFor to loop through the savedPatents array -->
-        <li *ngFor="let patent of savedPatents | search: searchedTerm">
+        <li *ngFor="let patent of savedPatents | search: searchedTerm" class="">
           <h1 class="patent-title" [innerHTML]="patent.title | highlight: searchedTerm">{{ patent.title }}</h1>
           <h2 class="patent-abstract" [innerHTML]="patent.abstract | highlight: searchedTerm">
             <b>Patent Abstract:</b> {{ patent.abstract }}
@@ -55,7 +53,7 @@
             <a class="gpatent" [href]="patent.google_patent_link" target="_blank">Google Patents</a>
             <a class="uspto" [href]="patent.uspto_link" target="_blank">USPTO</a>
             <a id="delete" (click)="removePatentFromProject(userId, selectedProject.key, patent.key)">Delete</a>         
-        </div>
+        </div> 
         </li>
       </ol>
     </section>

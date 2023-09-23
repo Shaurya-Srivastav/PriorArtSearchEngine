@@ -139,9 +139,7 @@
   <div class="open-sidebar-button" (click)="toggleSidebar()">
     <i class="fa fa-bars"></i>
   </div>
-  
   <br>
-  <h1 class=""></h1>
   <br>
   <div *ngFor="let patent of getDisplayedResults().currentResults; let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
     [@expandCollapse]="patent.state" (click)="togglePatent(patent)">
@@ -149,7 +147,7 @@
      [style.background-color]="getSimilarityBadge(patent.similarity_score).color">
   <span>{{ getSimilarityBadge(patent.similarity_score).label }} <br> <div  style="text-align: center;">{{patent.type}}</div>  </span>
 </div>
-
+<input type="checkbox" class="check">
     <h2 class="patent-title">{{ patent.title }} <br>
       <div>
         <div *ngIf="patent.type=='granted'">US{{patent.patent_id}} </div>

@@ -229,18 +229,11 @@ h1, h3{
   transform: translateX(-50%);
   z-index: 101;
   cursor: pointer;
-  color: #FFC0CB; /* Pink color */
+  color: #4c6a45; /* Pink color */
   font-size: 35px;
   transition: color 0.3s; /* Add transition for color change */
   display: none;
 }
-
-
-
-.open-sidebar-button:hover {
-  color: #D87093; /* Darker pink color on hover */
-}
-
 
 
 #search-bar-area {
@@ -354,15 +347,6 @@ button i.fa {
   color: #4c6a45;
 }
 
-.toggle-button {
-  background-color: #FFC0CB; /* Light gray background */
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-family: 'Poppins', sans-serif;
-  color: #555; /* Darker text for better contrast on light background */
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
 
 .search-history-item {
   cursor: pointer; /* Make the cursor look like a pointer when hovering over the item */
@@ -380,11 +364,7 @@ button i.fa {
   background-color: #e0e0e0; /* Change background color on hover */
 }
 
-.toggle-button:hover {
-  background-color: #D87093;
-}
 .similarity-badge {
-  z-index: 9999; 
   position: absolute;
   top: -10px; 
   right: 10px; 
@@ -400,9 +380,17 @@ button i.fa {
 }
 
 .patent-title{
-  width: 80%;
+  width: 70%;
 }
 
+
+.check{
+  width: 30px;
+  height: 30px;
+  color: #4c6a45;
+  border-radius: 50%;
+  z-index: 100000;
+}
 
 .patents-section {
   background: #000428;  /* fallback for old browsers */

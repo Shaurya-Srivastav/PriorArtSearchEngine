@@ -1,22 +1,26 @@
 /* Navbar styles */
 #navbar {
+    width: 80%;
     color: #fff; /* White text color */
+    float: right;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    margin-bottom: 5%;
     height: 15vh;
+    background-color: #4c6a45;
 }
 
 .highlight {
-    background-color: violet;
+    background-color: #4c6a45;
     font-weight: bold;
   }
   
 
 .title {
+    color: white;
     font-size: 45px;
-    color: #555;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
 }
@@ -28,7 +32,6 @@
 
 /* Button styles */
 .nav-button {
-    background-color: #FFC0CB;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -36,12 +39,12 @@
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: bold;
-    color: #555;
+    color: white;
     padding: 20px;
 }
 
 .nav-button:hover {
-    background-color: #DADADA; /* Neon green background color on hover */
+    background-color: #435c3b; /* Neon green background color on hover */
 }
 
 
@@ -49,13 +52,12 @@
 #logo {
     margin-right: 10%;
     font-size: 3vw;
-    color: #FFC0CB;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
   }
   #logo a {
     text-decoration: none; /* Remove any underlines from the link */
-    color: #FFC0CB; /* Set the color to black */
+    color: white; /* Set the color to black */
   }
   
   #logo span {
@@ -75,7 +77,7 @@
     margin: 0 auto;
 }
 .title2 {
-    color: #555;
+    color: white;
     font-size: 30px;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
@@ -120,21 +122,26 @@ li {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     margin-right: 10px;
-    background-color: #FFC0CB;
+    background-color: #4c6a45;
     border-radius: 5px;
     padding: 12px 24px;
-    color: #555;
+    color: white;
     text-decoration: none; /* Remove underlines from links */
     display: inline-block; /* Display links as blocks */
 }
 
 .links a:hover {
-    background-color: #DADADA; /* Darker green on hover */
+    background-color: #3e542f; /* Darker green on hover */
 }
 
 #delete{
     color: white;
     background-color: red;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+#delete:hover{
+    background-color: #3e542f;
 }
 
 .title{
@@ -147,7 +154,7 @@ li {
 /* Sidebar styles */
 #sidebar {
     width: 20%;
-    background-color: #FFC0CB;
+    background-color: #4c6a45;
     color: #555;
     height: 100vh;
     position: fixed;
@@ -162,26 +169,23 @@ li {
 .sidebar-header {
     padding: 15px;
     text-align: center;
-    background-color: #FFC0CB;
-    color: #555;
 }
 
 #add-project-button {
-    background-color: #555;
-    color: #FFC0CB;
+    background-color: #4c6a45;
+    color: white;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
+    font-size: 2rem;
     font-weight: bold;
     margin-top: 10px;
 }
 
 #add-project-button:hover {
-    background-color: #DADADA;
-    color: #555;
+    background-color: #3e542f;
 }
 
 .project-list {
@@ -195,7 +199,7 @@ li {
     justify-content: space-between; /* Align items to the right side */
     align-items: center; /* Center vertically */
     margin: 0 auto;
-    margin-bottom: 5%;
+    margin-top: 5%;
     width: 95%;
     padding: 10px;
     text-align: left;
@@ -237,7 +241,7 @@ li {
 }
 
 .edit-icon:hover{
-    color: #FFC0CB;
+    color: #3e542f;
 }
 
 .delete-icon:hover {
@@ -261,7 +265,7 @@ li {
 }
 
 .cool-button:hover {
-    background-color: #DADADA; /* Slightly darker green on hover */
+    background-color: #4c6a45; /* Slightly darker green on hover */
 }
 
 
@@ -286,8 +290,8 @@ li {
 }
 
 .search-button {
-    background-color: #FFC0CB; /* Green button background color */
-    color: #555; /* White button text color */
+    background-color: #4c6a45; /* Green button background color */
+    color: white; /* White button text color */
     border: none;
     padding: 12px 24px;
     cursor: pointer;
@@ -298,7 +302,7 @@ li {
 }
 
 .search-button:hover {
-    background-color: #DADADA; /* Slightly darker green on hover */
+    background-color: #3e542f; /* Slightly darker green on hover */
 }
 
 

@@ -13,6 +13,7 @@
         </div>
         <button class="login-button" type="submit" (click)="login()">Login</button>
       </form>
+
       <form id="signupForm" [hidden]="!showSignupForm">
         <!-- Signup form fields -->
         <div class="form-group">
@@ -38,6 +39,7 @@
         
         <button class="login-button" type="submit" (click)="register()">Sign Up</button>
       </form>
+
       <div class="login-link">
         <a (click)="toggleForm()">{{ showSignupForm ? 'Back to Login' : 'Sign Up' }}</a>
       </div>
