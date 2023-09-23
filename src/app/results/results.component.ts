@@ -436,7 +436,7 @@ export class ResultsComponent implements OnInit {
 }
 
   getSimilarityPercentage(score: number): number {
-    return 1 - ((score * score)/4)
+    return (1 - ((score * score)/4)) * 100; 
   }
   /*
   getSimilarityPercentage(score: number): number {

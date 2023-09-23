@@ -22,26 +22,13 @@ export class SearchComponent {
   @ViewChild('calendarRef') calendarRef!: ElementRef;
   @ViewChild('picker') datePicker!: MatDatepicker<Date>;
 
-  gradients: string[] = [
-    "linear-gradient(106.5deg, rgba(255, 215, 185, 0.91) 23%, rgba(223, 159, 247, 0.8) 93%)",
-    "linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%)",
-    "linear-gradient(110.4deg, rgb(255, 196, 254) 9.6%, rgb(251, 229, 123) 91%)",
-  ];
 
   ngAfterViewInit(): void {
-    this.setRandomGradient();
   }
 
   
 
-  setRandomGradient(): void {
-    const randomIndex = Math.floor(Math.random() * this.gradients.length);
-    const selectedGradient = this.gradients[randomIndex];
-    const searchSection = document.getElementById('search');
-    if (searchSection) {
-      searchSection.style.background = selectedGradient;
-    }
-  }
+
 
 
   // Inject the Router service

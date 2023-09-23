@@ -7,12 +7,11 @@
 }
 
 .dropdown-btn {
-  background-color: #FFC0CB; /* Pink background color */
-  color: #555;
+  background-color: #4c6a45; /* Pink background color */
+  color: white;
   padding: 5px 15px;
   border-radius: 20px;
   font-family: 'Poppins', sans-serif;
-  color: #555; /* Darker text for better contrast on light background */
   cursor: pointer;
   transition: background-color 0.3s;
 }
