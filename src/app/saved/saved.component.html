@@ -1,6 +1,19 @@
-<nav id="navbar">
-    <!-- <div class="title">Semantic</div> -->
-    <div id="logo">
+<div id="sidebar">
+    <div class="sidebar-header">
+      <button id="add-project-button" (click)="openProjectModal()">Add Project</button>
+    </div>
+    <ul class="project-list">
+      <li *ngFor="let project of savedProjects">
+        <i class="fas fa-pencil-alt edit-icon" (click)="editProject(project.key, project)"></i>
+                <a (click)="loadPatentsForProject(project.key)">{{ project.title }}</a>
+        <i class="fas fa-trash-alt delete-icon" (click)="deleteProject(userId, project.key)"></i>
+      </li>
+    </ul>
+  </div>
+  
+  <div id="content">
+    <nav id="navbar">
+      <div id="logo">
         <a href="#">
           <span *ngFor="let letter of titleLetters; let i = index"
                 class="letter" [class.animate]="isSearching" [style.animation-delay]="(1 + i * 0.2) + 's'">
@@ -8,47 +21,43 @@
           </span>
         </a>
       </div>
-
-      
-    <div class="buttons">
+      <div class="buttons">
         <a href="/search" class="nav-button">Home</a>
         <a href="/results" class="nav-button">Back to Results</a>
-    </div>
-</nav>
-<section id="savedPatents">
-    <br>
-    <div class="imp-button">
-        <h1 class="title2">Saved Patents: </h1>
-        <button class="switch-button">Keyword Search</button>
-    </div>
-    
-    <br>
-    <div class="search-container">
+      </div>
+    </nav>
+    <section id="savedPatents">
+      <br>
+      <h1 class="title">Projects</h1>
+      <br>
+      <div class="search-container">
         <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="searchedTerm">
         <button class="search-button">Search</button>
-    </div>   
-    <br>
-    <form>
-        <button class="cool-button" (click)="clearSavedPatents()">Clear List</button>
-    </form>
-    <br>
-    <ol>
+      </div>
+      <br>
+      <form>
+        <button class="cool-button" (click)="clearPatentsForProject(userId, selectedProject.key)">Clear List</button>
+      </form>
+      <br>
+      <h1 class="title2" *ngIf="selectedProject">Project Title: {{ selectedProject.title }}</h1>
+      <h1 class="title2" *ngIf="selectedProject">Project Description: {{ selectedProject.description }}</h1>
+      <br>
+      <ol>
         <!-- Use *ngFor to loop through the savedPatents array -->
         <li *ngFor="let patent of savedPatents | search: searchedTerm">
-            <h1 class="patent-title" [innerHTML]="patent.title | highlight: searchedTerm">{{ patent.title }}</h1>
-            <h2 class="patent-abstract" [innerHTML]="patent.abstract | highlight: searchedTerm">
-                <b>Patent Abstract:</b> {{ patent.abstract }}
-            </h2>
-            <br>
-            <div class="links">
-                <a class="uspto-link" [href]="patent.document_link" target="_blank">Open Document</a>
-                <a class="gpatent" [href]="patent.google_patent_link" target="_blank">Google Patents</a>
-                <a class="uspto" [href]="patent.uspto_link" target="_blank">USPTO</a>
-                <a id="delete" (click)="deletePatent(patent.key)">Delete</a> 
-            </div>
+          <h1 class="patent-title" [innerHTML]="patent.title | highlight: searchedTerm">{{ patent.title }}</h1>
+          <h2 class="patent-abstract" [innerHTML]="patent.abstract | highlight: searchedTerm">
+            <b>Patent Abstract:</b> {{ patent.abstract }}
+          </h2>
+          <br>
+          <div class="links">
+            <a class="uspto-link" [href]="patent.document_link" target="_blank">Open Document</a>
+            <a class="gpatent" [href]="patent.google_patent_link" target="_blank">Google Patents</a>
+            <a class="uspto" [href]="patent.uspto_link" target="_blank">USPTO</a>
+            <a id="delete" (click)="removePatentFromProject(userId, selectedProject.key, patent.key)">Delete</a>         
+        </div>
         </li>
-    </ol>
-</section>
-
-
-
+      </ol>
+    </section>
+  </div>
+  

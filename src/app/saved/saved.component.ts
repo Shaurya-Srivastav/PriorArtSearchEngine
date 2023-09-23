@@ -1,13 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ChangeDetectorRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { map } from 'rxjs/operators';
+import { ProjectService } from '../services/project.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProjectModalComponent } from '../modals/project-modal/project-modal.component'; // Import your modal component
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { savePatentService } from '../services/save-patent.service';
+import { map } from 'rxjs/operators';
+import { AngularFireDatabase } from '@angular/fire/compat/database'; // Import AngularFireDatabase
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-saved',
   templateUrl: './saved.component.html',
@@ -34,84 +32,116 @@ export class SavedComponent implements OnInit{
 
   searchedTerm: any;
 
-  
+  savedProjects: any[] = [];
+  selectedProject: any;
+
   constructor(
-    private route: ActivatedRoute, 
-    private cdr: ChangeDetectorRef, 
-    private http: HttpClient,
-    private router: Router,
-    private db: AngularFireDatabase,
+    private projectService: ProjectService, 
+    private dialog: MatDialog,
     private afAuth: AngularFireAuth,
-    private sanitizer: DomSanitizer,
-    private savePatent: savePatentService
-    ) { }
+    private db: AngularFireDatabase,
+    private cd: ChangeDetectorRef
+    ) {}
 
-    ngOnInit(): void {
-      this.afAuth.authState.subscribe(user => {
-        if (user) {
-          this.userId = user.uid;
-          console.log(this.userId)
-          this.searchQuery = this.route.snapshot.queryParamMap.get('query') || '';
-    
-          // Fetch saved patents
-          this.db.list(`saved_patents/${this.userId}`).snapshotChanges().pipe(
-            map(actions => actions.map(a => {
-              const data = a.payload.val();
-              const key = a.key;
-              if (typeof data === 'object' && data !== null) {
-                return { key, ...data };
-              } else {
-                // Handle this case as you see fit. For now, just returning key.
-                return { key };
-              }
-            }))
-          ).subscribe(patents => {
-            console.log(patents)
-            this.savedPatents = patents;
-          });
-        } else {
-          this.userId = null;
-          alert("Please Log in to use this page!")
-        }
-      });
-  }
-
-  async deletePatent(patentKey: string): Promise<void> {
-    try {
-      await this.savePatent.deletePatent(this.userId, patentKey);
-      alert('Patent removed successfully.');
-      this.savedPatents = this.savedPatents.filter(patent => patent.key !== patentKey);
-    } catch (error) {
-      console.error('Error removing patent: ', error);
-      alert('An error occurred while trying to remove the patent. Please try again.');
-    }
-  }
-  
-  async clearSavedPatents(): Promise<void> {
-    const confirmation = window.confirm("Are you sure you want to clear all saved patents?");
-    if (confirmation) {
-      try {
-        await this.savePatent.clearSavedPatents(this.userId);
-        this.savedPatents = [];
-        alert('Saved patents cleared successfully!');
-      } catch (error) {
-        console.error('Error clearing saved patents:', error);
+  ngOnInit(): void {
+    // Load saved projects when the component initializes
+    this.afAuth.authState.subscribe((user) => {
+      if (user) {
+        this.userId = user.uid;
+        console.log(this.userId);
+        this.loadSavedProjects(this.userId);
+      } else {
+        this.userId = null;
+        alert('Please Log in to use this page!');
       }
-    }
+    });
+    
   }
 
-  animateLogo(): void {
-    const letters = document.querySelectorAll('.letter');
-    letters.forEach((letter, index) => {
-      setTimeout(() => {
-        letter.classList.add('animate');
-      }, 70 * index);
+  // Open the project modal when the "Add Project" button is clicked
+  openProjectModal() {
+    const dialogRef = this.dialog.open(ProjectModalComponent, {
+      width: '400px',
+      data: {uid: this.userId, projectToEdit: false}, // Pass data if needed
+    });
+  
+    dialogRef.afterClosed().subscribe((result: any) => {
+      // Check if the user saved the project in the modal
+      if (result && result.saved) {
+        this.loadSavedProjects(this.userId);
+      }
     });
   }
 
-  toggleResults() {
-    this.showResults = !this.showResults;
+  // Function to save the project to Firebase
+  saveProject(projectDetails: { title: string, description: string }) {
+    // Assuming you have the user's UID in userId
+    this.projectService.createProject(this.userId, projectDetails).then((response) => {
+      console.log('Project created:', response.key);
+      // After creating the project, you can also load the updated project list
+      this.loadSavedProjects(this.userId);
+    });
   }
 
+  // Function to load saved projects
+  loadSavedProjects(userId: string) {
+    console.log("hello")
+    this.projectService.getProjects(userId).subscribe((projects) => {
+      this.savedProjects = projects;
+    });
+  }
+
+  // Function to delete a project
+  deleteProject(userId: string, projectKey: string) {
+    this.projectService.deleteProject(userId, projectKey).then(() => {
+      // Reload the project list after deletion
+      this.loadSavedProjects(this.userId);
+      this.loadPatentsForProject(projectKey)
+      this.cd.detectChanges();
+      alert("succesfully deleted project")
+    });
+  }
+
+  loadPatentsForProject(projectKey: string) {
+    console.log("hi")
+    // Assuming you have a function in your service to get patents for a project
+    this.projectService.getPatentsForProject(this.userId, projectKey).subscribe((patents) => {
+      this.selectedProject = this.savedProjects.find((project) => project.key === projectKey);
+      this.savedPatents = patents;
+    });
+  }
+
+  removePatentFromProject(userId: string, projectId: string, patentKey: string): Promise<void> {
+    console.log(patentKey)
+    const patentRef = this.db.object(`projects/${userId}/${projectId}/patents/${patentKey}`);
+    return patentRef.remove();
+}
+
+  clearPatentsForProject(userId: string, projectId: string) {
+    const projectPatentsRef = this.db.list(`projects/${userId}/${projectId}/patents`);
+    return projectPatentsRef.remove().then(() => {
+      // Reload the list of patents for the selected project
+      this.loadPatentsForProject(projectId);
+      alert("sucessfully cleared")
+    });
+  }
+
+  editProject(projectKey:any, project: any) {
+    const dialogRef = this.dialog.open(ProjectModalComponent, {
+      width: '400px',
+      data: {
+        title: project.title, description: project.description , uid: this.userId, projectKey: projectKey, projectToEdit: true
+      },
+    });
+  
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.loadSavedProjects(this.userId);
+      this.loadPatentsForProject(projectKey)
+      this.cd.detectChanges();
+      
+    });
+  }
+
+  
   
 }

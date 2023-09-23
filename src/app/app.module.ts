@@ -31,7 +31,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { SearchPipe } from './search.pipe';
 import {HighlightPipe} from './highlight.pipe';
-
+import { ProjectModalComponent } from './modals/project-modal/project-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {HighlightPipe} from './highlight.pipe';
     SavedComponent,
     LoginComponent, 
     SearchPipe,
-    HighlightPipe
+    HighlightPipe,
+    ProjectModalComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +59,7 @@ import {HighlightPipe} from './highlight.pipe';
     MatButtonModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,6 +15,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { SearchHistoryService } from '../services/search-history.service';
 import { savePatentService } from '../services/save-patent.service';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-results',
@@ -68,8 +69,9 @@ export class ResultsComponent implements OnInit {
 
   savedPatents: any[] = [];
   recentSearches: any[] = [];
+  savedProjects: any[] = [];
 
-  title: string = 'Granted Patents';
+  title: string = 'Granted Patents';  
 
   isSidebarOpen: boolean = false;
   displayGranted: boolean = true;
@@ -78,6 +80,9 @@ export class ResultsComponent implements OnInit {
   saveSearchQuery: boolean = true;
   activeSearch: string | null = null;
 
+  projectTitle: any;
+  selectedProjectTitle: string | null = null;
+
   constructor(
     private router: Router,
     private http: HttpClient,
@@ -85,7 +90,8 @@ export class ResultsComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private route: ActivatedRoute,
     private searchHistoryService: SearchHistoryService,
-    private savePatentService: savePatentService
+    private savePatentService: savePatentService,
+    private projectService: ProjectService
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { data: any };
@@ -121,6 +127,9 @@ export class ResultsComponent implements OnInit {
       if (user) {
         this.userId = user.uid;
         console.log(this.userId);
+        this.projectService.getProjects(this.userId).subscribe((projects) => {
+          this.savedProjects = projects;
+        });
         this.searchQuery = this.route.snapshot.queryParamMap.get('query') || '';
         
         this.savePatentService.fetchSavedPatents(this.userId).subscribe(patents => {
@@ -146,13 +155,6 @@ export class ResultsComponent implements OnInit {
       );
     }
     this.updateDistanceBounds();
-    this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        this.userId = user.uid; // Here's the user ID!
-      } else {
-        this.userId = null;
-      }
-    }); 
    
   }
 
@@ -521,5 +523,22 @@ export class ResultsComponent implements OnInit {
     });
   }
 
-  
+  saveToProject(patent: any, project: any) {
+    // Create a new object representing the saved patent
+    const savedPatent = {
+      patentNumber: patent.patent_id,
+      title: patent.title,
+      abstract: patent.abstract,
+      summary: patent.summary,
+      claims: patent.claims,
+      projectId: project.key, // Storing project reference here
+      // Add other patent properties as needed
+    };
+    // Call your ProjectService to save the patent to the selected project
+    this.projectService.addPatentToProject(this.userId, project.key, savedPatent).then(() => {
+      alert(`Patent saved to project ${project.title} successfully` );
+    });
+    this.selectedProjectTitle = project.title;
+  }
+
 }
