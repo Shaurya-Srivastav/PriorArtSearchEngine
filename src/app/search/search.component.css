@@ -3,9 +3,9 @@
   height: 100vh;
   position: relative; /* To position bubbles correctly */
   overflow: hidden; /* To ensure bubbles don't spill out */
-  background: #000428;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #F5F5F5;
+  background: -webkit-linear-gradient(to right, #A8DADC, #F5F5F5);
+  background: linear-gradient(to right, #A8DADC, #F5F5F5);
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -20,7 +20,7 @@
 .link-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #4c6a45; /* Your desired button color */
+  background-color: #8FC1A9; /* Teal for buttons */
   color: white;
   text-decoration: none;
   border-radius: 25px;
@@ -30,13 +30,13 @@
 }
 
 .link-button:hover {
-  background-color: #435c3b; /* Change button color on hover */
+  background-color: #A8DADC; /* Change button color on hover */
 }
 
 
 
 a{
-  color: white;
+  color: #333;
 }
 
 #logo {
@@ -50,6 +50,7 @@ a{
 #logo span {
   display: inline-block;
   transform-origin: center bottom;
+  color: #8FC1A9; /* Soft Coral */
 }
 
 .search-form {
@@ -65,7 +66,7 @@ a{
 
 .suggest-for-you {
   margin-top: 30px; /* Add space between search bar and this section */
-  background-color: #FFF; /* White background */
+  background-color: #FFFFFF; /* White background */
   padding: 20px;
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
@@ -76,7 +77,7 @@ a{
 
 .suggest-title {
   font-family: 'Poppins', sans-serif;
-  color: #4c6a45; /* Color picked from your design */
+  color: #8FC1A9; /* Teal for sub-headings */
   margin-bottom: 15px; /* Space between title and suggestions */
 }
 
@@ -97,7 +98,7 @@ a{
 }
 
 .suggested-query:hover {
-  background-color:#4c6a45; /* Slightly darker gray on hover */
+  background-color:#A8DADC; /* Slightly darker gray on hover */
   color: white; 
 }
 
@@ -124,7 +125,7 @@ a{
 }
 
 .search-input::placeholder {
-  color: #4c6a45;
+  color: #A8DADC;
   font-family: 'Poppins', sans-serif;
 }
         
@@ -159,7 +160,7 @@ button.icon-button {
 
 
 button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 /************************LOGIN BUTTON ******************/
@@ -194,13 +195,13 @@ button:hover {
 }
 
 .login-button:hover {
-  background-color: #435c3b; /* Lighter background color on hover */
+  background-color: #A8DADC; /* Lighter background color on hover */
   box-shadow: 0 12px 18px rgba(0, 0, 0, 0.25);
 }
 
 
 button i.fa {
-  color: #4c6a45;
+  color: #8FC1A9; /* Gold icon colors */
 }
 
 
