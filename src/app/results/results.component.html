@@ -115,25 +115,6 @@
     </form>
 </aside>
 
-  <!-- Custom Sidebar for Search History -->
-  <aside class="search-history-sidebar">
-    <h1 class="sidebar-title">History</h1>
-    <ul class="search-history-list">
-      <li 
-          *ngFor="let search of recentSearches"
-          class="search-history-item" 
-          [class.active]="activeSearch === search.query"
-          (click)="onSearchHistoryClick(search)">
-          <span class="search-history-query">{{ search.query }}</span>
-          <br>
-          <span class="search-history-time">{{ search.timestamp | date:'shortTime' }}</span>
-          <br>
-          <i  class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
-      </li>
-  </ul> 
-    
-  </aside>
-
 <section class="patents-section" [class.expanded]="showResults">
   <br>
   <div class="open-sidebar-button" (click)="toggleSidebar()">
@@ -184,3 +165,21 @@
   </div>
 
 </section>
+ <!-- Custom Sidebar for Search History -->
+ <aside class="search-history-sidebar">
+  <h1 class="sidebar-title">History</h1>
+  <ul class="search-history-list">
+    <li 
+        *ngFor="let search of recentSearches"
+        class="search-history-item" 
+        [class.active]="activeSearch === search.query"
+        (click)="onSearchHistoryClick(search)">
+        <span class="search-history-query">{{ search.query }}</span>
+        <br>
+        <span class="search-history-time">{{ search.timestamp | date:'shortTime' }}</span>
+        <br>
+        <i  class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
+    </li>
+</ul> 
+  
+</aside>

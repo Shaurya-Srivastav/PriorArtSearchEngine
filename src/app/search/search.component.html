@@ -1,5 +1,5 @@
+
 <section id="search">
-  
     <h1 id="logo">
       <a href="#">
       <span *ngFor="let letter of titleLetters; let i = index"
@@ -8,6 +8,17 @@
       </span>
       </a>  
     </h1>
+    <div class="top-right-dropdown">
+      <div class="dropdown">
+        <button class="login-button">
+          <i class="fa fa-user" style="color: white;"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="/logout">Logout</a>
+        </div>
+      </div>
+    </div>
+    
     <form class="search-form" #searchForm>
       <div class="search-input-container">
         <textarea class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="searchQuery" required></textarea>
@@ -39,16 +50,5 @@
             <!-- Add more suggestions as needed -->
         </div>
     </div>
-  
-    <a href="/login">
-      <button class="login-button">
-        <i class="fa fa-user" style="color: white;"></i>
-      </button>
-    </a>
-
-    <a>
-
-    </a>
-        
   </section>
   
