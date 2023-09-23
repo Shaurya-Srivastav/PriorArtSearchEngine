@@ -3,6 +3,9 @@
   height: 100vh;
   position: relative; /* To position bubbles correctly */
   overflow: hidden; /* To ensure bubbles don't spill out */
+  background: #000428;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -17,7 +20,7 @@
 .link-button {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #D87093; /* Your desired button color */
+  background-color: #4c6a45; /* Your desired button color */
   color: white;
   text-decoration: none;
   border-radius: 25px;
@@ -27,22 +30,11 @@
 }
 
 .link-button:hover {
-  background-color: #FFB6C1; /* Change button color on hover */
+  background-color: #435c3b; /* Change button color on hover */
 }
 
 
 
-#search::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Ccircle fill='%23FFB6C1' cx='5%25' cy='10%25' r='2%25'/%3E%3Ccircle fill='%23FFB6C1' cx='90%25' cy='80%25' r='4%25'/%3E%3Ccircle fill='%23FFB6C1' cx='50%25' cy='40%25' r='3%25'/%3E%3C/g%3E%3C/svg%3E");
-  opacity: 0.6; /* Adjust as needed */
-  z-index: -1; /* Place it behind the content */
-}
 a{
   color: white;
 }
@@ -52,7 +44,6 @@ a{
   top: 5%;
   left: 5%;
   font-size: 45px;
-  color: white;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
 }
@@ -85,7 +76,7 @@ a{
 
 .suggest-title {
   font-family: 'Poppins', sans-serif;
-  color: #D87093; /* Color picked from your design */
+  color: #4c6a45; /* Color picked from your design */
   margin-bottom: 15px; /* Space between title and suggestions */
 }
 
@@ -106,7 +97,8 @@ a{
 }
 
 .suggested-query:hover {
-  background-color: #DADADA; /* Slightly darker gray on hover */
+  background-color:#4c6a45; /* Slightly darker gray on hover */
+  color: white; 
 }
 
 .search-input-container {
@@ -132,7 +124,7 @@ a{
 }
 
 .search-input::placeholder {
-  color: #999;
+  color: #4c6a45;
   font-family: 'Poppins', sans-serif;
 }
         
@@ -176,7 +168,7 @@ button:hover {
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: #D87093; /* Background color */
+  background-color: #4c6a45; /* Background color */
   border: none;
   color: white;
   font-size: 24px;
@@ -198,24 +190,17 @@ button:hover {
 
 .login-button i.fa {
   font-size: 28px;
-  margin-top: 2px;
-  transform: translateY(2px);
   transition: transform 0.3s ease; /* Add a subtle icon scale transition */
 }
 
 .login-button:hover {
-  background-color: #FFB6C1; /* Lighter background color on hover */
-  transform: perspective(120px) rotateX(15deg) scale(1.1);
+  background-color: #435c3b; /* Lighter background color on hover */
   box-shadow: 0 12px 18px rgba(0, 0, 0, 0.25);
-}
-
-.login-button:hover i.fa {
-  transform: translateY(2px) scale(1.2); /* Scale the icon slightly on hover */
 }
 
 
 button i.fa {
-  color: #D87093;
+  color: #4c6a45;
 }
 
 
