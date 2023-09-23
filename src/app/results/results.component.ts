@@ -421,7 +421,7 @@ export class ResultsComponent implements OnInit {
     let color: string;
   
     if (similarity > 0.66) {
-      color = '#AED581';  // Green for high similarity
+      color = '#4c6a45';  // Green for high similarity
     } else if (similarity > 0.33) {
       color = '#FFF9C4';  // Yellow for medium similarity
     } else {

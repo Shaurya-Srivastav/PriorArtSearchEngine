@@ -19,7 +19,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
+  background-color: #4c6a45;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -28,7 +28,7 @@
 }
 
 .dropdown-content a {
-  color: #555;
+  color: white;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -36,7 +36,7 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: #435c3b;
 }
 
 .dropdown:hover .dropdown-content {
@@ -44,7 +44,7 @@
 }
 
 .dropdown-btn:hover {
-  background-color: #DADADA; /* Lighter pink on hover */
+  background-color: #435c3b; /* Lighter pink on hover */
 }
 
 /* Container Styles */
@@ -58,35 +58,30 @@
 /* Sidebar Styles for Search History */
 .search-history-sidebar {
   width: 15%; /* Adjust the width to 30% */
-  background-color: #FFC0CB;
+  background-color: #4c6a45;
   padding: 20px;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #435c3b;
   box-sizing: border-box;
-  height: 76vh;
+  height: 80vh;
   overflow-y: auto; /* Add vertical scroll when content exceeds the sidebar height */
 }
 .filter-sidebar {
-  width: 15%; /* Adjust the width to 30% */
-  background-color: #FFC0CB;
+  width: 10%; /* Adjust the width to 30% */
+  background-color: #4c6a45;
   padding: 20px;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #435c3b;
   box-sizing: border-box;
-  height: 76vh;
+  height: 80vh;
   overflow-y: auto; /* Add vertical scroll when content exceeds the sidebar height */
 }
 
 .sidebar-title {
   margin-bottom: 10px;
   font-size: 1.5rem;
-  color: black;
+  color: white;
   font-family: 'Poppins', sans-serif;
 }
 
-.delete-icon {
-  color: red;
-  cursor: pointer;
-  margin-left: 10px;
-}
 
 
 .search-history-item {
@@ -252,7 +247,7 @@ h1, h3{
   display: flex;
   align-items: center;
   justify-content: center; /* Center the contents */
-  background-color: white;
+  background-color: #4c6a45;
   padding: 2% 5%;
   position: relative; /* To position the logo */
 }
@@ -261,7 +256,6 @@ h1, h3{
 #logo {
   margin-right: 10%;
   font-size: 2.3vw;
-  color: #FFC0CB;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
   text-align: center;
@@ -269,7 +263,7 @@ h1, h3{
 
 #logo a {
   text-decoration: none; /* Remove any underlines from the link */
-  color: #FFC0CB; /* Set the color to black */
+  color: white; /* Set the color to black */
 }
 
 #logo span {
@@ -277,6 +271,7 @@ h1, h3{
   transform-origin: center bottom;
 }
 .fa-calendar{
+  color: #4c6a45 ;
   padding-top: 0;
 }
 
@@ -338,6 +333,7 @@ button.search-button {
   position: absolute;
   right: 10px;
   top: 50%;
+  color: #4c6a45;
   transform: translateY(-50%);
 }
 
@@ -347,6 +343,7 @@ button.icon-button {
   top: 50%;
   transform: translateY(-50%);
   padding: 0;
+  color: #4c6a45
 }
 
 button:hover {
@@ -354,7 +351,7 @@ button:hover {
 }
 
 button i.fa {
-  color: #D87093;
+  color: #4c6a45;
 }
 
 .toggle-button {
@@ -395,33 +392,38 @@ button i.fa {
   border-radius: 0 0 5px 5px; 
   font-size: 0.8rem;
   font-weight: bold;
-  color: black;
+  color: white;
   text-transform: uppercase;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   z-index: 3;
   background-color: inherit; /* This will get the background color from whatever you set in JavaScript. */
 }
 
+.patent-title{
+  width: 80%;
+}
+
 
 .patents-section {
-  background-color: #f5f5f5; /* light gray background */
+  background: #000428;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   overflow-y: auto;
   transition: max-height 0.5s ease-in-out; /* smooth expansion transition */
   padding: 0 20px; /* horizontal padding for content */
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 76vh;
+  height: 80%;
 }
-
 .saved-patent {
-  background-color: #FFC0CB !important;
+  background-color: #4c6a45 !important;
 }
 
-.patent-box:hover {
-  background-color: #FFC0CB;
-  z-index: 2;
-}
 
 .patents-section.expanded {
   max-height: 80vh; /* or whatever value you want it to expand to */
@@ -440,6 +442,12 @@ button i.fa {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
   margin-bottom: 20px;  /* Adjust this value as needed */
   width: 80%;
+}
+
+.patent-box:hover {
+  background-color: #4c6a45;
+  color: white;
+  z-index: 2;
 }
 
 .patents-section.show-results {
@@ -461,11 +469,11 @@ button i.fa {
 }
 
 .patent-button {
-  background-color: #FFC0CB; /* Light gray background */
+  background-color: #4c6a45; /* Light gray background */
   padding: 5px 15px;
   border-radius: 20px;
   font-family: 'Poppins', sans-serif;
-  color: #555; /* Darker text for better contrast on light background */
+  color: white; /* Darker text for better contrast on light background */
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -476,14 +484,14 @@ button i.fa {
 }
 
 .patent-button:hover {
-  background-color: #DADADA; /* Slightly darker gray on hover */
+  background-color: #435c3b; /* Slightly darker gray on hover */
 }
 
 /* Add the following styles for the minimalistic button */
 .minimalistic-button {
   text-decoration: none;
-  background-color: #FFC0CB;
-  color: #555;
+  background-color: white;
+  color: #4c6a45;
   border-radius: 20px;
   padding: 20px 30px;
   margin-left: 1%; /* Adjust this margin as needed */
@@ -493,7 +501,8 @@ button i.fa {
 }
 
 .minimalistic-button:hover {
-  background-color: #DADADA;
+  background-color: #3e542f;
+  color: white;
 }
 
 
@@ -518,8 +527,8 @@ button i.fa {
 
 .pagination a {
   text-decoration: none;
-  background-color: #FFC0CB;
-  color: #555;
+  background-color: #4c6a45;
+  color: white;
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -531,12 +540,12 @@ button i.fa {
 }
 
 .pagination a:hover {
-  background-color: #DADADA;
+  background-color: #435c3b;
 }
 
 .pagination a.activePage {
-  background-color: #DADADA;
-  color: #FFF;  /* Optional: If you want to change the text color for better contrast */
+  background-color: #3e542f;
+  color: white;  /* Optional: If you want to change the text color for better contrast */
 }
 
 @media screen and (max-width: 1000px){

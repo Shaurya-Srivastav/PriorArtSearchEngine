@@ -92,25 +92,25 @@
 
 <div class="page-container">
   <aside class="filter-sidebar">
-    <h1>Filters</h1>
-    <h2>Date Range</h2>
+    <h1 class="sidebar-title">Filters</h1>
+    <h2 class="sidebar-title">Date Range</h2>
     <div class="date-range">
-      <label for="startDate" >Start Date:</label>
+      <label for="startDate" style="color: white;">Start Date:</label>
       <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
-      <label for="endDate">End Date:</label>
+      <label for="endDate" style="color: white;">End Date:</label>
       <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
     </div>
-    <h2>Filter Options</h2>
+    <h2 class="sidebar-title">Filter Options</h2>
     <form (submit)="applyFilters(); $event.preventDefault();">
       <div class="filter-option">
         <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
           (ngModelChange)="onGrantedCheckboxChange()">
-        <label for="grantedCheckbox">Granted</label>
+        <label for="grantedCheckbox" style="color: white;">Granted</label>
       </div>
       <div class="filter-option">
         <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
           (ngModelChange)="onPregrantedCheckboxChange()">
-        <label for="pregrantedCheckbox">Pregranted</label>
+        <label for="pregrantedCheckbox" style="color: white;">Pregranted</label>
       </div>
     </form>
 </aside>
@@ -150,7 +150,7 @@
   <span>{{ getSimilarityBadge(patent.similarity_score).label }} <br> <div  style="text-align: center;">{{patent.type}}</div>  </span>
 </div>
 
-    <h2>{{ patent.title }} <br>
+    <h2 class="patent-title">{{ patent.title }} <br>
       <div>
         <div *ngIf="patent.type=='granted'">US{{patent.patent_id}} </div>
         <div *ngIf="patent.type=='pregranted'">{{patent.application_id}}</div>
