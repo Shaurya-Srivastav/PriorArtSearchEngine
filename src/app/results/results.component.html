@@ -95,9 +95,9 @@
     <h1 class="sidebar-title">Filters</h1>
     <h2 class="sidebar-title">Date Range</h2>
     <div class="date-range">
-      <label for="startDate" style="color: white;">Start Date:</label>
+      <label for="startDate" style="color: black;">Start Date:</label>
       <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
-      <label for="endDate" style="color: white;">End Date:</label>
+      <label for="endDate" style="color: black;">End Date:</label>
       <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
     </div>
     <h2 class="sidebar-title">Filter Options</h2>
@@ -105,18 +105,26 @@
       <div class="filter-option">
         <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
           (ngModelChange)="onGrantedCheckboxChange()">
-        <label for="grantedCheckbox" style="color: white;">Granted</label>
+        <label for="grantedCheckbox" style="color: black;">Granted</label>
       </div>
       <div class="filter-option">
         <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
           (ngModelChange)="onPregrantedCheckboxChange()">
-        <label for="pregrantedCheckbox" style="color: white;">Pregranted</label>
+        <label for="pregrantedCheckbox" style="color: black;">Pregranted</label>
       </div>
     </form>
 </aside>
 
 <section class="patents-section" [class.expanded]="showResults">
   <br>
+  <div class="custom-dropdown">
+    <a class="dropdown-button">Add to Project</a>
+    <div class="dropdown-options">
+        <a href="#">Option 1</a>
+        <a href="#">Option 2</a>
+        <a href="#">Option 3</a>
+    </div>
+</div>
   <div class="open-sidebar-button" (click)="toggleSidebar()">
     <i class="fa fa-bars"></i>
   </div>

@@ -55,9 +55,70 @@
   overflow: hidden;
 }
 
+
+
+        /* Dropdown container */
+        .custom-dropdown {
+          position: relative;
+          display: inline-block;
+      }
+
+      /* Dropdown button */
+      .dropdown-button {
+          display: inline-block;
+          padding: 15px 30px;
+          font-size: 18px;
+          background-color: #8FC1A9;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .dropdown-btn:hover{
+        background-color: #A8DADC;
+      }
+      .dropdown-button:hover{
+        background-color: #A8DADC;
+      }
+
+      /* Dropdown content (hidden by default) */
+      .dropdown-options {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+          z-index: 1000;
+      }
+
+      /* Dropdown content links */
+      .dropdown-options a {
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+          color: #333;
+          transition: background-color 0.3s;
+      }
+
+      /* Change link color on hover */
+      .dropdown-options a:hover {
+          background-color: #A8DADC;
+          color: #fff;
+      }
+
+      /* Show the dropdown content when the button is hovered over */
+      .custom-dropdown:hover .dropdown-options {
+          display: block;
+      }
+
+
+
+
 /* Sidebar Styles for Search History */
 .search-history-sidebar {
-  width: 25%; /* Adjust the width to 30% */
+  width: 20%; /* Adjust the width to 30% */
   background: -webkit-linear-gradient(to bottom, #A8DADC, #F5F5F5);
   background: linear-gradient(to bottom, #A8DADC, #F5F5F5);
   background-attachment: fixed;
@@ -71,7 +132,7 @@
   overflow-y: auto; /* Add vertical scroll when content exceeds the sidebar height */
 }
 .filter-sidebar {
-  width: 10%; /* Adjust the width to 30% */
+  width: 20%; /* Adjust the width to 30% */
   background: -webkit-linear-gradient(to bottom, #A8DADC, #F5F5F5);
   background: linear-gradient(to bottom, #A8DADC, #F5F5F5);
   background-attachment: fixed;
