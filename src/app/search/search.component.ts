@@ -58,13 +58,21 @@ export class SearchComponent {
     // Send a POST request to your Flask server
     this.http.post('http://129.213.84.77:5000/search', requestData).subscribe(
       (response: any) => {
-        // Assuming your server returns results in the response
-        this.results = response;
-        this.isSearching = false;
-        this.isSubmitting = false;
-        this.router.navigate(['/results'], {
-          state: { data: this.results, query: this.queryValue, formattedDate: formattedDate },
-        });
+        console.log(response)
+        if (response['Granted results']) {
+          // Assuming your server returns results in the response
+          this.results = response;
+          this.isSearching = false;
+          this.isSubmitting = false;
+          this.router.navigate(['/results'], {
+            state: { data: this.results, query: this.queryValue, formattedDate: formattedDate },
+          });
+        } else {
+          alert(response['error'])
+          this.isSearching = false;
+          this.isSubmitting = false;
+        }
+       
       },
       (error) => {
         console.error('Error:', error);

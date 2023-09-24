@@ -248,36 +248,44 @@ export class ResultsComponent implements OnInit {
         console.log('API Response:', response);
 
         if (response) {
-          if (response['Granted results']) {
-            this.grantedResults = response['Granted results'].map(
-              (res: any) => ({ ...res, state: 'collapsed' })
+          if (!response['error']) {
+            if (response['Granted results']) {
+              this.grantedResults = response['Granted results'].map(
+                (res: any) => ({ ...res, state: 'collapsed' })
+              );
+            }
+  
+            if (response['Pregranted Results']) {
+              this.pregrantedResults = response['Pregranted Results'];
+            }
+            this.activeSearch = this.queryValue; 
+            if (this.saveSearchQuery == true) {
+              this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
+            }
+            this.grantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
+            this.pregrantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
+            localStorage.setItem(
+              'grantedResults',
+              JSON.stringify(this.grantedResults)
             );
+            localStorage.setItem(
+              'pregrantedResults',
+              JSON.stringify(this.pregrantedResults)
+            );
+            this.updateDistanceBounds();
+            // Reopen the results section now that the data has been fetched and processed
+            this.showResults = true;
+            this.saveSearchQuery = true;
+            this.currentPage = 1; // Reset the current page after getting new results
+            this.isSubmitting = false;
+            this.isSearching = false;
+          } else {
+            alert(response['error'])
+            this.grantedResults = [];
+            this.pregrantedResults = [];
+            this.isSubmitting = false;
+            this.isSearching = false;
           }
-
-          if (response['Pregranted Results']) {
-            this.pregrantedResults = response['Pregranted Results'];
-          }
-          this.activeSearch = this.queryValue; 
-          if (this.saveSearchQuery == true) {
-            this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
-          }
-          this.grantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
-          this.pregrantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
-          localStorage.setItem(
-            'grantedResults',
-            JSON.stringify(this.grantedResults)
-          );
-          localStorage.setItem(
-            'pregrantedResults',
-            JSON.stringify(this.pregrantedResults)
-          );
-          this.updateDistanceBounds();
-          // Reopen the results section now that the data has been fetched and processed
-          this.showResults = true;
-          this.saveSearchQuery = true;
-          this.currentPage = 1; // Reset the current page after getting new results
-          this.isSubmitting = false;
-          this.isSearching = false;
         }
       },
       (error) => {
