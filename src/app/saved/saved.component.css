@@ -1,7 +1,7 @@
-/* Navbar styles */
+
 #navbar {
     width: 80%;
-    color: #fff; /* White text color */
+    color: #8FC1A9; /* White text color */
     float: right;
     display: flex;
     justify-content: space-between;
@@ -9,17 +9,22 @@
     padding: 10px 20px;
     margin-bottom: 5%;
     height: 15vh;
-    background-color: #4c6a45;
+    background: -webkit-linear-gradient(to right, #A8DADC, #F5F5F5);
+    background: linear-gradient(to right, #A8DADC, #F5F5F5);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover
 }
 
 .highlight {
-    background-color: #4c6a45;
+    background-color: #8FC1A9;
     font-weight: bold;
   }
   
 
 .title {
-    color: white;
+    color: #8FC1A9;
     font-size: 45px;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
@@ -39,12 +44,12 @@
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: bold;
-    color: white;
+    color: #8FC1A9;
     padding: 20px;
 }
 
 .nav-button:hover {
-    background-color: #435c3b; /* Neon green background color on hover */
+    background-color: #A8DADC; /* Neon green background color on hover */
 }
 
 
@@ -57,7 +62,7 @@
   }
   #logo a {
     text-decoration: none; /* Remove any underlines from the link */
-    color: white; /* Set the color to black */
+    color: #8FC1A9; /* Set the color to black */
   }
   
   #logo span {
@@ -122,7 +127,7 @@ li {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
     margin-right: 10px;
-    background-color: #4c6a45;
+    background-color: #8FC1A9;
     border-radius: 5px;
     padding: 12px 24px;
     color: white;
@@ -131,7 +136,7 @@ li {
 }
 
 .links a:hover {
-    background-color: #3e542f; /* Darker green on hover */
+    background-color: #A8DADC; /* Darker green on hover */
 }
 
 #delete{
@@ -141,7 +146,7 @@ li {
     cursor: pointer;
 }
 #delete:hover{
-    background-color: #3e542f;
+    background-color: #A8DADC;
 }
 
 .title{
@@ -154,7 +159,12 @@ li {
 /* Sidebar styles */
 #sidebar {
     width: 20%;
-    background-color: #4c6a45;
+    background: -webkit-linear-gradient(to right, #A8DADC, #F5F5F5);
+    background: linear-gradient(to right, #A8DADC, #F5F5F5);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     color: #555;
     height: 100vh;
     position: fixed;
@@ -162,7 +172,6 @@ li {
     left: 0;
     overflow-y: auto;
     font-family: 'Poppins', sans-serif;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: width 0.3s ease;
 }
 
@@ -172,8 +181,7 @@ li {
 }
 
 #add-project-button {
-    background-color: #4c6a45;
-    color: white;
+    color: #8FC1A9;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -182,10 +190,12 @@ li {
     font-size: 2rem;
     font-weight: bold;
     margin-top: 10px;
+    transition: 0.8s ease;
 }
 
 #add-project-button:hover {
-    background-color: #3e542f;
+    background-color: #A8DADC;
+    color: white;
 }
 
 .project-list {
@@ -241,7 +251,7 @@ li {
 }
 
 .edit-icon:hover{
-    color: #3e542f;
+    color: #8FC1A9;
 }
 
 .delete-icon:hover {
@@ -265,7 +275,7 @@ li {
 }
 
 .cool-button:hover {
-    background-color: #4c6a45; /* Slightly darker green on hover */
+    background-color: #8FC1A9; /* Slightly darker green on hover */
 }
 
 
@@ -290,7 +300,7 @@ li {
 }
 
 .search-button {
-    background-color: #4c6a45; /* Green button background color */
+    background-color: #8FC1A9; /* Green button background color */
     color: white; /* White button text color */
     border: none;
     padding: 12px 24px;
@@ -302,7 +312,7 @@ li {
 }
 
 .search-button:hover {
-    background-color: #3e542f; /* Slightly darker green on hover */
+    background-color: #A8DADC; /* Slightly darker green on hover */
 }
 
 

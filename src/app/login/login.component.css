@@ -1,3 +1,4 @@
+
 /* Login Page Styles */
 .login-container {
   display: flex;
@@ -6,12 +7,17 @@
   min-height: 100vh;
   background-size: cover;
   background-position: center;
-  font-family: 'Roboto', sans-serif;
+  background: -webkit-linear-gradient(to bottom, #A8DADC, #F5F5F5);
+  background: linear-gradient(to bottom, #A8DADC, #F5F5F5);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .page-title {
   font-size: 64px;
-  color: #FFF;
+  color: black;
   margin-bottom: 20px;
   font-weight: 800;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -19,7 +25,7 @@
 }
 
 .login-box {
-  background-color: #4c6a45;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   padding: 40px;
@@ -40,7 +46,7 @@
   font-size: 48px;
   margin-bottom: 20px;
   font-family: 'Poppins', sans-serif;
-  color: white; 
+  color: black; 
 }
 
 /* Login Form Styles */
@@ -53,7 +59,7 @@ label {
   display: block;
   font-size: 20px;
   margin-bottom: 10px;
-  color: white;
+  color: black;
 }
 
 input[type="text"],
@@ -74,7 +80,7 @@ input[type="password"]:focus {
 }
 
 .login-button {
-  background-color: #4c6a45;
+  background-color: #8FC1A9;
   font-family: 'Poppins', sans-serif;
   color: white;
   border: none;
@@ -87,7 +93,7 @@ input[type="password"]:focus {
 }
 
 .login-button:hover {
-  background-color: #3e542f;
+  background-color: #A8DADC;
   transform: scale(1.05);
 }
 
@@ -121,11 +127,11 @@ input[type="password"]:focus {
 .signup-link a,
 .login-link a {
   text-decoration: none;
-  color: white;
+  color: black;
   transition: color 0.3s ease;
 }
 
 .signup-link a:hover,
 .login-link a:hover {
-  color: #3e542f;
+  color: #A8DADC;
 }

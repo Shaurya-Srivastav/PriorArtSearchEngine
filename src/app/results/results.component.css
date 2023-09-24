@@ -7,7 +7,7 @@
 }
 
 .dropdown-btn {
-  background-color: #4c6a45; /* Pink background color */
+  background-color: #8FC1A9; /* Pink background color */
   color: white;
   padding: 5px 15px;
   border-radius: 20px;
@@ -19,7 +19,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #4c6a45;
+  background-color: #8FC1A9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -36,7 +36,7 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #435c3b;
+  background-color: #A8DADC;
 }
 
 .dropdown:hover .dropdown-content {
@@ -44,7 +44,7 @@
 }
 
 .dropdown-btn:hover {
-  background-color: #435c3b; /* Lighter pink on hover */
+  background-color: #A8DADC; /* Lighter pink on hover */
 }
 
 /* Container Styles */
@@ -545,7 +545,7 @@ button i.fa {
 
 .pagination a {
   text-decoration: none;
-  background-color: #4c6a45;
+  background-color: #8FC1A9;
   color: white;
   border-radius: 50%;
   width: 30px;
@@ -558,11 +558,11 @@ button i.fa {
 }
 
 .pagination a:hover {
-  background-color: #435c3b;
+  background-color: #A8DADC;
 }
 
 .pagination a.activePage {
-  background-color: #3e542f;
+  background-color: #A8DADC;
   color: white;  /* Optional: If you want to change the text color for better contrast */
 }
 
