@@ -116,6 +116,9 @@ export class ResultsComponent implements OnInit {
         'pregrantedResults',
         JSON.stringify(this.pregrantedResults)
       );
+
+      this.startDate = new Date(this.startDate);
+      this.endDate = new Date(this.endDate);
      
     }
   }
@@ -547,6 +550,42 @@ export class ResultsComponent implements OnInit {
       alert(`Patent saved to project ${project.title} successfully` );
     });
     this.selectedProjectTitle = project.title;
+  }
+
+  saveAllToProject(patent: any, project: any) {
+    // Create a new object representing the saved patent
+    const savedPatent = {
+      patentNumber: patent.patent_id,
+      title: patent.title,
+      abstract: patent.abstract,
+      summary: patent.summary,
+      claims: patent.claims,
+      projectId: project.key, // Storing project reference here
+      // Add other patent properties as needed
+    };
+    // Call your ProjectService to save the patent to the selected project
+    this.projectService.addPatentToProject(this.userId, project.key, savedPatent).then(() => {
+      console.log(`Patent saved to project ${project.title} successfully` );
+    });
+    this.selectedProjectTitle = project.title;
+  }
+
+  addSelectedPatentsToProject(project: any) {
+    // Filter patents that are selected
+    const selectedGrantedPatents = this.grantedResults.filter(p => p.selected);
+    const selectedPregranedPatents = this.pregrantedResults.filter(p => p.selected);
+    // Iterate over each selected patent and add them to the project
+    selectedGrantedPatents.forEach(patent => {
+      this.saveAllToProject(patent, project);
+    });
+
+    selectedPregranedPatents.forEach(patent => {
+      this.saveAllToProject(patent, project);
+    });
+  
+    // Optionally reset the selected state of patents after adding
+    selectedGrantedPatents.forEach(patent => patent.selected = false);
+    selectedPregranedPatents.forEach(patent => patent.selected = false);
   }
 
 }

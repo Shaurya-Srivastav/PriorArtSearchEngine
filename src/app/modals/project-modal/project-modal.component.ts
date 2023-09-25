@@ -1,14 +1,15 @@
 import { Component, EventEmitter, Output, Inject  } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProjectService  } from 'src/app/services/project.service';
+
 @Component({
   selector: 'app-project-modal',
   templateUrl: './project-modal.component.html',
   styleUrls: ['./project-modal.component.css']
 })
 export class ProjectModalComponent {
-  projectTitle: string = '';
-  projectDescription: string = '';
+  projectTitle: string = "";
+  projectDescription: string = "";
 
   @Output() projectSaved = new EventEmitter<{ title: string, description: string }>();
 
@@ -23,12 +24,19 @@ export class ProjectModalComponent {
       if (this.data) {
         this.projectTitle = this.data.title;
         this.projectDescription = this.data.description;
+      } else {
+        this.projectTitle = "";
+        this.projectDescription = "";
       }
     }
 
     
     saveProject() {
-      if (this.projectTitle.trim() !== '' && this.projectDescription.trim() !== '') {
+      console.log("testing")
+      if(this.projectDescription == undefined) {
+        this.projectDescription = ""
+      }
+      if (this.projectTitle.trim() !== '') {
         if (this.data && this.data.projectToEdit) { // Check if in edit mode
           this.projectService.updateProject(this.data.uid, this.data.projectKey, { title: this.projectTitle, description: this.projectDescription });
         } else { // If not in edit mode, create a new project

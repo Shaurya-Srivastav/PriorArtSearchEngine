@@ -1,65 +1,58 @@
-
 <div class="sidebar" [class.open]="isSidebarOpen">
-
-  <h1 style="font-size: 2.5rem;">Filters</h1>
-    <h2>Date Range</h2>
-    <div class="date-range">
-      <label for="startDate" >Start Date:</label>
-      <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
-      <label for="endDate">End Date:</label>
-      <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
+  <h1 style="font-size: 2.5rem">Filters</h1>
+  <h2>Date Range</h2>
+  <div class="date-range">
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate" />
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate" />
+  </div>
+  <h2>Filter Options</h2>
+  <form (submit)="applyFilters(); $event.preventDefault()">
+    <div class="filter-option">
+      <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
+        (ngModelChange)="onGrantedCheckboxChange()" />
+      <label for="grantedCheckbox">Granted</label>
     </div>
-    <h2>Filter Options</h2>
-    <form (submit)="applyFilters(); $event.preventDefault();">
-      <div class="filter-option">
-        <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
-          (ngModelChange)="onGrantedCheckboxChange()">
-        <label for="grantedCheckbox">Granted</label>
-      </div>
-      <div class="filter-option">
-        <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
-          (ngModelChange)="onPregrantedCheckboxChange()">
-        <label for="pregrantedCheckbox">Pregranted</label>
-      </div>
-    </form>
+    <div class="filter-option">
+      <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
+        (ngModelChange)="onPregrantedCheckboxChange()" />
+      <label for="pregrantedCheckbox">Pregranted</label>
+    </div>
+  </form>
 
-    <br><br>
-    <h1 style="font-size: 2.5rem;">History</h1>
-    <ul class="search-history-list">
-      <li 
-          *ngFor="let search of recentSearches"
-          class="search-history-item" 
-          [class.active]="activeSearch === search.query"
-          (click)="onSearchHistoryClick(search)">
-          <span class="search-history-query">{{ search.query }}</span>
-          <br>
-          <span class="search-history-time">{{ search.timestamp | date:'shortTime' }}</span>
-          <br>
-          <i  class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
-      </li>
-  </ul> 
-
-  
-  
-</div> 
-
-
+  <br /><br />
+  <h1 style="font-size: 2.5rem">History</h1>
+  <ul class="search-history-list">
+    <li *ngFor="let search of recentSearches" class="search-history-item" [class.active]="activeSearch === search.query"
+      (click)="onSearchHistoryClick(search)">
+      <span class="search-history-query">{{ search.query }}</span>
+      <br />
+      <span class="search-history-time">{{
+        search.timestamp | date : "shortTime"
+        }}</span>
+      <br />
+      <i class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
+    </li>
+  </ul>
+</div>
 
 <section id="search-bar-area">
   <h1 id="logo">
     <a href="#">
-    <span *ngFor="let letter of titleLetters; let i = index"
-          class="letter" [class.animate]="isSearching" [style.animation-delay]="(i * 0.2) + 's'">
-      {{ letter }}
-    </span>
+      <span *ngFor="let letter of titleLetters; let i = index" class="letter" [class.animate]="isSearching"
+        [style.animation-delay]="i * 0.2 + 's'">
+        {{ letter }}
+      </span>
     </a>
   </h1>
 
-  <form class="search-form" (submit)="search(); $event.preventDefault();">
+  <form class="search-form" (submit)="search(); $event.preventDefault()">
     <!-- Search Input -->
     <div class="search-input-container">
-      <textarea class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="queryValue" required></textarea>
-      <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
+      <textarea class="search-input" placeholder="Search..." [(ngModel)]="queryValue" name="queryValue"
+        required></textarea>
+      <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate" />
       <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
 
       <div class="icon-buttons-container">
@@ -70,16 +63,12 @@
         <button class="search-button" [disabled]="isSubmitting">
           <i class="fa fa-search"></i>
         </button>
-
       </div>
-
     </div>
-
   </form>
 
   <a (click)="routeSaved()" class="minimalistic-button">Projects</a>
 </section>
-
 
 <div class="pagination">
   <ul>
@@ -95,99 +84,105 @@
     <h1 class="sidebar-title">Filters</h1>
     <h2 class="sidebar-title">Date Range</h2>
     <div class="date-range">
-      <label for="startDate" style="color: black;">Start Date:</label>
-      <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate">
-      <label for="endDate" style="color: black;">End Date:</label>
-      <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate">
+      <label for="startDate" style="color: black">Start Date:</label>
+      <input type="date" id="startDate" name="startDate" [(ngModel)]="startDate"/>
+      <label for="endDate" style="color: black">End Date:</label>
+      <input type="date" id="endDate" name="endDate" [(ngModel)]="endDate"/>
     </div>
     <h2 class="sidebar-title">Filter Options</h2>
-    <form (submit)="applyFilters(); $event.preventDefault();">
+    <form (submit)="applyFilters(); $event.preventDefault()">
       <div class="filter-option">
         <input type="checkbox" id="grantedCheckbox" [(ngModel)]="displayGranted" name="grantedFilter"
-          (ngModelChange)="onGrantedCheckboxChange()">
-        <label for="grantedCheckbox" style="color: black;">Granted</label>
+          (ngModelChange)="onGrantedCheckboxChange()" />
+        <label for="grantedCheckbox" style="color: black">Granted</label>
       </div>
       <div class="filter-option">
         <input type="checkbox" id="pregrantedCheckbox" [(ngModel)]="displayPregranted" name="pregrantFilter"
-          (ngModelChange)="onPregrantedCheckboxChange()">
-        <label for="pregrantedCheckbox" style="color: black;">Pregranted</label>
+          (ngModelChange)="onPregrantedCheckboxChange()" />
+        <label for="pregrantedCheckbox" style="color: black">Pregranted</label>
       </div>
     </form>
-</aside>
+  </aside>
 
-<section class="patents-section" [class.expanded]="showResults">
-  <br>
-  <div class="custom-dropdown">
-    <a class="dropdown-button">Add to Project</a>
-    <div class="dropdown-options">
-        <a href="#">Option 1</a>
-        <a href="#">Option 2</a>
-        <a href="#">Option 3</a>
-    </div>
-</div>
-  <div class="open-sidebar-button" (click)="toggleSidebar()">
-    <i class="fa fa-bars"></i>
-  </div>
-  <br>
-  <br>
-  <div *ngFor="let patent of getDisplayedResults().currentResults; let i = index" [class.saved-patent]="isSaved(patent)" class="patent-box"
-    [@expandCollapse]="patent.state" (click)="togglePatent(patent)">
-    <div class="similarity-badge" 
-     [style.background-color]="getSimilarityBadge(patent.similarity_score).color">
-  <span>{{ getSimilarityBadge(patent.similarity_score).label }} <br> <div  style="text-align: center;">{{patent.type}}</div>  </span>
-</div>
-<input type="checkbox" class="check">
-    <h2 class="patent-title">{{ patent.title }} <br>
-      <div>
-        <div *ngIf="patent.type=='granted'">US{{patent.patent_id}} </div>
-        <div *ngIf="patent.type=='pregranted'">{{patent.application_id}}</div>
+  <section class="patents-section" [class.expanded]="showResults">
+    <br />
+    <div class="custom-dropdown">
+      <a class="dropdown-button">Add to Project</a>
+      <div class="dropdown-options">
+        <a *ngFor="let project of savedProjects" (click)="addSelectedPatentsToProject(project)">
+          {{ project.title }}
+        </a>
       </div>
-    </h2>
-    <p>{{ patent.abstract }}</p>
-    <div class="more-info" *ngIf="patent.state === 'expanded'">
-      <h2>Summary</h2>
-      <p>{{ patent.summary }}</p>
-      <h2>Claims</h2>
-      <p>{{ patent.claims }}</p>
-
     </div>
+    <div class="open-sidebar-button" (click)="toggleSidebar()">
+      <i class="fa fa-bars"></i>
+    </div>
+    <br />
+    <br />
+    <div *ngFor="let patent of getDisplayedResults().currentResults; let i = index"
+      [class.saved-patent]="isSaved(patent)" class="patent-box" [@expandCollapse]="patent.state"
+      (click)="togglePatent(patent)">
+      <div class="similarity-badge" [style.background-color]="
+          getSimilarityBadge(patent.similarity_score).color
+        ">
+        <span>{{ getSimilarityBadge(patent.similarity_score).label }} <br />
+          <div style="text-align: center">{{ patent.type }}</div>
+        </span>
+      </div>
+      <input type="checkbox" class="check" [(ngModel)]="patent.selected" (click)="stopPropagation($event)" />
+      <h2 class="patent-title">
+        {{ patent.title }} <br />
+        <div>
+          <div *ngIf="patent.type == 'granted'">US{{ patent.patent_id }}</div>
+          <div *ngIf="patent.type == 'pregranted'">
+            {{ patent.application_id }}
+          </div>
+        </div>
+      </h2>
+      <p>{{ patent.abstract }}</p>
+      <div class="more-info" *ngIf="patent.state === 'expanded'">
+        <h2>Summary</h2>
+        <p>{{ patent.summary }}</p>
+        <h2>Claims</h2>
+        <p>{{ patent.claims }}</p>
+      </div>
 
-    <div class="patent-buttons">
-      <!-- <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span> !-->
-      <span class="patent-button" (click)="openUSPTO(patent.patent_id); stopPropagation($event)">
-        <a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/{{ patent.patent_id }}" target="_blank">USPTO</a>
-      </span>
-      <span class="patent-button" (click)="stopPropagation($event)">
-        <a href="https://patents.google.com/patent/US{{ patent.patent_id }}" target="_blank">Google Patents</a>
-      </span>
+      <div class="patent-buttons">
+        <!-- <span class="patent-button" (click)="stopPropagation($event)"> Open Document </span> !-->
+        <span class="patent-button" (click)="openUSPTO(patent.patent_id); stopPropagation($event)">
+          <a href="https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/{{
+              patent.patent_id
+            }}" target="_blank">USPTO</a>
+        </span>
+        <span class="patent-button" (click)="stopPropagation($event)">
+          <a href="https://patents.google.com/patent/US{{ patent.patent_id }}" target="_blank">Google Patents</a>
+        </span>
 
-      <div class="dropdown" (click)="stopPropagation($event)">
-        <div class="dropdown-btn">Save to Project</div>
-        <div class="dropdown-content">
-          <a *ngFor="let project of savedProjects" (click)="saveToProject(patent, project)">
-            {{ project.title }}
-          </a>
+        <div class="dropdown" (click)="stopPropagation($event)">
+          <div class="dropdown-btn">Save to Project</div>
+          <div class="dropdown-content">
+            <a *ngFor="let project of savedProjects" (click)="saveToProject(patent, project)">
+              {{ project.title }}
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-</section>
- <!-- Custom Sidebar for Search History -->
- <aside class="search-history-sidebar">
-  <h1 class="sidebar-title">History</h1>
-  <ul class="search-history-list">
-    <li 
-        *ngFor="let search of recentSearches"
-        class="search-history-item" 
-        [class.active]="activeSearch === search.query"
-        (click)="onSearchHistoryClick(search)">
+  </section>
+  <!-- Custom Sidebar for Search History -->
+  <aside class="search-history-sidebar">
+    <h1 class="sidebar-title">History</h1>
+    <ul class="search-history-list">
+      <li *ngFor="let search of recentSearches" class="search-history-item"
+        [class.active]="activeSearch === search.query" (click)="onSearchHistoryClick(search)">
         <span class="search-history-query">{{ search.query }}</span>
-        <br>
-        <span class="search-history-time">{{ search.timestamp | date:'shortTime' }}</span>
-        <br>
-        <i  class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
-    </li>
-</ul> 
-  
-</aside>
+        <br />
+        <span class="search-history-time">{{
+          search.timestamp | date : "shortTime"
+          }}</span>
+        <br />
+        <i class="fa fa-trash-o" (click)="onDeleteSearchHistory(search.key, $event)"></i>
+      </li>
+    </ul>
+  </aside>
+</div>

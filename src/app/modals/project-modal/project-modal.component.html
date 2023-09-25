@@ -3,10 +3,10 @@
     <div class="modal-content">
       <h2>Create Project</h2>
       <form (submit)="saveProject()">
-        <label for="title">Title:</label>
+        <label style="color: black">Title:</label>
         <input type="text" id="title" [(ngModel)]="projectTitle" name="title" required>
   
-        <label for="description">Description:</label>
+        <label style="color: black">Description:</label>
         <textarea id="description" [(ngModel)]="projectDescription" name="description" required></textarea>
   
         <button type="submit">Save</button>

@@ -93,13 +93,16 @@ export class SavedComponent implements OnInit{
 
   // Function to delete a project
   deleteProject(userId: string, projectKey: string) {
-    this.projectService.deleteProject(userId, projectKey).then(() => {
-      // Reload the project list after deletion
-      this.loadSavedProjects(this.userId);
-      this.loadPatentsForProject(projectKey)
-      this.cd.detectChanges();
-      alert("succesfully deleted project")
-    });
+    const confirm = window.confirm('Are you sure you want to delete?');
+    if (confirm) {
+      this.projectService.deleteProject(userId, projectKey).then(() => {
+        // Reload the project list after deletion
+        this.loadSavedProjects(this.userId);
+        this.loadPatentsForProject(projectKey)
+        this.cd.detectChanges();
+        alert("succesfully deleted project")
+      });
+    }
   }
 
   loadPatentsForProject(projectKey: string) {
@@ -113,17 +116,27 @@ export class SavedComponent implements OnInit{
 
   removePatentFromProject(userId: string, projectId: string, patentKey: string): Promise<void> {
     console.log(patentKey)
-    const patentRef = this.db.object(`projects/${userId}/${projectId}/patents/${patentKey}`);
-    return patentRef.remove();
-}
+    const confirm = window.confirm('Are you sure you want to delete?');
+    if (confirm) {
+      const patentRef = this.db.object(`projects/${userId}/${projectId}/patents/${patentKey}`);
+      return patentRef.remove();
+    }  else {
+      return Promise.resolve();;
+    }
+  }
 
   clearPatentsForProject(userId: string, projectId: string) {
-    const projectPatentsRef = this.db.list(`projects/${userId}/${projectId}/patents`);
-    return projectPatentsRef.remove().then(() => {
-      // Reload the list of patents for the selected project
-      this.loadPatentsForProject(projectId);
-      alert("sucessfully cleared")
-    });
+    const confirm = window.confirm('Are you sure you want to delete?');
+    if (confirm) {
+      const projectPatentsRef = this.db.list(`projects/${userId}/${projectId}/patents`);
+      return projectPatentsRef.remove().then(() => {
+        // Reload the list of patents for the selected project
+        this.loadPatentsForProject(projectId);
+        alert("sucessfully cleared")
+      });
+    } else {
+      return 0;
+    }
   }
 
   editProject(projectKey:any, project: any) {

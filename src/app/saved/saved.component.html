@@ -49,9 +49,9 @@
           </h2>
           <br>
           <div class="links">
-            <a class="uspto-link" [href]="patent.document_link" target="_blank">Open Document</a>
-            <a class="gpatent" [href]="patent.google_patent_link" target="_blank">Google Patents</a>
-            <a class="uspto" [href]="patent.uspto_link" target="_blank">USPTO</a>
+            <a class="gpatent" href="https://patents.google.com/patent/US{{ patent.patentNumber }}" target="_blank">Google Patents</a>
+            <!--             <a class="uspto" (click)="openUSPTO(patent.patent_id);" target="_blank">USPTO</a>
+ -->
             <a id="delete" (click)="removePatentFromProject(userId, selectedProject.key, patent.key)">Delete</a>         
         </div> 
         </li>
