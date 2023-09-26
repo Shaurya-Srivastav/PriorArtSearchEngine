@@ -1,19 +1,22 @@
 export const environment = {
     production: false,
     firebase: {
-        apiKey: "AIzaSyCEV9qEyjlspqPmd9r4qOxD_vjBrfXbhcQ",
+        apiKey: "AIzaSyBbDw2viXyV8-y6mziDDlD9GPvUvH0sowQ",
 
-        authDomain: "priorartsearch-6ca4b.firebaseapp.com",
-      
-        projectId: "priorartsearch-6ca4b",
-      
-        storageBucket: "priorartsearch-6ca4b.appspot.com",
-      
-        messagingSenderId: "328402322107",
-      
-        appId: "1:328402322107:web:c83b618b38a41c0a12df9e",
-      
-        measurementId: "G-46DQCT3Y4S"
+  authDomain: "priorartsearch2.firebaseapp.com",
+
+  databaseURL: "https://priorartsearch2-default-rtdb.firebaseio.com",
+
+  projectId: "priorartsearch2",
+
+  storageBucket: "priorartsearch2.appspot.com",
+
+  messagingSenderId: "829492170892",
+
+  appId: "1:829492170892:web:250aaa59af7d4af2126ba9",
+
+  measurementId: "G-W78WZ5KC06"
+
       
     
     }

@@ -116,10 +116,6 @@ export class ResultsComponent implements OnInit {
         'pregrantedResults',
         JSON.stringify(this.pregrantedResults)
       );
-
-      this.startDate = new Date(this.startDate);
-      this.endDate = new Date(this.endDate);
-     
     }
   }
 
@@ -164,6 +160,7 @@ export class ResultsComponent implements OnInit {
   changePage(page: number): void {
     this.currentPage = page;
   }
+  
 
 
   
@@ -249,7 +246,6 @@ export class ResultsComponent implements OnInit {
     this.http.post('http://129.213.84.77:5000/search', requestData).subscribe(
       (response: any) => {
         console.log('API Response:', response);
-
         if (response) {
           if (!response['error']) {
             if (response['Granted results']) {
@@ -262,6 +258,7 @@ export class ResultsComponent implements OnInit {
               this.pregrantedResults = response['Pregranted Results'];
             }
             this.activeSearch = this.queryValue; 
+            this.saveSearchQuery = true;
             if (this.saveSearchQuery == true) {
               this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
             }
@@ -278,7 +275,7 @@ export class ResultsComponent implements OnInit {
             this.updateDistanceBounds();
             // Reopen the results section now that the data has been fetched and processed
             this.showResults = true;
-            this.saveSearchQuery = true;
+            this.saveSearchQuery = false;
             this.currentPage = 1; // Reset the current page after getting new results
             this.isSubmitting = false;
             this.isSearching = false;
