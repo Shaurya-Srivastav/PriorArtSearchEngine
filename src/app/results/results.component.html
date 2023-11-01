@@ -139,7 +139,8 @@
           </div>
         </div>
       </h2>
-      <p>{{ patent.abstract }}</p>
+      <p *ngIf="patent.state === 'expanded' && patent.highlightedAbstract" [innerHTML]="patent.highlightedAbstract"></p>
+      <p *ngIf="!patent.highlightedAbstract || patent.state !== 'expanded'">{{ patent.abstract }}</p>      
       <div class="more-info" *ngIf="patent.state === 'expanded'">
         <h2>Summary</h2>
         <p>{{ patent.summary }}</p>

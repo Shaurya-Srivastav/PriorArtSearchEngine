@@ -19,5 +19,8 @@ export const environment = {
 
       
     
+    },
+    openai: {
+      apiKey: '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'
     }
   };

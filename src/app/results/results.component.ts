@@ -16,6 +16,7 @@ import { map } from 'rxjs/operators';
 import { SearchHistoryService } from '../services/search-history.service';
 import { savePatentService } from '../services/save-patent.service';
 import { ProjectService } from '../services/project.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-results',
@@ -57,6 +58,7 @@ export class ResultsComponent implements OnInit {
   selectedDate: Date = new Date();
   startDate: any;
   endDate: any;
+  highlightedSentences: string[] = [];
 
   isSubmitting: boolean = false;
   currentPage: number = 1;
@@ -104,8 +106,6 @@ export class ResultsComponent implements OnInit {
       );
       this.grantedResults = this.results.data['Granted results'];
       this.pregrantedResults = this.results.data['Pregranted Results'];
-      this.grantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
-      this.pregrantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
       this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
       this.updateDistanceBounds();
       localStorage.setItem(
@@ -116,6 +116,7 @@ export class ResultsComponent implements OnInit {
         'pregrantedResults',
         JSON.stringify(this.pregrantedResults)
       );
+      
     }
   }
 
@@ -160,8 +161,6 @@ export class ResultsComponent implements OnInit {
   changePage(page: number): void {
     this.currentPage = page;
   }
-  
-
 
   
   getPages(): number[] {
@@ -203,7 +202,7 @@ export class ResultsComponent implements OnInit {
     if (this.displayGranted && this.displayPregranted) {
       // Display both "Granted" and "Pregranted"
       const combinedResults = this.grantedResults.concat(this.pregrantedResults);
-      return combinedResults.sort((a, b) => a.similarity_score - b.similarity_score);
+      return combinedResults.sort((a, b) => b.similarity_score - a.similarity_score);
     } else if (this.displayGranted) {
       // Display only "Granted"
       return this.grantedResults;
@@ -221,7 +220,52 @@ export class ResultsComponent implements OnInit {
   }
   togglePatent(patent: any) {
     patent.state = patent.state === 'expanded' ? 'collapsed' : 'expanded';
+
+    if (patent.state === 'expanded') {
+      this.getGptResponse(patent);
+    }
   }
+
+  async getGptResponse(patent: any) {
+    const requestData = {
+      user_query: this.queryValue,
+      patent_info: patent.abstract
+    };
+  
+    this.http.post('http://129.213.84.77:5000/gpt', requestData).subscribe((response: any) => {
+      if (response) {
+        console.log("Response received:", response);
+        this.highlightedSentences = this.processResponse(response);
+        console.log("Highlighted sentences:", this.highlightedSentences);
+        patent.highlightedAbstract = this.createHighlightedAbstract(patent.abstract, this.highlightedSentences);
+        console.log("Highlighted Abstract:", patent.highlightedAbstract);
+      }
+    })
+  }
+  
+  processResponse(response: any) {
+    if (response && response.similar) {
+      return response.similar.split('\n').map((sentence: any) => 
+        sentence.trim()
+               .replace(/^-\s*"/, '') // Remove leading '- "'
+               .replace(/"$/, '')     // Remove trailing '"'
+      );
+    }
+    return [];
+  }
+  
+  
+  createHighlightedAbstract(abstract: string, sentences: string[]) {
+    let highlightedAbstract = abstract;
+    sentences.forEach((sentence) => {
+      // Regex: flexible for spaces and case-insensitive
+      const re = new RegExp(`(${sentence.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      highlightedAbstract = highlightedAbstract.replace(re, `<span class="highlight">$1</span>`);
+    });
+    return highlightedAbstract;
+  }
+  
+  
 
   search() {
     if (!this.queryValue || this.queryValue.trim() === '') {
@@ -262,8 +306,6 @@ export class ResultsComponent implements OnInit {
             if (this.saveSearchQuery == true) {
               this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
             }
-            this.grantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
-            this.pregrantedResults.sort((a, b) => a.similarity_score - b.similarity_score); // Added sorting
             localStorage.setItem(
               'grantedResults',
               JSON.stringify(this.grantedResults)
@@ -448,20 +490,7 @@ export class ResultsComponent implements OnInit {
   getSimilarityPercentage(score: number): number {
     return (1 - ((score * score)/4)) * 100; 
   }
-  /*
-  getSimilarityPercentage(score: number): number {
-        const basePercentage = this.getBasePercentage();
-      
-        if (this.minDist === this.maxDist) return basePercentage;  // Avoid division by zero.
-        
-        // Normalize score such that baseDist gives basePercentage and maxDist gives 0%.
-        let percentage = basePercentage - ((score - this.minDist) / (this.maxDist - this.minDist) * basePercentage);
-        
-        // To make sure it doesn't exceed basePercentage due to potential floating-point errors.
-        return Math.min(percentage, basePercentage);
-    }
-  */
-
+  
   computeDistances(arr: any[]): { minDist: number, maxDist: number } {
     const minDist = Math.min(...arr.map(p => p.similarity_score));
     const maxDist = Math.max(...arr.map(p => p.similarity_score));
