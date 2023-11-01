@@ -18,7 +18,4 @@ export const environment = {
         measurementId: "G-W78WZ5KC06"
     
     },
-    openai: {
-      apiKey: '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'
-    }
   };
