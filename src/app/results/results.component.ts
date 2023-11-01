@@ -17,6 +17,7 @@ import { SearchHistoryService } from '../services/search-history.service';
 import { savePatentService } from '../services/save-patent.service';
 import { ProjectService } from '../services/project.service';
 import { environment } from 'src/environments/environment.prod';
+import Fuse from 'fuse.js';
 
 @Component({
   selector: 'app-results',
@@ -59,6 +60,12 @@ export class ResultsComponent implements OnInit {
   startDate: any;
   endDate: any;
   highlightedSentences: string[] = [];
+  private fuse?: Fuse<string>;
+  private fuseOptions = {
+    includeScore: true,
+    threshold: 0.65, // Adjust for fuzziness
+    isCaseSensitive: false,
+  };
 
   isSubmitting: boolean = false;
   currentPage: number = 1;
@@ -93,7 +100,8 @@ export class ResultsComponent implements OnInit {
     private route: ActivatedRoute,
     private searchHistoryService: SearchHistoryService,
     private savePatentService: savePatentService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private cdr: ChangeDetectorRef
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { data: any };
@@ -239,29 +247,40 @@ export class ResultsComponent implements OnInit {
         console.log("Highlighted sentences:", this.highlightedSentences);
         patent.highlightedAbstract = this.createHighlightedAbstract(patent.abstract, this.highlightedSentences);
         console.log("Highlighted Abstract:", patent.highlightedAbstract);
+        this.cdr.detectChanges();
       }
-    })
+    });
   }
   
   processResponse(response: any) {
     if (response && response.similar) {
-      return response.similar.split('\n').map((sentence: any) => 
-        sentence.trim()
-               .replace(/^-\s*"/, '') // Remove leading '- "'
-               .replace(/"$/, '')     // Remove trailing '"'
-      );
+      return response.similar.split('\n').map((sentence: string) => sentence.trim().replace(/^-\s*"/, '').replace(/"$/, ''));
     }
     return [];
   }
+
   
   
   createHighlightedAbstract(abstract: string, sentences: string[]) {
+    this.fuse = new Fuse(abstract.split('. '), this.fuseOptions);
+  
     let highlightedAbstract = abstract;
     sentences.forEach((sentence) => {
-      // Regex: flexible for spaces and case-insensitive
-      const re = new RegExp(`(${sentence.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-      highlightedAbstract = highlightedAbstract.replace(re, `<span class="highlight">$1</span>`);
+      if (this.fuse) {
+        const results = this.fuse.search(sentence);
+        console.log(`Searching for sentence: ${sentence}`);
+        console.log(`Results:`, results);
+        console.log(`Threshold: ${this.fuseOptions.threshold}`);
+        if (results.length > 0 && results[0].score && results[0].score <= this.fuseOptions.threshold) {
+          const match = results[0].item;
+          console.log(`Matching sentence: ${sentence}, Found match: ${match}, Score: ${results[0].score}`);
+          const re = new RegExp(`(${match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+          highlightedAbstract = highlightedAbstract.replace(re, `<span class="highlight">$1</span>`);
+        }
+      }
     });
+  
+    console.log(`Final highlighted abstract: ${highlightedAbstract}`);
     return highlightedAbstract;
   }
   
