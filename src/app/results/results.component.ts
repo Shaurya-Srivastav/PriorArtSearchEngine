@@ -210,7 +210,7 @@ export class ResultsComponent implements OnInit {
     if (this.displayGranted && this.displayPregranted) {
       // Display both "Granted" and "Pregranted"
       const combinedResults = this.grantedResults.concat(this.pregrantedResults);
-      return combinedResults.sort((a, b) => b.similarity_score - a.similarity_score);
+      return combinedResults.sort((a, b) => a.similarity_score - b.similarity_score);
     } else if (this.displayGranted) {
       // Display only "Granted"
       return this.grantedResults;
@@ -240,7 +240,7 @@ export class ResultsComponent implements OnInit {
       patent_info: patent.abstract
     };
   
-    this.http.post('http://129.213.84.77:5000/gpt', requestData).subscribe((response: any) => {
+    this.http.post('http://129.213.84.77:5000/gpt', requestData).subscribe((response) => {
       if (response) {
         console.log("Response received:", response);
         this.highlightedSentences = this.processResponse(response);
@@ -252,38 +252,29 @@ export class ResultsComponent implements OnInit {
     });
   }
   
+  
   processResponse(response: any) {
     if (response && response.similar) {
-      return response.similar.split('\n').map((sentence: string) => sentence.trim().replace(/^-\s*"/, '').replace(/"$/, ''));
+      // Extract sentences including their quotation marks
+      return response.similar.match(/"([^"]+)"/g) || [];
     }
     return [];
   }
-
   
   
-  createHighlightedAbstract(abstract: string, sentences: string[]) {
-    this.fuse = new Fuse(abstract.split('. '), this.fuseOptions);
   
+  createHighlightedAbstract(abstract: any, sentences: any) {
     let highlightedAbstract = abstract;
-    sentences.forEach((sentence) => {
-      if (this.fuse) {
-        const results = this.fuse.search(sentence);
-        console.log(`Searching for sentence: ${sentence}`);
-        console.log(`Results:`, results);
-        console.log(`Threshold: ${this.fuseOptions.threshold}`);
-        if (results.length > 0 && results[0].score && results[0].score <= this.fuseOptions.threshold) {
-          const match = results[0].item;
-          console.log(`Matching sentence: ${sentence}, Found match: ${match}, Score: ${results[0].score}`);
-          const re = new RegExp(`(${match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-          highlightedAbstract = highlightedAbstract.replace(re, `<span class="highlight">$1</span>`);
-        }
-      }
+  
+    sentences.forEach((quotedSentence: any) => {
+      const sentence = quotedSentence.slice(1, -1); // Remove the surrounding quotation marks for matching
+      const re = new RegExp(`(${sentence.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      highlightedAbstract = highlightedAbstract.replace(re, `<span class="highlight">$1</span>`);
     });
   
     console.log(`Final highlighted abstract: ${highlightedAbstract}`);
     return highlightedAbstract;
   }
-  
   
 
   search() {
