@@ -59,6 +59,7 @@ export class ResultsComponent implements OnInit {
   selectedDate: Date = new Date();
   startDate: any;
   endDate: any;
+  queryIndexValue: string = '';
   highlightedSentences: string[] = [];
   private fuse?: Fuse<string>;
   private fuseOptions = {
@@ -296,7 +297,80 @@ export class ResultsComponent implements OnInit {
       user_input_date: formattedDate,
     };
 
-    this.http.post('http://129.213.84.77:5000/search', requestData).subscribe(
+    this.http.post('http://129.213.131.75:5000/search', requestData).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response) {
+          if (!response['error']) {
+            if (response['Granted results']) {
+              this.grantedResults = response['Granted results'].map(
+                (res: any) => ({ ...res, state: 'collapsed' })
+              );
+            }
+  
+            if (response['Pregranted Results']) {
+              this.pregrantedResults = response['Pregranted Results'];
+            }
+            this.activeSearch = this.queryValue; 
+            this.saveSearchQuery = true;
+            if (this.saveSearchQuery == true) {
+              this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
+            }
+            localStorage.setItem(
+              'grantedResults',
+              JSON.stringify(this.grantedResults)
+            );
+            localStorage.setItem(
+              'pregrantedResults',
+              JSON.stringify(this.pregrantedResults)
+            );
+            this.updateDistanceBounds();
+            // Reopen the results section now that the data has been fetched and processed
+            this.showResults = true;
+            this.saveSearchQuery = false;
+            this.currentPage = 1; // Reset the current page after getting new results
+            this.isSubmitting = false;
+            this.isSearching = false;
+          } else {
+            alert(response['error'])
+            this.grantedResults = [];
+            this.pregrantedResults = [];
+            this.isSubmitting = false;
+            this.isSearching = false;
+          }
+        }
+      },
+      (error) => {
+        console.error('Error:', error);
+
+        this.isSearching = false; // Handle error and reset isSearching flag
+      }
+    );
+
+  }
+
+
+  searchIndex() {
+    if (!this.queryIndexValue || this.queryIndexValue.trim() === '') {
+      // Maybe show a warning message here
+      console.warn('Search is empty. No action taken.');
+      return; // Return here to exit the function early and not proceed with the query
+    }
+    this.isSubmitting = true;
+    this.isSearching = true;
+    this.showResults = false;
+    console.log('submit', this.queryIndexValue);
+    
+    const formattedDate = this.selectedDate
+      ? this.selectedDate.toISOString().split('T')[0]
+      : null;
+    this.endDate = this.selectedDate.toISOString();
+    const requestData = {
+      input_idea: this.queryIndexValue,
+      user_input_date: formattedDate,
+    };
+
+    this.http.post('http://129.213.131.75:5000/index-search', requestData).subscribe(
       (response: any) => {
         console.log('API Response:', response);
         if (response) {

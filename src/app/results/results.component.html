@@ -67,6 +67,26 @@
     </div>
   </form>
 
+  <form class="search-form" (submit)="searchIndex(); $event.preventDefault()">
+    <!-- Search Input -->
+    <div class="search-input-container">
+      <textarea class="search-input" placeholder="Search..." [(ngModel)]="queryIndexValue" name="queryValue"
+        required></textarea>
+      <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate" />
+      <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
+
+      <div class="icon-buttons-container">
+        <button mat-icon-button (click)="picker.open()" class="icon-button" type="button" [disabled]="isSubmitting">
+          <i class="fa fa-calendar"></i>
+        </button>
+
+        <button class="search-button" [disabled]="isSubmitting">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+
   <a (click)="routeSaved()" class="minimalistic-button">Projects</a>
 </section>
 
