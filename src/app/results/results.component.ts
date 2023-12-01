@@ -252,7 +252,6 @@ export class ResultsComponent implements OnInit {
     });
   }
   
-  
   processResponse(response: any) {
     if (response && response.similar) {
       // Extract sentences including their quotation marks

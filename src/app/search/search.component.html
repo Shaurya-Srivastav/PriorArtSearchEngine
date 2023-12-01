@@ -29,7 +29,21 @@
         <button mat-icon-button (click)="picker.open()" class="icon-button" [disabled]="isSubmitting">
           <i class="fa fa-calendar"></i>
         </button>
-        <button (click)="onSubmit()" class="search-button" [disabled]="isSubmitting">
+        <button (click)="onSemanticSearch()" class="search-button" [disabled]="isSubmitting">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+      <br><br>
+      <div class="search-input-container">
+        <textarea class="search-input" placeholder="Search..." [(ngModel)]="queryIndexValue" name="searchQuery" required></textarea>
+        <!-- Hidden Angular Material Datepicker Input -->
+        <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
+        <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
+        <!-- Calendar Icon to open the Angular Material Datepicker -->
+        <button mat-icon-button (click)="picker.open()" class="icon-button" [disabled]="isSubmitting">
+          <i class="fa fa-calendar"></i>
+        </button>
+        <button (click)="onIndexSearch()" class="search-button" [disabled]="isSubmitting">
           <i class="fa fa-search"></i>
         </button>
       </div>

@@ -12,6 +12,9 @@
           <label for="password">Password</label>
           <input type="password" id="password" name="password" [(ngModel)]="password" required>
         </div>
+        <div class="disclaimer">
+          <p>We value your privacy. No information is stored in our system.</p>
+      </div>
         <button class="login-button" type="submit" (click)="login()">Login</button>
       </form>
 
@@ -39,6 +42,10 @@
         </div>
         
         <button class="login-button" type="submit" (click)="register()">Sign Up</button>
+        <div class="disclaimer">
+          <p>We value your privacy. No information is stored in our system.</p>
+      </div>
+
       </form>
 
       <div class="login-link">

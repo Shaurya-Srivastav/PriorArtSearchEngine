@@ -6,7 +6,7 @@
   display: inline-block;
 }
 
-.highlight {
+#highlight {
   background-color: yellow; /* Sets the background color to yellow */
   font-weight: normal; /* Ensures the text isn't bolded */
   color: black; /* Optional: Sets the text color to black for better readability */
