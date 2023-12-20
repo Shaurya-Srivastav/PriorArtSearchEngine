@@ -20,40 +20,41 @@
     </div>
     
     <form class="search-form" #searchForm>
+      <h1 class="selection-title">Selections: </h1>
+      <div>
+        <div class="selections-container">
+            <span class="selection-query"><label for="abstracts"> Abstract: </label><input id="abstracts" type="checkbox" value="Abstract"></span>
+            <span class="selection-query"><label for="dd"> Detail Description: </label> <input id="dd" type="checkbox" value="Detail-Description"></span>
+            <span class="selection-query"><label for="claims">Claims: </label> <input id="claims" type="checkbox" value="Claims"></span>
+            <span class="selection-query"><label for="bs">Brief Summary: </label> <input id="bs" type="checkbox" value="Brief-Summary"></span>
+        </div>
+    </div>
+
+      <h3 class="search-bar-title">Semantic Search</h3>
       <div class="search-input-container">
-        <textarea class="search-input" placeholder="Semantic Search..." [(ngModel)]="queryValue" name="searchQuery" required></textarea>
-        <!-- Hidden Angular Material Datepicker Input -->
-        <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
-        <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
-        <!-- Calendar Icon to open the Angular Material Datepicker -->
-        <button mat-icon-button (click)="picker.open()" class="icon-button" [disabled]="isSubmitting">
-          <i class="fa fa-calendar"></i>
-        </button>
-        <button (click)="onSemanticSearch()" class="search-button" [disabled]="isSubmitting">
-          <i class="fa fa-search"></i>
-        </button>
+        <textarea class="search-input" [(ngModel)]="queryValue" name="searchQuery" required></textarea>
       </div>
+
       <br><br>
+      <h3 class="search-bar-title">Keyword Search</h3>
       <div class="search-input-container">
-        <textarea class="search-input" placeholder="Keyword Search..." [(ngModel)]="queryIndexValue" name="searchQuery" required></textarea>
-        <!-- Hidden Angular Material Datepicker Input -->
-        <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
-        <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
-        <!-- Calendar Icon to open the Angular Material Datepicker -->
-        <button mat-icon-button (click)="picker.open()" class="icon-button" [disabled]="isSubmitting">
-          <i class="fa fa-calendar"></i>
-        </button>
-        <button (click)="onIndexSearch()" class="search-button" [disabled]="isSubmitting">
-          <i class="fa fa-search"></i>
-        </button>
+        <textarea class="search-input" [(ngModel)]="queryIndexValue" name="searchQuery" required></textarea>
       </div>
     </form>
 
+  <div class="search-and-calendar">
     <div class="search-button-container">
-  <a href="/results" class="link-button">Search History</a>
-</div>
+      <a href="/results" class="link-button">Search</a>
+    </div>
+  
+  
+    <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
+    <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>     
+    <button mat-icon-button (click)="picker.open()" class="icon-button" [disabled]="isSubmitting">
+      <i class="fa fa-calendar"></i>
+    </button>
+  </div>
 
-    
     
     <div class="suggest-for-you">
         <h2 class="suggest-title">Suggestions for you</h2>

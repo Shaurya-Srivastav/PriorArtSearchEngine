@@ -326,15 +326,16 @@ h1, h3{
   background-size: cover;
   padding: 2% 5%;
   position: relative; /* To position the logo */
+  padding-bottom: 70px; 
 }
 
 
 #logo {
-  margin-right: 10%;
   font-size: 2.3vw;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
   text-align: center;
+  width: 25%;
 }
 
 #logo a {
@@ -366,7 +367,7 @@ h1, h3{
 
 .search-input-container {
   position: relative;  /* Ensures child absolute positioning is relative to this container */
-  width: 100%;  /* Set to full width of its container */
+  width: 80%;  /* Set to full width of its container */
   display: flex;
   align-items: center;
 }
@@ -374,14 +375,13 @@ h1, h3{
 .search-input {
   flex-grow: 1;
   min-height: 40px; /* Minimum height for one line */
-  padding: 10px 100px 10px 20px;
+  padding: 10px 10px 10px 20px;
   border-radius: 20px;
   font-size: 16px;
   border: 1px solid #ccc;
   outline: none;
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: calc(100% - 90px - 40px - 40px);
   resize: vertical; /* Allow vertical resizing */
 }
 
@@ -396,7 +396,75 @@ h1, h3{
 }
 
 
-button {  
+.search-button-container {
+  text-align: center;
+}
+
+.link-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #8FC1A9; /* Teal for buttons */
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 18px;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.link-button:hover {
+  background-color: #A8DADC; /* Change button color on hover */
+}
+
+.search-and-calendar {
+  display: flex;
+  align-items: center; /* This aligns the items vertically at the center */
+  justify-content: center; /* This centers the items horizontally */
+}
+
+.search-button-container {
+  margin-right: 10px; /* Optional: Adds some space between the buttons */
+}
+
+.selections-row {
+  position: absolute; /* Position the selections row absolutely within the search bar area */
+  bottom: 0; /* Stick it to the bottom */
+  left: 50%; /* Start from the middle */
+  transform: translateX(-50%); /* Center it horizontally */
+  width: auto; /* Let it take the width it requires */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center items horizontally */
+  gap: 10px;
+}
+
+.selection-title {
+  margin-top: 15px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.selections-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap if they can't fit in a single row */
+  gap: 10px; /* Adds a gap between the checkboxes */
+}
+
+.selection-query {
+  display: flex;
+  align-items: center;
+  background-color: #EDEDED; /* Light gray background */
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #555; /* Darker text for better contrast on light background */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  label {
+    margin-right: 2px;
+  }
+}
+
+/* button {  
   background-color: transparent;
   border: none;
   color: white;
@@ -423,7 +491,7 @@ button.icon-button {
   top: 50%;
   transform: translateY(-50%);
   padding: 0;
-}
+} */
 
 button:hover {
   background-color: rgba(255, 255, 255, 0.1);
@@ -465,11 +533,6 @@ button i.fa {
   background-color: inherit; /* This will get the background color from whatever you set in JavaScript. */
 }
 
-.patent-title{
-  width: 70%;
-}
-
-
 .check{
   width: 30px;
   height: 30px;
@@ -494,6 +557,24 @@ button i.fa {
 
 .patents-section.expanded {
   max-height: 80vh; /* or whatever value you want it to expand to */
+}
+
+.expand-collapse-btn {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  padding: 8px 16px;
+  background-color: #8FC1A9; /* Teal for buttons */
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-size: 12px;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.expand-collapse-btn:hover {
+  background-color: #A8DADC; /* Change button color on hover */
 }
 
 .patent-box {
@@ -565,7 +646,7 @@ button i.fa {
   color: #8FC1A9;
   border-radius: 20px;
   padding: 20px 30px;
-  margin-left: 1%; /* Adjust this margin as needed */
+  margin-left: 2%; /* Adjust this margin as needed */
   font-family: 'Poppins', sans-serif;
   font-size: 1rem;
   position: relative; /* Add this */

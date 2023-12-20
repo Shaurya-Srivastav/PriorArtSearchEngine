@@ -14,7 +14,6 @@
 
 .search-button-container {
   text-align: center;
-  margin-top: 20px;
 }
 
 .link-button {
@@ -55,8 +54,8 @@ a{
 
 .search-form {
   position: relative; /* Changed from absolute to relative */
-  transform: none; /* Remove any transformations */
-  margin: 20% auto 40px auto; /* Top margin pushes it down, bottom margin gives space before the next section */
+  transform: none; /* Reamove any transformations */
+  margin: 10% auto 40px auto; /* Top margin pushes it down, bottom margin gives space before the next section */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -87,7 +86,22 @@ a{
   flex-wrap: wrap; /* Wrap to the next line if out of space */
 }
 
+.selections-container {
+  display: flex;
+  gap: 10px; /* Space between individual suggestions */
+  flex-wrap: wrap; /* Wrap to the next line if out of space */
+}
+
 .suggested-query {
+  background-color: #EDEDED; /* Light gray background */
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #555; /* Darker text for better contrast on light background */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.selection-query {
   background-color: #EDEDED; /* Light gray background */
   padding: 5px 15px;
   border-radius: 20px;
@@ -102,6 +116,12 @@ a{
   color: white; 
 }
 
+.selection-query:hover {
+  background-color:#A8DADC; /* Slightly darker gray on hover */
+  color: white; 
+}
+
+
 .search-input-container {
   position: relative;  /* Ensures child absolute positioning is relative to this container */
   width: 100%;  /* Set to full width of its container */
@@ -113,14 +133,14 @@ a{
   flex-grow: 1; /* Allows it to fill available space */
   min-height: 40px; /* Set a minimum height */
   max-height: 120px; /* Set a maximum height */
-  padding: 10px 100px 10px 20px; /* Adjusted padding */
+  padding: 10px 10px 10px 10px; /* Adjusted padding */
   border-radius: 20px;
   font-size: 16px;
   border: 1px solid #ccc;
   outline: none;
   font-family: 'Poppins', sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: calc(100% - 90px - 40px - 40px); /* Adjusted width. Account for 2 buttons (each 40px) and the total right padding (90px) */
+  width: 100%; /* Adjusted width. Account for 2 buttons (each 40px) and the total right padding (90px): calc(100% - 90px - 40px - 40px)*/
   resize: none; /* Disable textarea resizing */
 }
 
@@ -128,9 +148,19 @@ a{
   color: #A8DADC;
   font-family: 'Poppins', sans-serif;
 }
+
+.search-bar-title{
+  position: relative;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+.selection-title{
+  font-family: 'Poppins', sans-serif;
+}
         
 
-button {  
+/* button {  
   background-color: transparent;
   border: none;
   color: white;
@@ -142,21 +172,33 @@ button {
   cursor: pointer;
   outline: none;
   font-family: 'Poppins', sans-serif;
-}             
-button.search-button {
+} */
+
+/* button.search-button {
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-}
+} */
 
-button.icon-button {
+/* button.icon-button {
   position: absolute;
   right: 55px;
   top: 50%;
   transform: translateY(-50%);
   padding: 0;
+} */
+
+.search-and-calendar {
+  display: flex;
+  align-items: center; /* This aligns the items vertically at the center */
+  justify-content: center; /* This centers the items horizontally */
 }
+
+.search-button-container {
+  margin-right: 10px; /* Optional: Adds some space between the buttons */
+}
+
 
 
 button:hover {

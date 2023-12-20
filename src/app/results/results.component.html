@@ -47,47 +47,50 @@
     </a>
   </h1>
 
+
   <form class="search-form" (submit)="search(); $event.preventDefault()">
     <!-- Search Input -->
     <div class="search-input-container">
       <textarea class="search-input" placeholder="Semantic Search..." [(ngModel)]="queryValue" name="queryValue"
         required></textarea>
-      <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate" />
-      <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
-
-      <div class="icon-buttons-container">
-        <button mat-icon-button (click)="picker.open()" class="icon-button" type="button" [disabled]="isSubmitting">
-          <i class="fa fa-calendar"></i>
-        </button>
-
-        <button class="search-button" [disabled]="isSubmitting">
-          <i class="fa fa-search"></i>
-        </button>
-      </div>
     </div>
   </form>
-  <br>
+
   <form class="search-form" (submit)="searchIndex(); $event.preventDefault()">
     <!-- Search Input -->
     <div class="search-input-container">
       <textarea class="search-input" placeholder="Keyword Search..." [(ngModel)]="queryIndexValue" name="queryValue"
         required></textarea>
-      <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate" />
-      <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>
-
-      <div class="icon-buttons-container">
-        <button mat-icon-button (click)="picker.open()" class="icon-button" type="button" [disabled]="isSubmitting">
-          <i class="fa fa-calendar"></i>
-        </button>
-
-        <button class="search-button" [disabled]="isSubmitting">
-          <i class="fa fa-search"></i>
-        </button>
-      </div>
+  
     </div>
   </form>
 
-  <a (click)="routeSaved()" class="minimalistic-button">Projects</a>
+  <div class="search-and-calendar">
+    <div class="search-button-container">
+      <a href="/results" class="link-button">Search</a>
+    </div>
+    <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
+    <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>     
+    <button mat-icon-button (click)="picker.open()" class="icon-button" [disabled]="isSubmitting">
+      <i class="fa fa-calendar"></i>
+    </button>
+
+    <a (click)="routeSaved()" class="minimalistic-button">Projects</a>
+  </div>
+
+
+  <!-- Selections row at the bottom -->
+  <div class="selections-row">
+    <h1 class="selection-title">Selections:</h1>
+    <div class="selections-container">
+      <span class="selection-query"><label for="abstracts">Abstract: </label><input id="abstracts" type="checkbox" value="Abstract"></span>
+      <span class="selection-query"><label for="dd">Detail Description: </label><input id="dd" type="checkbox" value="Detail-Description"></span>
+      <span class="selection-query"><label for="claims">Claims: </label><input id="claims" type="checkbox" value="Claims"></span>
+      <span class="selection-query"><label for="bs">Brief Summary: </label><input id="bs" type="checkbox" value="Brief-Summary"></span>
+    </div>
+  </div>
+
+  
 </section>
 
 <div class="pagination">
@@ -139,26 +142,33 @@
     </div>
     <br />
     <br />
+
     <div *ngFor="let patent of getDisplayedResults().currentResults; let i = index"
-      [class.saved-patent]="isSaved(patent)" class="patent-box" [@expandCollapse]="patent.state"
-      (click)="togglePatent(patent)">
-      <div class="similarity-badge" [style.background-color]="
+      [class.saved-patent]="isSaved(patent)" class="patent-box">
+
+      <!-- Button to toggle expand/collapse -->
+      <button class="expand-collapse-btn" (click)="togglePatent(patent); stopPropagation($event)">
+        {{ patent.state === 'expanded' ? 'Close' : 'Open' }}
+      </button>
+
+
+      <!-- <div class="similarity-badge" [style.background-color]="
           getSimilarityBadge(patent.similarity_score).color
         ">
         <span>{{ getSimilarityBadge(patent.similarity_score).label }} <br />
           <div style="text-align: center">{{ patent.type }}</div>
         </span>
-      </div>
+      </div> -->
+
       <input type="checkbox" class="check" [(ngModel)]="patent.selected" (click)="stopPropagation($event)" />
-      <h2 class="patent-title">
-        {{ patent.title }} <br />
-        <div>
-          <div *ngIf="patent.type == 'granted'">US{{ patent.patent_id }}</div>
-          <div *ngIf="patent.type == 'pregranted'">
-            {{ patent.application_id }}
-          </div>
-        </div>
+      <h2 class="patent-title" *ngIf="patent.type == 'granted'">
+        {{ patent.title }}  - US{{ patent.patent_id }}
       </h2>
+      <h2 class="patent-title" *ngIf="patent.type == 'pregranted'">
+          {{ patent.title }}  - US{{ patent.patent_id }}
+      </h2>
+
+      <h4>Filing-Date: MM/DD/YYYY | Assignees: John Doe </h4>
       <p *ngIf="patent.state === 'expanded' && patent.highlightedAbstract" [innerHTML]="patent.highlightedAbstract"></p>
       <p *ngIf="!patent.highlightedAbstract || patent.state !== 'expanded'">{{ patent.abstract }}</p>      
       <div class="more-info" *ngIf="patent.state === 'expanded'">
@@ -175,6 +185,7 @@
               patent.patent_id
             }}" target="_blank">USPTO</a>
         </span>
+
         <span class="patent-button" (click)="stopPropagation($event)">
           <a href="https://patents.google.com/patent/US{{ patent.patent_id }}" target="_blank">Google Patents</a>
         </span>
@@ -187,6 +198,11 @@
             </a>
           </div>
         </div>
+
+        <span class="patent-button" (click)="stopPropagation($event)">
+          <a href="#" target="_blank">Saved to project-title </a> <!-- when you click it should route to specific project -->
+        </span>
+
       </div>
     </div>
   </section>
