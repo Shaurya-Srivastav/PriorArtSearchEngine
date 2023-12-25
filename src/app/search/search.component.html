@@ -32,7 +32,7 @@
 
       <h3 class="search-bar-title">Semantic Search</h3>
       <div class="search-input-container">
-        <textarea class="search-input" [(ngModel)]="queryValue" name="searchQuery" required></textarea>
+        <textarea class="search-input" [(ngModel)]="querySemanticValue" name="searchQuery" required></textarea>
       </div>
 
       <br><br>
@@ -43,8 +43,8 @@
     </form>
 
   <div class="search-and-calendar">
-    <div class="search-button-container">
-      <a href="/results" class="link-button">Search</a>
+    <div class="search-button-container" (click)="search()">
+      <a class="link-button" >Search</a>
     </div>
   
   

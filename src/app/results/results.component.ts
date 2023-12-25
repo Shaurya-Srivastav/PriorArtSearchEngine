@@ -55,7 +55,7 @@ export class ResultsComponent implements OnInit {
   pregrantedResults: any[] = [];
   combinedResults: any[] = [];
   showResults: boolean = false;
-  queryValue: string = '';
+  querySemanticValue: string = '';
   selectedDate: Date = new Date();
   startDate: any;
   endDate: any;
@@ -108,14 +108,14 @@ export class ResultsComponent implements OnInit {
     const state = navigation?.extras.state as { data: any };
     if (state) {
       this.results = state;
-      this.queryValue = this.results.query;
+      this.querySemanticValue = this.results.query;
       this.endDate = this.results.formattedDate
       this.grantedResults = this.results.data['Granted results'].map(
         (res: any) => ({ ...res, state: 'collapsed' })
       );
       this.grantedResults = this.results.data['Granted results'];
       this.pregrantedResults = this.results.data['Pregranted Results'];
-      this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
+      this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults, this.pregrantedResults);
       this.updateDistanceBounds();
       localStorage.setItem(
         'grantedResults',
@@ -237,7 +237,7 @@ export class ResultsComponent implements OnInit {
 
   async getGptResponse(patent: any) {
     const requestData = {
-      user_query: this.queryValue,
+      user_query: this.querySemanticValue,
       patent_info: patent.abstract
     };
   
@@ -276,24 +276,33 @@ export class ResultsComponent implements OnInit {
     return highlightedAbstract;
   }
   
-
   search() {
-    if (!this.queryValue || this.queryValue.trim() === '') {
-      // Maybe show a warning message here
-      console.warn('Search is empty. No action taken.');
-      return; // Return here to exit the function early and not proceed with the query
+    if (!this.querySemanticValue.trim() && !this.queryIndexValue.trim()) {
+        alert('Please enter a query in at least one of the search boxes.');
     }
+    else if (this.querySemanticValue.trim() && !this.queryIndexValue.trim()) {
+        this.semanticSearch();
+    }
+    else if (!this.querySemanticValue.trim() && this.queryIndexValue.trim()) {
+        this.indexSearch();
+    }
+    else {
+        this.combinedSearch();
+    }
+  }
+
+  semanticSearch() {
     this.isSubmitting = true;
     this.isSearching = true;
     this.showResults = false;
-    console.log('submit', this.queryValue);
+    console.log('submit', this.querySemanticValue);
     
     const formattedDate = this.selectedDate
       ? this.selectedDate.toISOString().split('T')[0]
       : null;
     this.endDate = this.selectedDate.toISOString();
     const requestData = {
-      input_idea: this.queryValue,
+      input_idea: this.querySemanticValue,
       user_input_date: formattedDate,
     };
 
@@ -311,10 +320,10 @@ export class ResultsComponent implements OnInit {
             if (response['Pregranted Results']) {
               this.pregrantedResults = response['Pregranted Results'];
             }
-            this.activeSearch = this.queryValue; 
+            this.activeSearch = this.querySemanticValue; 
             this.saveSearchQuery = true;
             if (this.saveSearchQuery == true) {
-              this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
+              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults, this.pregrantedResults);
             }
             localStorage.setItem(
               'grantedResults',
@@ -350,12 +359,8 @@ export class ResultsComponent implements OnInit {
   }
 
 
-  searchIndex() {
-    if (!this.queryIndexValue || this.queryIndexValue.trim() === '') {
-      // Maybe show a warning message here
-      console.warn('Search is empty. No action taken.');
-      return; // Return here to exit the function early and not proceed with the query
-    }
+
+  indexSearch() {
     this.isSubmitting = true;
     this.isSearching = true;
     this.showResults = false;
@@ -384,10 +389,10 @@ export class ResultsComponent implements OnInit {
             if (response['Pregranted Results']) {
               this.pregrantedResults = response['Pregranted Results'];
             }
-            this.activeSearch = this.queryValue; 
+            this.activeSearch = this.querySemanticValue; 
             this.saveSearchQuery = true;
             if (this.saveSearchQuery == true) {
-              this.searchHistoryService.addSearchQuery(this.queryValue, this.grantedResults, this.pregrantedResults);
+              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults, this.pregrantedResults);
             }
             localStorage.setItem(
               'grantedResults',
@@ -422,8 +427,75 @@ export class ResultsComponent implements OnInit {
 
   }
 
+  combinedSearch() {
+    this.isSubmitting = true;
+    this.isSearching = true;
+    this.showResults = false;
+    console.log('submit', this.queryIndexValue);
+    
+    const formattedDate = this.selectedDate
+      ? this.selectedDate.toISOString().split('T')[0]
+      : null;
+    this.endDate = this.selectedDate.toISOString();
+    const requestData = {
+      semantic_query: this.querySemanticValue,
+      index_query: this.queryIndexValue,
+      user_input_date: formattedDate, // Use datePicker instead of datePickerRef
+    };
+
+    this.http.post('http://129.213.131.75:5000/combined-search', requestData).subscribe(
+      (response: any) => {
+        console.log('API Response:', response);
+        if (response) {
+          if (!response['error']) {
+            if (response['Granted results']) {
+              this.grantedResults = response['Granted results'].map(
+                (res: any) => ({ ...res, state: 'collapsed' })
+              );
+            }
+  
+            if (response['Pregranted Results']) {
+              this.pregrantedResults = response['Pregranted Results'];
+            }
+            this.activeSearch = this.querySemanticValue; 
+            this.saveSearchQuery = true;
+            if (this.saveSearchQuery == true) {
+              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults, this.pregrantedResults);
+            }
+            localStorage.setItem(
+              'grantedResults',
+              JSON.stringify(this.grantedResults)
+            );
+            localStorage.setItem(
+              'pregrantedResults',
+              JSON.stringify(this.pregrantedResults)
+            );
+            this.updateDistanceBounds();
+            // Reopen the results section now that the data has been fetched and processed
+            this.showResults = true;
+            this.saveSearchQuery = false;
+            this.currentPage = 1; // Reset the current page after getting new results
+            this.isSubmitting = false;
+            this.isSearching = false;
+          } else {
+            alert(response['error'])
+            this.grantedResults = [];
+            this.pregrantedResults = [];
+            this.isSubmitting = false;
+            this.isSearching = false;
+          }
+        }
+      },
+      (error) => {
+        console.error('Error:', error);
+
+        this.isSearching = false; // Handle error and reset isSearching flag
+      }
+    );
+  }
+
   onSearchHistoryClick(search: any) {
-    this.queryValue = search.query;  // Set the clicked query as the current search input
+    this.querySemanticValue = search.query;  // Set the clicked query as the current search input
     this.saveSearchQuery = false;
     
     // Set the results if they exist

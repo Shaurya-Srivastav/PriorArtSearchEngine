@@ -51,12 +51,12 @@
   <form class="search-form" (submit)="search(); $event.preventDefault()">
     <!-- Search Input -->
     <div class="search-input-container">
-      <textarea class="search-input" placeholder="Semantic Search..." [(ngModel)]="queryValue" name="queryValue"
+      <textarea class="search-input" placeholder="Semantic Search..." [(ngModel)]="querySemanticValue" name="queryValue"
         required></textarea>
     </div>
   </form>
 
-  <form class="search-form" (submit)="searchIndex(); $event.preventDefault()">
+  <form class="search-form" (submit)="search(); $event.preventDefault()">
     <!-- Search Input -->
     <div class="search-input-container">
       <textarea class="search-input" placeholder="Keyword Search..." [(ngModel)]="queryIndexValue" name="queryValue"
@@ -66,8 +66,8 @@
   </form>
 
   <div class="search-and-calendar">
-    <div class="search-button-container">
-      <a href="/results" class="link-button">Search</a>
+    <div class="search-button-container" (click)="search()">
+      <a class="link-button">Search</a>
     </div>
     <input matInput [matDatepicker]="picker" style="display: none" [(ngModel)]="selectedDate" name="selectedDate">
     <mat-datepicker touchUi="true" #picker class="cdk-overlay-transparent-backdrop"></mat-datepicker>     
