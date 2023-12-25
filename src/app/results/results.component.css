@@ -459,9 +459,10 @@ h1, h3{
   color: #555; /* Darker text for better contrast on light background */
   cursor: pointer;
   transition: background-color 0.3s;
-  label {
-    margin-right: 2px;
-  }
+}
+
+.selection-query label {
+  margin-right: 2px;
 }
 
 /* button {  
