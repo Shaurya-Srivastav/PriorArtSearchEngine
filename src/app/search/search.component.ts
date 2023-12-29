@@ -3,8 +3,7 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { Router } from '@angular/router';  // <-- Import Router
 import { HttpClient } from '@angular/common/http'; // Import HttpClient for HTTP requests
 import { SearchHistoryService } from '../services/search-history.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -25,21 +24,12 @@ export class SearchComponent {
   @ViewChild('calendarRef') calendarRef!: ElementRef;
   @ViewChild('picker') datePicker!: MatDatepicker<Date>;
 
-
-  ngAfterViewInit(): void {
-  }
-
-  
-
-
-
-
   // Inject the Router service
   constructor(
     private router: Router,
     private http: HttpClient,
     private searchHistoryService: SearchHistoryService,
-    private afAuth: AngularFireAuth,
+    private authService: AuthService
   ) 
   {}
   
@@ -183,12 +173,8 @@ export class SearchComponent {
   }
 
   logout() {
-    this.afAuth.signOut().then((res) => {
-      console.log(res);
-      this.router.navigate(['/login']);
-    }).catch((err) => {
-      alert(err.message);
-    })
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }
