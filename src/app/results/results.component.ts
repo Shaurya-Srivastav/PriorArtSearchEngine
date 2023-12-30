@@ -17,7 +17,6 @@ import { SearchHistoryService } from '../services/search-history.service';
 import { savePatentService } from '../services/save-patent.service';
 import { ProjectService } from '../services/project.service';
 import { environment } from 'src/environments/environment.prod';
-import Fuse from 'fuse.js';
 
 @Component({
   selector: 'app-results',
@@ -61,12 +60,6 @@ export class ResultsComponent implements OnInit {
   endDate: any;
   queryIndexValue: string = '';
   highlightedSentences: string[] = [];
-  private fuse?: Fuse<string>;
-  private fuseOptions = {
-    includeScore: true,
-    threshold: 0.65, // Adjust for fuzziness
-    isCaseSensitive: false,
-  };
 
   isSubmitting: boolean = false;
   currentPage: number = 1;
@@ -115,7 +108,15 @@ export class ResultsComponent implements OnInit {
       );
       this.grantedResults = this.results.data['Granted results'];
       this.pregrantedResults = this.results.data['Pregranted Results'];
-      this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults, this.pregrantedResults);
+      this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults)
+    .subscribe({
+        next: (response) => {
+            console.log('Search history saved', response);
+        },
+        error: (error) => {
+            console.error('Error saving search history', error);
+        }
+    });
       this.updateDistanceBounds();
       localStorage.setItem(
         'grantedResults',
@@ -144,7 +145,7 @@ export class ResultsComponent implements OnInit {
         this.savePatentService.fetchSavedPatents(this.userId).subscribe(patents => {
           this.savedPatents = patents;
         });
-        this.searchHistoryService.fetchRecentSearches(this.userId).subscribe(searches => {
+        this.searchHistoryService.fetchRecentSearches().subscribe(searches => {
           this.recentSearches = searches;
           console.log(this.recentSearches)
         });
@@ -323,7 +324,7 @@ export class ResultsComponent implements OnInit {
             this.activeSearch = this.querySemanticValue; 
             this.saveSearchQuery = true;
             if (this.saveSearchQuery == true) {
-              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults, this.pregrantedResults);
+              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults);
             }
             localStorage.setItem(
               'grantedResults',
@@ -392,7 +393,7 @@ export class ResultsComponent implements OnInit {
             this.activeSearch = this.querySemanticValue; 
             this.saveSearchQuery = true;
             if (this.saveSearchQuery == true) {
-              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults, this.pregrantedResults);
+              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults);
             }
             localStorage.setItem(
               'grantedResults',
@@ -460,7 +461,7 @@ export class ResultsComponent implements OnInit {
             this.activeSearch = this.querySemanticValue; 
             this.saveSearchQuery = true;
             if (this.saveSearchQuery == true) {
-              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults, this.pregrantedResults);
+              this.searchHistoryService.addSearchQuery(this.querySemanticValue, this.grantedResults);
             }
             localStorage.setItem(
               'grantedResults',
@@ -506,22 +507,25 @@ export class ResultsComponent implements OnInit {
     }
   }
 
-  onDeleteSearchHistory(searchKey: string, event: Event) {
+  onDeleteSearchHistory(searchId: number, event: Event) {
     event.stopPropagation(); // Prevent triggering other click events
-
+  
     const confirmation = window.confirm("Are you sure you want to delete this search history?");
     if (confirmation) {
-        this.searchHistoryService.deleteSearchHistory(this.userId, searchKey)
-            .then(() => {
-                // Refresh local data or remove the deleted item from local list
-                this.recentSearches = this.recentSearches.filter(search => search.key !== searchKey);
-            })
-            .catch(error => {
-                console.error('Error deleting search history:', error);
-                alert('An error occurred while deleting the search history. Please try again.');
-            });
+      this.searchHistoryService.deleteSearchHistory(searchId.toString())
+        .subscribe(
+          () => {
+            // Refresh local data or remove the deleted item from local list
+            this.recentSearches = this.recentSearches.filter(search => search.id !== searchId);
+          },
+          error => {
+            console.error('Error deleting search history:', error);
+            alert('An error occurred while deleting the search history. Please try again.');
+          }
+        );
     }
-}
+  }
+  
 
   async savePatent(patent: any) {
     if (!this.userId) {

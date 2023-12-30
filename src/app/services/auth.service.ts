@@ -12,7 +12,7 @@ export class AuthService {
   private hasToken(): boolean {
     return !!localStorage.getItem('token');
   }
-
+ 
   login(token: string) {
     localStorage.setItem('token', token);
     this.loggedIn.next(true);

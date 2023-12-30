@@ -1,58 +1,42 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { Observable, of } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchHistoryService {
-  userId: string | null = null;
+  private baseUrl = 'http://129.213.131.75:5000'; // Flask server URL
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userId = user.uid;
-      }
-    });
+  constructor(private http: HttpClient) {}
+
+  // Utility method to get the HTTP options
+  private getHttpOptions() {
+    const token = localStorage.getItem('token'); 
+    console.log(token);
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
   }
 
-  addSearchQuery(query: string, grantedResults: any[], pregrantedResults: any[]): Promise<void> {
-    if (!this.userId) return Promise.reject("User not authenticated.");
-
-    const timestamp = new Date().toISOString();
-    const searchItem = {
-        query,
-        timestamp,
-        results: {
-            granted: grantedResults,
-            pregranted: pregrantedResults
-        }
+  addSearchQuery(query: string, results: any[]): Observable<any> {
+    const body = {
+      query: query,
+      results: results  // Send as a JSON object/array
     };
 
-    return this.db.list(`recentSearches/${this.userId}`).push(searchItem).then();
+    return this.http.post(`${this.baseUrl}/save_search`, body, this.getHttpOptions());
 }
 
-  fetchRecentSearches(userId: any) {
-    return this.db.list(`recentSearches/${userId}`, ref => ref.orderByChild('timestamp').limitToLast(10)).snapshotChanges().pipe(
-      map(actions => {
-        let searches = actions.map(a => {
-          const data = a.payload.val();
-          const key = a.key;
-          if (typeof data === 'object' && data !== null) {
-            return { key, ...data };
-          } else {
-            return { key };
-          }
-        });
-        // reverse the array to make it descending
-        return searches.reverse();
-      })
-    );
+fetchRecentSearches(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/get_search_history`, this.getHttpOptions());
+}
+  // Assuming you have an endpoint to delete a specific search history
+  deleteSearchHistory(searchId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete_search/${searchId}`, this.getHttpOptions());
   }
-
-  deleteSearchHistory(userId: string, searchKey: string): Promise<void> {
-    return this.db.object(`recentSearches/${userId}/${searchKey}`).remove();
-}
 }
